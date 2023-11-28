@@ -11,3 +11,5 @@ A
 Blanat/Blanat.iml,6\d\6db64aeb354c25fb8d7627153968be20fdfa7d2e
 j
 :Blanat/src/main/java/Ensak/Blanat/Blanat/DTOs/dealDTO.java,7\f\7f9b2e45cf2609b28cebeaa0c8f8253eeceb7e4a
+>
+Blanat/pom.xml,c\7\c7d53be104f07e4e1b8f840c9f4761bad4147de6
