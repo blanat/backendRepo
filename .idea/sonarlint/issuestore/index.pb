@@ -13,3 +13,13 @@ j
 :Blanat/src/main/java/Ensak/Blanat/Blanat/DTOs/dealDTO.java,7\f\7f9b2e45cf2609b28cebeaa0c8f8253eeceb7e4a
 >
 Blanat/pom.xml,c\7\c7d53be104f07e4e1b8f840c9f4761bad4147de6
+g
+7Blanat/src/main/java/Ensak/Blanat/Blanat/DTOs/notesDTOs,0\5\0569a279c84c098bf26361fd6ac1397a4af97929
+i
+9Blanat/src/main/java/Ensak/Blanat/Blanat/enums/notesEnums,c\c\cc1fe8d5cbaf768fa63c1a9cc15c3ddf49ed649c
+q
+ABlanat/src/main/java/Ensak/Blanat/Blanat/exeptions/notesExeptions,8\f\8f5bcd984939d084029d46a71a33dd4bed76ad5d
+m
+=Blanat/src/main/java/Ensak/Blanat/Blanat/mappers/notesMappers,4\8\4871a23433ce27292d9a4c76c6c7ddd56eeaf9d1
+o
+?Blanat/src/main/java/Ensak/Blanat/Blanat/services/notesServices,b\3\b3b252f2d0c581cdee3d435c38133aaec89cd8cf
