@@ -1,2 +1,5 @@
-package Ensak.Blanat.Blanat.DTOs;public class dealDTO {
+package Ensak.Blanat.Blanat.DTOs;
+
+public class dealDTO {
+    private long id;
 }
