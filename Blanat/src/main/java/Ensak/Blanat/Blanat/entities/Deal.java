@@ -1,12 +1,13 @@
 package Ensak.Blanat.Blanat.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deal {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private long deal_ID;
 
@@ -45,8 +46,12 @@ public class Deal {
     @Column(nullable = true)
     private int vote_down;
 
-    //private int nbre_comment;
+    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_ID)")
+    private int nbre_comment;
 
     @Column(nullable = false)
-    private Date dateCreation;
+    private LocalDate dateCreation;
+
+    @OneToMany(mappedBy = "deal")
+    private Collection<Comment> comments;
 }

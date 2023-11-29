@@ -1,2 +1,9 @@
 
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ8Ì¥ÙÁ1
+z	java:S116"YRename this field "date_Adherence" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÔÅÕÿÿÿÿÿ8ä²·ÙÁ1
+X
+java:S1128"6Remove this unused import 'lombok.AllArgsConstructor'.(´œ¾öùÿÿÿÿ8åÃòÙÁ1
+J
+java:S1128"(Remove this unused import 'lombok.Data'.(÷í«ÿÿÿÿÿ8æÃòÙÁ1
+R
+java:S1128"5Remove this unused import 'lombok.NoArgsConstructor'.(¸¨›8æÃòÙÁ1

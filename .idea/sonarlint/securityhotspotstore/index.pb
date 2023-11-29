@@ -23,3 +23,9 @@ m
 =Blanat/src/main/java/Ensak/Blanat/Blanat/mappers/notesMappers,4\8\4871a23433ce27292d9a4c76c6c7ddd56eeaf9d1
 o
 ?Blanat/src/main/java/Ensak/Blanat/Blanat/services/notesServices,b\3\b3b252f2d0c581cdee3d435c38133aaec89cd8cf
+k
+;Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Deal.java,f\a\fa73b49304dd94a7dc72a470f522fd0fc782e96c
+p
+@Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Moderator.java,f\a\fa57d66f49070133e4ec13ed8f29e3c299641f3c
+n
+>Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Comment.java,a\d\adce7c7f76a92b7803c1580893d46e92c060e451
