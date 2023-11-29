@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 
 @Entity
+@Data
 public class Client extends User_Proj {
 
 }

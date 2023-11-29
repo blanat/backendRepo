@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
+@Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "user_Table")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User_Proj {

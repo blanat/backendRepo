@@ -1,4 +1,10 @@
 
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ8º×„ÇÁ1
-M
-java:S1068"0Remove this unused "isSuperAdmin" private field.(¦Áã¤8Â×„ÇÁ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ8ß”€àÁ1
+\
+java:S1128":Remove this unused import 'jakarta.persistence.OneToMany'.( ëîéúÿÿÿÿ8ÕàÁ1
+[
+java:S1128"9Remove this unused import 'jakarta.persistence.OneToOne'.(Ç­É™üÿÿÿÿ8ÕàÁ1
+X
+java:S1128"6Remove this unused import 'lombok.AllArgsConstructor'.(´œ¾öùÿÿÿÿ8ÕàÁ1
+R
+java:S1128	"5Remove this unused import 'lombok.NoArgsConstructor'.(¸¨›8ÕàÁ1
