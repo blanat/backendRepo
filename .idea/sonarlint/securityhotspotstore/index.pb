@@ -29,3 +29,17 @@ p
 @Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Moderator.java,f\a\fa57d66f49070133e4ec13ed8f29e3c299641f3c
 n
 >Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Comment.java,a\d\adce7c7f76a92b7803c1580893d46e92c060e451
+{
+KBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/ClientRepository.java,f\9\f95b7b6f4643d5f46432bb7c194b2c357cc125aa
+y
+IBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/UserRepository.java,f\f\ff5efe8b69e5b2a7505aa2451816d8a03ae9fc71
+~
+NBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/ModeratorRepository.java,b\e\be2d1d216304dc3b48e5728ec948c808487705f1
+y
+IBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/DealRepository.java,8\b\8bda1d4c2454c7403ef54e35513a62221b68ad44
+|
+LBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/CommentRepository.java,c\c\cccb01ddb9b3037f0c795ce764206deb31ddb8cc
+n
+>Blanat/src/main/java/Ensak/Blanat/Blanat/entities/User_Cl.java,b\0\b0b0e74e9960feddb793a6355b89ca77b62e20de
+p
+@Blanat/src/main/java/Ensak/Blanat/Blanat/entities/User_Proj.java,4\3\43b248cfc32ff1f9c527d063c3f1c723da3ae268

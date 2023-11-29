@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 
 @Entity
-public class Client extends User {
+public class Client extends User_Proj {
 
 }

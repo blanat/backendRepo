@@ -6,7 +6,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Moderator extends User {
+public class Moderator extends User_Proj {
 
     private boolean isSuperAdmin;
 
