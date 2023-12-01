@@ -22,7 +22,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User_Proj user;
+    private UserApp user;
 
     @ManyToOne
     @JoinColumn(name = "deal_id", nullable = false)

@@ -6,7 +6,7 @@ package Ensak.Blanat.Blanat.services.authServices;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.JwtAuthenticationResponse;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignInRequest;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignUpRequest;
-import Ensak.Blanat.Blanat.entities.Role;
+import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;

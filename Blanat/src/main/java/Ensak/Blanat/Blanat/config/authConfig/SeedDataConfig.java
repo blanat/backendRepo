@@ -1,7 +1,7 @@
 package Ensak.Blanat.Blanat.config.authConfig;
 
 
-import Ensak.Blanat.Blanat.entities.Role;
+import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.UserService;

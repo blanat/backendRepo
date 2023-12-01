@@ -26,7 +26,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-  
+
+    /* this filter intercepts incoming requests, checks
+     for a valid JWT in the "Authorization" header, validates
+      the token, and sets the authenticated user in the
+       Spring Security context if the token is valid*/
+
   private final JwtService jwtService;
   private final UserService userService;
 
