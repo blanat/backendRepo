@@ -61,3 +61,9 @@ XBlanat/src/main/java/Ensak/Blanat/Blanat/controllers/authControllers/TestContro
 UBlanat/src/main/java/Ensak/Blanat/Blanat/controllers/DealsController/DealServlet.java,e\5\e59daa67991abd25a36ca838c20a21db24f88aa1
 ~
 NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/SecurityConfig.java,5\3\53963cef6fa4f5ec55649b9fe0719f334553b33a
+ˆ
+XBlanat/src/main/java/Ensak/Blanat/Blanat/controllers/authControllers/UserController.java,f\0\f097ac47df38bf66d882b0ab483c24c49a569160
+~
+NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/PasswordConfig.java,8\8\8871cf8e073fa77deafa55008d6bcf9043d05686
+~
+NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/SeedDataConfig.java,1\6\1658f1af7f3b86310f24447debb43999f0855f90

@@ -9,6 +9,7 @@ import Ensak.Blanat.Blanat.DTOs.ethDoa.SignUpRequest;
 import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import lombok.RequiredArgsConstructor;
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
