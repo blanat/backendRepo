@@ -37,7 +37,6 @@ public class UserApp implements UserDetails {
   String email;
 
   String password;
-
   @Enumerated(EnumType.STRING)
   Role role;
 
@@ -54,7 +53,8 @@ public class UserApp implements UserDetails {
   @OneToMany(mappedBy = "dealCreator")
   private Collection<Deal> deals;
 
-
+  @OneToMany(mappedBy ="Creator")
+  private List<Discussion> discussions;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
