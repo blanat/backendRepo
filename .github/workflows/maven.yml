@@ -34,7 +34,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run tests with Maven
-      run: mvn test --file ./Blanat/pom.xml
+      run: mvn test --file ./Blanat
 
   package:
 
@@ -50,4 +50,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Package with Maven
-      run: mvn package --file ./Blanat/pom.xml
+      run: mvn package --file ./Blanat
