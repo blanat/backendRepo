@@ -1,10 +1,2 @@
 
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ƒàÅşÿÿÿÿ8µ®¨Â1
-^
-java:S1128"ARemove this unused import 'Ensak.Blanat.Blanat.entities.Comment'.(¾«¬Ü8øÅŒ¸Â1
-`
-java:S1128">Remove this unused import 'Ensak.Blanat.Blanat.entities.Deal'.(Œä„ ÿÿÿÿÿ8ùÅŒ¸Â1
-R
-java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8ùÅŒ¸Â1
-H
-java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8úÅŒ¸Â1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ƒàÅşÿÿÿÿ8ØéŞÖÂ1
