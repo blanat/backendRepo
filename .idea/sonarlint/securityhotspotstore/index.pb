@@ -71,3 +71,7 @@ n
 >Blanat/src/main/java/Ensak/Blanat/Blanat/enums/Categories.java,0\3\03466bbfe30fa98b2e5e59a3748a8c0da23bfacd
 q
 ABlanat/src/main/java/Ensak/Blanat/Blanat/entities/SavedDeals.java,1\9\19b2473e31b3c57a7ecaeee6e1c82cf1621aec65
+t
+DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/ijoj.java,8\5\8585280bf39fc15432d761ceceb5c64f25dfe010
+t
+DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/jioj.java,f\6\f6496e9700c96a89fe1baf48eeb2a3dcfd988be0
