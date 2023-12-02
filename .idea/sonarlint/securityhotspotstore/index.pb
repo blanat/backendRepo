@@ -75,3 +75,5 @@ t
 DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/ijoj.java,8\5\8585280bf39fc15432d761ceceb5c64f25dfe010
 t
 DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/jioj.java,f\6\f6496e9700c96a89fe1baf48eeb2a3dcfd988be0
+
+OBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/SavedDealsRepository.java,0\b\0bc5b6883710ff86096fcf9d8d12c769d73b4303
