@@ -1,36 +1,2 @@
 
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨ƒàÅşÿÿÿÿ8«¨†ÕÂ1
-]	java:S125$"<This block of commented-out lines of code should be removed.(á¹îƒüÿÿÿÿ8éÍ¨ÕÂ1
-^
-java:S1128"ARemove this unused import 'Ensak.Blanat.Blanat.entities.Comment'.(¾«¬Ü8îÍ¨ÕÂ1
-`
-java:S1128">Remove this unused import 'Ensak.Blanat.Blanat.entities.Deal'.(Œä„ ÿÿÿÿÿ8ğÍ¨ÕÂ1
-f
-java:S1128"DRemove this unused import 'Ensak.Blanat.Blanat.entities.SavedDeals'.(»í¼×úÿÿÿÿ8óÍ¨ÕÂ1
-c
-java:S1128"ARemove this unused import 'Ensak.Blanat.Blanat.entities.UserApp'.(²ÍÈşÿÿÿÿ8õÍ¨ÕÂ1
-c
-java:S1128"ARemove this unused import 'Ensak.Blanat.Blanat.enums.Categories'.(§èÑšùÿÿÿÿ8÷Í¨ÕÂ1
-X
-java:S1128";Remove this unused import 'Ensak.Blanat.Blanat.enums.Role'.(Ö„è8ùÍ¨ÕÂ1
-k
-java:S1128	"ORemove this unused import 'Ensak.Blanat.Blanat.repositories.CommentRepository'.(‹¯øl8úÍ¨ÕÂ1
-i
-java:S1128
-"LRemove this unused import 'Ensak.Blanat.Blanat.repositories.DealRepository'.(»ıæÑ8ûÍ¨ÕÂ1
-o
-java:S1128"RRemove this unused import 'Ensak.Blanat.Blanat.repositories.SavedDealsRepository'.(Ò­éŠ8şÍ¨ÕÂ1
-n
-java:S1128"LRemove this unused import 'Ensak.Blanat.Blanat.repositories.UserRepository'.(ë¸™øÿÿÿÿ8€Î¨ÕÂ1
-d
-java:S1128"GRemove this unused import 'org.springframework.boot.CommandLineRunner'.(È—ÿÅ8‚Î¨ÕÂ1
-e
-java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8ƒÎ¨ÕÂ1
-R
-java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8†Î¨ÕÂ1
-V
-java:S1128"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8‡Î¨ÕÂ1
-H
-java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8‡Î¨ÕÂ1
-M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ˆÎ¨ÕÂ1
