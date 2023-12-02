@@ -3,4 +3,6 @@ o	java:S120"ZRename this package name to match the regular expression '^[a-z_
 L
 java:S19481"*Make "comments" transient or serializable.(£”¶‰ÿÿÿÿÿ8Öº¸Â1
 I
+java:S19484",Make "savedDeals" transient or serializable.(¿Ï›²8ú¯êÓÂ1
+I
 java:S19487"'Make "deals" transient or serializable.(‰ïòİúÿÿÿÿ8şÂÙÍÂ1
