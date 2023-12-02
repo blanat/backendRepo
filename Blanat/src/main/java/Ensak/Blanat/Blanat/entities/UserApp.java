@@ -48,6 +48,14 @@ public class UserApp implements UserDetails {
   @OneToMany(mappedBy = "user")
   private Collection<Comment> comments;
 
+  @OneToMany(mappedBy = "user")
+  private Collection<SavedDeals> savedDeals;
+
+  @OneToMany(mappedBy = "dealCreator")
+  private Collection<Deal> deals;
+
+
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority(role.name()));

@@ -1,9 +1,9 @@
 
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ8Ã»‘ÚÁ1
-n	java:S116"RRename this field "deal_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æßÔü8É»‘ÚÁ1
-q	java:S116"URename this field "date_debut" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãØï8É»‘ÚÁ1
-o	java:S116 "SRename this field "date_fin" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(û¹Æ†8É»‘ÚÁ1
-u	java:S116)"YRename this field "livraison_prix" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼çó‰8É»‘ÚÁ1
-s	java:S116,"RRename this field "vote_up" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö†Î—ûÿÿÿÿ8É»‘ÚÁ1
-p	java:S116/"TRename this field "vote_down" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ†…ó8É»‘ÚÁ1
-s	java:S1162"WRename this field "nbre_comment" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â¥µ8É»‘ÚÁ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ8šªŞÍÂ1
+n	java:S116"RRename this field "deal_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æßÔü8ªŞÍÂ1
+q	java:S116!"URename this field "date_debut" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãØï8ªŞÍÂ1
+o	java:S116$"SRename this field "date_fin" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(û¹Æ†8ªŞÍÂ1
+u	java:S116-"YRename this field "livraison_prix" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼çó‰8ŸªŞÍÂ1
+s	java:S1160"RRename this field "vote_up" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö†Î—ûÿÿÿÿ8ŸªŞÍÂ1
+p	java:S1163"TRename this field "vote_down" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ†…ó8ŸªŞÍÂ1
+s	java:S1166"WRename this field "nbre_comment" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â¥µ8ŸªŞÍÂ1

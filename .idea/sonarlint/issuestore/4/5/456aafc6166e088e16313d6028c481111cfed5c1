@@ -2,3 +2,5 @@
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ
 L
 java:S19481"*Make "comments" transient or serializable.(£”¶‰ÿÿÿÿÿ8Öº¸Â1
+I
+java:S19487"'Make "deals" transient or serializable.(‰ïòİúÿÿÿÿ8şÂÙÍÂ1

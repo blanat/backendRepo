@@ -67,3 +67,7 @@ XBlanat/src/main/java/Ensak/Blanat/Blanat/controllers/authControllers/UserContro
 NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/PasswordConfig.java,8\8\8871cf8e073fa77deafa55008d6bcf9043d05686
 ~
 NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/SeedDataConfig.java,1\6\1658f1af7f3b86310f24447debb43999f0855f90
+n
+>Blanat/src/main/java/Ensak/Blanat/Blanat/enums/Categories.java,0\3\03466bbfe30fa98b2e5e59a3748a8c0da23bfacd
+q
+ABlanat/src/main/java/Ensak/Blanat/Blanat/entities/SavedDeals.java,1\9\19b2473e31b3c57a7ecaeee6e1c82cf1621aec65

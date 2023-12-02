@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.entities;
 
+import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,9 @@ public class Deal {
 
     @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private Categories category;
 
     @Column(nullable = false)
     private Date date_debut;
@@ -54,4 +58,10 @@ public class Deal {
 
     @OneToMany(mappedBy = "deal")
     private Collection<Comment> comments;
+
+    @OneToMany(mappedBy = "deal")
+    private Collection<SavedDeals> savedDeals;
+
+    @ManyToOne
+    private UserApp dealCreator;
 }
