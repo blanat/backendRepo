@@ -35,7 +35,7 @@ jobs:
         cache: maven
     - name: Run tests with Maven
       run:  mvn test --file ./Blanat/pom.xml
-
+      working-directory: ./Blanat
 
   package:
 
@@ -52,3 +52,5 @@ jobs:
         cache: maven
     - name: Package with Maven
       run: mvn package --file ./Blanat/pom.xml
+      working-directory: ./Blanat
+
