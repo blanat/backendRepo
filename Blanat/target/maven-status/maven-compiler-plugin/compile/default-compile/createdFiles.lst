@@ -1,18 +1,38 @@
 Ensak\Blanat\Blanat\entities\UserApp.class
+<<<<<<< HEAD
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignUpRequest$SignUpRequestBuilder.class
 Ensak\Blanat\Blanat\BlanatApplication.class
 Ensak\Blanat\Blanat\repositories\SavedDealsRepository.class
+=======
+Ensak\Blanat\Blanat\repositories\DiscussionRepository.class
+Ensak\Blanat\Blanat\DTOs\ethDoa\SignUpRequest$SignUpRequestBuilder.class
+Ensak\Blanat\Blanat\BlanatApplication.class
+>>>>>>> 5db7e1cd27968acb49afa4310c75212993146e4a
 Ensak\Blanat\Blanat\config\authConfig\SeedDataConfig.class
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignUpRequest.class
 Ensak\Blanat\Blanat\entities\Deal.class
 Ensak\Blanat\Blanat\services\authServices\UserService.class
+<<<<<<< HEAD
+=======
+Ensak\Blanat\Blanat\DTOs\discDTO\discussionDTO$discussionDTOBuilder.class
+>>>>>>> 5db7e1cd27968acb49afa4310c75212993146e4a
 Ensak\Blanat\Blanat\entities\SavedDeals.class
 Ensak\Blanat\Blanat\enums\Role.class
 Ensak\Blanat\Blanat\controllers\DealsController\DealServlet.class
 Ensak\Blanat\Blanat\repositories\CommentRepository.class
+<<<<<<< HEAD
 Ensak\Blanat\Blanat\config\authConfig\PasswordConfig.class
 Ensak\Blanat\Blanat\controllers\authControllers\UserController.class
 Ensak\Blanat\Blanat\DTOs\ethDoa\JwtAuthenticationResponse.class
+=======
+Ensak\Blanat\Blanat\DTOs\discDTO\discussionDTO.class
+Ensak\Blanat\Blanat\services\discuService\discussionService.class
+Ensak\Blanat\Blanat\entities\Discussion$DiscussionBuilder.class
+Ensak\Blanat\Blanat\config\authConfig\PasswordConfig.class
+Ensak\Blanat\Blanat\controllers\authControllers\UserController.class
+Ensak\Blanat\Blanat\DTOs\ethDoa\JwtAuthenticationResponse.class
+Ensak\Blanat\Blanat\entities\Discussion.class
+>>>>>>> 5db7e1cd27968acb49afa4310c75212993146e4a
 Ensak\Blanat\Blanat\enums\Categories.class
 Ensak\Blanat\Blanat\controllers\authControllers\AuthenticationController.class
 Ensak\Blanat\Blanat\controllers\authControllers\TestController.class
@@ -26,5 +46,9 @@ Ensak\Blanat\Blanat\DTOs\ethDoa\JwtAuthenticationResponse$JwtAuthenticationRespo
 Ensak\Blanat\Blanat\config\authConfig\SecurityConfig.class
 Ensak\Blanat\Blanat\repositories\DealRepository.class
 Ensak\Blanat\Blanat\services\authServices\JwtService.class
+<<<<<<< HEAD
+=======
+Ensak\Blanat\Blanat\controllers\DiscController\DiscussionController.class
+>>>>>>> 5db7e1cd27968acb49afa4310c75212993146e4a
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignInRequest.class
 Ensak\Blanat\Blanat\repositories\UserRepository.class
