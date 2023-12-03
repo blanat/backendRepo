@@ -1,0 +1,1 @@
+& 2javaXhrBsrc/main/java/Ensak/Blanat/Blanat/repositories/DealRepository.java

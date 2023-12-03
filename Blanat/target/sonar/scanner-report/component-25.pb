@@ -1,0 +1,1 @@
+ 2javaXDhr4src/main/java/Ensak/Blanat/Blanat/entities/Deal.java

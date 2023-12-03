@@ -1,0 +1,1 @@
+ 2javaX hr:src/main/java/Ensak/Blanat/Blanat/entities/SavedDeals.java
