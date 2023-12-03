@@ -102,11 +102,7 @@
 					</configuration>
 				</plugin>
 				<!-- SonarQube -->
-				<plugin>
-					<groupId>org.sonarsource.scanner.maven</groupId>
-					<artifactId>sonar-maven-plugin</artifactId>
-					<version>3.8.0.2131</version>
-				</plugin>
+				
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
@@ -135,14 +131,24 @@
 					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin>
-			<!--./ SonarQube -->
+
 		</plugins>
 
             </build>
 
-        </project>
+	<profiles>
+	<profile>
+		<id>sonar</id>
+		<activation>
+			<activeByDefault>true</activeByDefault>
+		</activation>
+		<properties>
+			<sonar.projectKey>Blanat</sonar.projectKey>
+			<sonar.projectName>Blanat</sonar.projectName>
+			<sonar.login>sqp_e64d9b47ccfffbcfd77885d977ecb667728198b4</sonar.login>
+			<sonar.host.url>http://localhost:9000</sonar.host.url>
+		</properties>
+	</profile>
+	</profiles>
+
+</project>
