@@ -3,8 +3,6 @@
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 o
 ?Blanat/src/main/java/Ensak/Blanat/Blanat/BlanatApplication.java,3\0\30e250c1481bf76994cc46a2f577ddb58303a335
-m
-=Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Client.java,6\0\60847b32099d19c77cdd0596ebf87822119601d3
 A
 Blanat/Blanat.iml,6\d\6db64aeb354c25fb8d7627153968be20fdfa7d2e
 >
@@ -21,8 +19,6 @@ o
 ?Blanat/src/main/java/Ensak/Blanat/Blanat/services/notesServices,b\3\b3b252f2d0c581cdee3d435c38133aaec89cd8cf
 k
 ;Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Deal.java,f\a\fa73b49304dd94a7dc72a470f522fd0fc782e96c
-p
-@Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Moderator.java,f\a\fa57d66f49070133e4ec13ed8f29e3c299641f3c
 n
 >Blanat/src/main/java/Ensak/Blanat/Blanat/entities/Comment.java,a\d\adce7c7f76a92b7803c1580893d46e92c060e451
 y
@@ -31,12 +27,8 @@ y
 IBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/DealRepository.java,8\b\8bda1d4c2454c7403ef54e35513a62221b68ad44
 |
 LBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/CommentRepository.java,c\c\cccb01ddb9b3037f0c795ce764206deb31ddb8cc
-p
-@Blanat/src/main/java/Ensak/Blanat/Blanat/entities/User_Proj.java,4\3\43b248cfc32ff1f9c527d063c3f1c723da3ae268
 h
 8Blanat/src/main/java/Ensak/Blanat/Blanat/enums/Role.java,f\3\f37ce27582270cb6cdcd610c9696fee2bf29fb50
-k
-;Blanat/src/main/java/Ensak/Blanat/Blanat/entities/User.java,f\4\f495ee46af6d51a187626290f8058af0028ebf8b
 n
 >Blanat/src/main/java/Ensak/Blanat/Blanat/entities/UserApp.java,4\5\456aafc6166e088e16313d6028c481111cfed5c1
 w
@@ -49,8 +41,6 @@ SBlanat/src/main/java/Ensak/Blanat/Blanat/DTOs/ethDoa/JwtAuthenticationResponse.
 YBlanat/src/main/java/Ensak/Blanat/Blanat/services/authServices/AuthenticationService.java,8\3\835bfac3cc676dc8769a4334659638db529aa994
 
 OBlanat/src/main/java/Ensak/Blanat/Blanat/services/authServices/UserService.java,4\e\4e4546e158455fabdafd55973f6994b98de882dd
-p
-@Blanat/src/main/java/Ensak/Blanat/Blanat/repositories/sidjs.java,2\3\235fa7cbe2f432df760f7e8990b633ea732b0f11
 ‰
 YBlanat/src/main/java/Ensak/Blanat/Blanat/filters/authFilters/JwtAuthenticationFilter.java,1\8\186e58f3e5627c7a32bfdd24deeb817852544557
 ’
@@ -71,9 +61,5 @@ n
 >Blanat/src/main/java/Ensak/Blanat/Blanat/enums/Categories.java,0\3\03466bbfe30fa98b2e5e59a3748a8c0da23bfacd
 q
 ABlanat/src/main/java/Ensak/Blanat/Blanat/entities/SavedDeals.java,1\9\19b2473e31b3c57a7ecaeee6e1c82cf1621aec65
-t
-DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/ijoj.java,8\5\8585280bf39fc15432d761ceceb5c64f25dfe010
-t
-DBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/jioj.java,f\6\f6496e9700c96a89fe1baf48eeb2a3dcfd988be0
 
 OBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/SavedDealsRepository.java,0\b\0bc5b6883710ff86096fcf9d8d12c769d73b4303
