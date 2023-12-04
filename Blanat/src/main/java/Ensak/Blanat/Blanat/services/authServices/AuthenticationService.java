@@ -29,8 +29,8 @@ public class AuthenticationService {
   public JwtAuthenticationResponse signup(SignUpRequest request) {
       var user = UserApp
                   .builder()
-                  .firstName(request.getFirstName())
-                  .lastName(request.getLastName())
+                  .userName(request.getUserName())
+                  //.lastName(request.getLastName())
                   .email(request.getEmail())
                   .password(passwordEncoder.encode(request.getPassword()))
                   .role(Role.ROLE_USER)

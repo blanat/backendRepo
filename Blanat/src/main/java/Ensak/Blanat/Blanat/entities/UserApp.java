@@ -29,9 +29,8 @@ public class UserApp implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
   
-  String firstName;
-
-  String lastName;
+  String userName;
+  //String lastName;
 
   @Column(unique = true)
   String email;
