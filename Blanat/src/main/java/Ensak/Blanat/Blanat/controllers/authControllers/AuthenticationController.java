@@ -34,7 +34,7 @@ public class AuthenticationController {
 //        signup(request);
 //    }
 
-    @PostMapping("/signup")
+    @PostMapping("/api/authentication/signup")
     public JwtAuthenticationResponse signup(@RequestBody SignUpRequest request) {
         //call validation
         return authenticationService.signup(request);
@@ -42,7 +42,7 @@ public class AuthenticationController {
 
 
 
-    @PostMapping("/signin")
+    @PostMapping("/api/authentication/signin")
     public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
         return authenticationService.signin(request);
     }
