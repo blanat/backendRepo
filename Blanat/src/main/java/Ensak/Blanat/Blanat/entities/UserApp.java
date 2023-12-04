@@ -4,14 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-
 import Ensak.Blanat.Blanat.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,7 +47,8 @@ public class UserApp implements UserDetails {
   @OneToMany(mappedBy = "dealCreator")
   private Collection<Deal> deals;
 
-  @OneToMany(mappedBy ="Creator")
+  @Getter
+  @OneToMany(mappedBy ="createur")
   private List<Discussion> discussions;
 
   @Override
@@ -86,4 +82,7 @@ public class UserApp implements UserDetails {
       return true;
   }
 
+  public void setDiscussions(List<Discussion> discussions) {
+    this.discussions = discussions;
+  }
 }
