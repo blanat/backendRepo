@@ -1,8 +1,10 @@
-package Ensak.Blanat.Blanat.services.discuService;
+package Ensak.Blanat.Blanat.services.DealServices;
+
 import Ensak.Blanat.Blanat.DTOs.dealDTO.DealDTO;
-import Ensak.Blanat.Blanat.DTOs.discDTO.DiscussionDTO;
+import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.Discussion;
 import Ensak.Blanat.Blanat.entities.UserApp;
+import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.repositories.DiscussionRepository;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +12,33 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DiscussionService {
+public class DealService {
 
-    private final DiscussionRepository discussionRepository;
+    private final DealRepository dealRepository;
     private final UserService userService;
 
     @Autowired
-    public DiscussionService(DiscussionRepository discussionRepository, UserService userService) {
-        this.discussionRepository = discussionRepository;
+    public DealService(DealRepository dealService, UserService userService) {
+        this.dealRepository = dealService;
         this.userService = userService;
     }
 
-    public Discussion createDeal(DealDTO dealDTO) {
+    public Deal createDeal(DealDTO dealDTO) {
         // Récupérer l'utilisateur connecté
         UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // Créer une nouvelle discussion
-        Discussion discussion = Discussion.builder()
+        Deal deal = Deal.builder()
                 .titre(dealDTO.getTitre())
                 .description(dealDTO.getDescription())
-                .nbrvue(0)
-                .categories(dealDTO.getCategories())
-                .createur(currentUser)
+                .prix(dealDTO.getPrix())
+                .description(dealDTO.getDescription())
+                .nbre_comment(0)
+                .category(dealDTO.getCategories())
+                .dealCreator(currentUser)
                 .build();
 
         // Enregistrer la discussion dans la base de données
-        return discussionRepository.save(discussion);
+        return dealRepository.save(deal);
     }
 }
