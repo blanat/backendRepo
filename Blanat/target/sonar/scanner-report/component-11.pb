@@ -1,1 +1,0 @@
- 2javaX.hrGsrc/main/java/Ensak/Blanat/Blanat/config/authConfig/SeedDataConfig.java

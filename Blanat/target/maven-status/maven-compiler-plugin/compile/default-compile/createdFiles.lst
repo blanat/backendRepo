@@ -3,17 +3,16 @@ Ensak\Blanat\Blanat\repositories\DiscussionRepository.class
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignUpRequest$SignUpRequestBuilder.class
 Ensak\Blanat\Blanat\BlanatApplication.class
 Ensak\Blanat\Blanat\repositories\SavedDealsRepository.class
+Ensak\Blanat\Blanat\services\discuService\DiscussionService.class
 Ensak\Blanat\Blanat\config\authConfig\SeedDataConfig.class
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignUpRequest.class
 Ensak\Blanat\Blanat\entities\Deal.class
 Ensak\Blanat\Blanat\services\authServices\UserService.class
-Ensak\Blanat\Blanat\DTOs\discDTO\discussionDTO$discussionDTOBuilder.class
 Ensak\Blanat\Blanat\entities\SavedDeals.class
 Ensak\Blanat\Blanat\enums\Role.class
 Ensak\Blanat\Blanat\controllers\DealsController\DealServlet.class
 Ensak\Blanat\Blanat\repositories\CommentRepository.class
-Ensak\Blanat\Blanat\DTOs\discDTO\discussionDTO.class
-Ensak\Blanat\Blanat\services\discuService\discussionService.class
+Ensak\Blanat\Blanat\DTOs\discDTO\DiscussionDTO$DiscussionDTOBuilder.class
 Ensak\Blanat\Blanat\entities\Discussion$DiscussionBuilder.class
 Ensak\Blanat\Blanat\config\authConfig\PasswordConfig.class
 Ensak\Blanat\Blanat\controllers\authControllers\UserController.class
@@ -35,3 +34,4 @@ Ensak\Blanat\Blanat\services\authServices\JwtService.class
 Ensak\Blanat\Blanat\controllers\DiscController\DiscussionController.class
 Ensak\Blanat\Blanat\DTOs\ethDoa\SignInRequest.class
 Ensak\Blanat\Blanat\repositories\UserRepository.class
+Ensak\Blanat\Blanat\DTOs\discDTO\DiscussionDTO.class
