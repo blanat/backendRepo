@@ -38,3 +38,5 @@ jobs:
       #  run: mvn -B -f ./Blanat/pom.xml verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Blanat -Dsonar.projectName='Blanat'
 
 
+
+
