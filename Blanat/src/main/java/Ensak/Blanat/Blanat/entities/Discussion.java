@@ -1,7 +1,7 @@
 package Ensak.Blanat.Blanat.entities;
+import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
-
 
 
 @Entity
@@ -15,14 +15,16 @@ public class Discussion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titre;
     private String description;
-    private int nombreVues;
+    private int nbrvue;
+
+    @Enumerated(EnumType.STRING)
+    Categories categories;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserApp Creator;
+    private UserApp createur;
 
     public void setId(Long id) {
         this.id = id;
@@ -36,11 +38,17 @@ public class Discussion {
         this.description = description;
     }
 
-    public void setNombreVues(int nombreVues) {
-        this.nombreVues = nombreVues;
+    public void setNbrvue(int nbrvue) {
+        this.nbrvue = nbrvue;
     }
 
-    public void setCreator(UserApp creator) {
-        Creator = creator;
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
+
+    public void setCreateur(UserApp createur) {
+        this.createur = createur;
+    }
+
+
 }
