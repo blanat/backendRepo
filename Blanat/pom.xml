@@ -16,10 +16,10 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>squ_891e4a13f3820cbbf1f901f3423fc99d9c8ae95f</sonar.login>
-
+		<sonar.organization>blanat</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
