@@ -31,7 +31,6 @@ public class SeedDataConfig implements CommandLineRunner {
         UserApp admin = UserApp
                       .builder()
                       .userName("admin")
-                      //.lastName("admin")
                       .email("admin@admin.com")
                       .password(passwordEncoder.encode("password"))
                       .role(Role.ROLE_ADMIN)

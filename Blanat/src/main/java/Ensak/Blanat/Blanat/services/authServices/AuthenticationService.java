@@ -3,18 +3,14 @@ package Ensak.Blanat.Blanat.services.authServices;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.JwtAuthenticationResponse;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignInRequest;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignUpRequest;
-import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.entities.UserApp;
+import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.stereotype.Service;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -30,11 +26,11 @@ public class AuthenticationService {
       var user = UserApp
                   .builder()
                   .userName(request.getUserName())
-                  //.lastName(request.getLastName())
                   .email(request.getEmail())
                   .password(passwordEncoder.encode(request.getPassword()))
                   .role(Role.ROLE_USER)
                   .build();
+      System.out.println(user);
 
       user = userService.save(user);
       var jwt = jwtService.generateToken(user);
