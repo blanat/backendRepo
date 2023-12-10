@@ -1,9 +1,10 @@
-package Ensak.Blanat.Blanat.repositories;
+package Ensak.Blanat.Blanat.authentication;
 
 import Ensak.Blanat.Blanat.DTOs.ethDoa.JwtAuthenticationResponse;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignInRequest;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignUpRequest;
 import Ensak.Blanat.Blanat.entities.UserApp;
+import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.AuthenticationService;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;

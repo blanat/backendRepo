@@ -1,7 +1,8 @@
-package Ensak.Blanat.Blanat.repositories;
+package Ensak.Blanat.Blanat.authentication;
 
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.enums.Role;
+import Ensak.Blanat.Blanat.repositories.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
