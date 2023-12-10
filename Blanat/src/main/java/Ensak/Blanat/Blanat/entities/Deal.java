@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.entities;
 import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;
@@ -16,7 +17,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deal {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private long deal_ID;
 
@@ -54,6 +56,7 @@ public class Deal {
     private int nbre_comment;
 
     @Column(nullable = false)
+    @ColumnDefault(value = "CURRENT_DATE")
     private LocalDate dateCreation;
 
     @OneToMany(mappedBy = "deal")
@@ -191,5 +194,25 @@ public class Deal {
 
     public void setDealCreator(UserApp dealCreator) {
         this.dealCreator = dealCreator;
+    }
+
+
+    public interface DealProjection {
+        Long getDeal_ID();
+        String getTitre();
+        String getDescription();
+        Categories getCategory();
+        Date getDate_debut();
+        Date getDate_fin();
+        String getPrix();
+        String getLocalisation();
+        float getLivraison_prix();
+        int getVote_up();
+        int getVote_down();
+        int getNbre_comment();
+        LocalDate getDateCreation();
+        Collection<Comment> getComments();
+        Collection<SavedDeals> getSavedDeals();
+        UserApp getDealCreator();
     }
 }

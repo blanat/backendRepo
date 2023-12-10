@@ -14,31 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DealService {
 
-    private final DealRepository dealRepository;
-    private final UserService userService;
 
-    @Autowired
-    public DealService(DealRepository dealService, UserService userService) {
-        this.dealRepository = dealService;
-        this.userService = userService;
-    }
 
-    public Deal createDeal(DealDTO dealDTO) {
-        // Récupérer l'utilisateur connecté
-        UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Créer une nouvelle discussion
-        Deal deal = Deal.builder()
-                .titre(dealDTO.getTitre())
-                .description(dealDTO.getDescription())
-                .prix(dealDTO.getPrix())
-                .description(dealDTO.getDescription())
-                .nbre_comment(0)
-                .category(dealDTO.getCategories())
-                .dealCreator(currentUser)
-                .build();
-
-        // Enregistrer la discussion dans la base de données
-        return dealRepository.save(deal);
-    }
 }

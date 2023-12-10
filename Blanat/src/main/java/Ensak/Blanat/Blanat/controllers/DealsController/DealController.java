@@ -6,9 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/deals")
 @RestController
 public class DealController {
-    private final DealService dealService;
 
-    public DealController(DealService dealService) {
-        this.dealService = dealService;
-    }
 }
