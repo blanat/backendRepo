@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -68,7 +69,7 @@ public class UserAppAuthTest {
 
 
         @Test
-        public void UserSigningRequestTest(){
+        public void UserSigningRequestCorrectCredentialsTest(){
             UserApp admin = UserApp.builder()
                     .id(1L)
                     .email("admin@admin")
@@ -87,5 +88,16 @@ public class UserAppAuthTest {
         JwtAuthenticationResponse signinResponse = authenticationService.signin(signInRequest);
             System.out.println(signinResponse.getToken());
             Assertions.assertThat(signinResponse.getToken()).isNotNull();
+    }
+
+    @Test
+    public void UserSigningRequestBadCredentialsTest(){
+
+        SignInRequest signInRequest =SignInRequest.builder()
+                .email("youssef@admin.com")
+                .password("password")
+                .build();
+
+        assertThrows(IllegalArgumentException.class, ()-> authenticationService.signin(signInRequest));
     }
 }
