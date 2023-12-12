@@ -21,16 +21,16 @@ public class DiscussionService {
         this.userService = userService;
     }
 
-    public Discussion createDeal(DealDTO dealDTO) {
+    public Discussion createDiscussion(DiscussionDTO DiscussionDTO) {
         // Récupérer l'utilisateur connecté
         UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // Créer une nouvelle discussion
         Discussion discussion = Discussion.builder()
-                .titre(dealDTO.getTitre())
-                .description(dealDTO.getDescription())
+                .titre(DiscussionDTO.getTitre())
+                .description(DiscussionDTO.getDescription())
                 .nbrvue(0)
-                .categories(dealDTO.getCategories())
+                .categories(DiscussionDTO.getCategories())
                 .createur(currentUser)
                 .build();
 
