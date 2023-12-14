@@ -4,6 +4,7 @@ import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;
@@ -19,8 +20,8 @@ import java.util.Date;
 public class Deal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private long deal_id;
+    @Column(nullable = false,name = "deal_id")
+    private long dealId;
 
     @Column(nullable = false)
     private String title;
@@ -32,7 +33,7 @@ public class Deal {
     private Categories category;
 
     @Column(nullable = false)
-    private Date date_start;
+    private Date dateStart;
 
     @Column(nullable = false)
     private Date date_end;
@@ -55,11 +56,11 @@ public class Deal {
     @Column(nullable = true)
     private int vote_down;
 
-    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_ID)")
+    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_id)")
     private int comment_count;
 
     @Column(nullable = false)
-    @ColumnDefault(value = "CURRENT_DATE")
+    @CreationTimestamp
     private LocalDate creation_date;
 
     @OneToMany(mappedBy = "deal")

@@ -34,6 +34,7 @@ public class DiscussionService {
                 .createur(currentUser)
                 .build();
 
+
         // Enregistrer la discussion dans la base de données
         return discussionRepository.save(discussion);
     }
