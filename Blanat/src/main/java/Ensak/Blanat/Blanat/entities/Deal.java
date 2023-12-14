@@ -1,37 +1,42 @@
 package Ensak.Blanat.Blanat.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import Ensak.Blanat.Blanat.enums.Categories;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Formula;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
+@ToString
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deal {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private long deal_ID;
 
     @Column(nullable = false)
-    private String titre;
+    private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = true)//testing
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)//testing
+    private Categories category;
+
+    @Column(nullable = true)//testing
     private Date date_debut;
 
-    @Column(nullable = false)
+    @Column(nullable = true)//testing
     private Date date_fin;
 
-    @Column(nullable = false)
-    private float prix;
+    @Column(nullable = true)//testing
+    private String prix;
 
     @Column(nullable = true)
     private String localisation;
@@ -45,8 +50,24 @@ public class Deal {
     @Column(nullable = true)
     private int vote_down;
 
-    //private int nbre_comment;
+    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_ID)")
+    private int nbre_comment;
 
-    @Column(nullable = false)
-    private Date dateCreation;
+    @Column(nullable = true)// should be false, but because we want to test we will be changing it to true
+    //@Temporal(TemporalType.TIMESTAMP)//format de la date
+    private LocalDate dateCreation;
+
+    @OneToMany(mappedBy = "deal")
+    private Collection<Comment> comments;
+
+    @OneToMany(mappedBy = "deal")
+    private Collection<SavedDeals> savedDeals;
+
+    @ManyToOne
+    private UserApp dealCreator;
+
+    @OneToMany(mappedBy = "deal")
+    private Collection<ImagesDeal> imagesDeals;
+
+
 }
