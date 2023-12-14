@@ -44,7 +44,7 @@ public class UserApp implements UserDetails {
   @OneToMany(mappedBy = "user")
   private Collection<SavedDeals> savedDeals;
 
-  @OneToMany(mappedBy = "dealCreator")
+  @OneToMany(mappedBy = "deal_creator")
   private Collection<Deal> deals;
 
   @Getter

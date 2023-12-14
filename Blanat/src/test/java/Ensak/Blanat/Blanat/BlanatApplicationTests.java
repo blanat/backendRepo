@@ -8,6 +8,7 @@ class BlanatApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
