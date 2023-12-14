@@ -63,3 +63,15 @@ q
 ABlanat/src/main/java/Ensak/Blanat/Blanat/entities/SavedDeals.java,1\9\19b2473e31b3c57a7ecaeee6e1c82cf1621aec65
 
 OBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/SavedDealsRepository.java,0\b\0bc5b6883710ff86096fcf9d8d12c769d73b4303
+t
+DBlanat/src/test/java/Ensak/Blanat/Blanat/BlanatApplicationTests.java,a\5\a53e38bd56615e1f1b2b2fccf417688344e531a3
+~
+NBlanat/src/main/java/Ensak/Blanat/Blanat/services/authServices/JwtService.java,8\7\87c3a1ebba0ad0818001f5940c3bc63ee22c8a6a
+?
+Blanat/mvnw.cmd,0\2\023f55b3049de534d472c3f4865c631ad2e04b77
+A
+Blanat/Dockerfile,0\3\0332fe3652e41ffa6cf6fd2bc0a8dc214a715f02
+D
+Blanat/.dockerignore,c\0\c04ceac024421b097db0f5909ce2a757c41b1544
+I
+Blanat/docker-compose.yml,4\6\46e9c4dc3d6d1176234dc0da95454e05f5b9ed4b

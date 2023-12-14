@@ -10,16 +10,16 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>Ensak.Blanat</groupId>
-	<artifactId>Blanat</artifactId>
+	<artifactId>blanat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Blanat</name>
+	<name>blanat</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>sqa_2458a44adf381fb6a4577c4674398cbe3d6f9bc3</sonar.login>
-
+		<sonar.organization>blanat</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -88,6 +88,11 @@
 			<version>1.2.17</version>
 		</dependency>
 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version>
+		</dependency>
 
 	</dependencies>
 
@@ -140,23 +145,12 @@
 				</configuration>
 			</plugin>
 
+
+
+
+
 		</plugins>
-
-            </build>
-
-	<profiles>
-	<profile>
-		<id>sonar</id>
-		<activation>
-			<activeByDefault>true</activeByDefault>
-		</activation>
-		<properties>
-			<sonar.projectKey>Blanat</sonar.projectKey>
-			<sonar.projectName>Blanat</sonar.projectName>
-			<sonar.login>sqp_e64d9b47ccfffbcfd77885d977ecb667728198b4</sonar.login>
-			<sonar.host.url>https://0408-196-72-98-79.ngrok-free.app</sonar.host.url>
-		</properties>
-	</profile>
-	</profiles>
+		<finalName>BlanatJar</finalName>
+	</build>
 
 </project>
