@@ -17,9 +17,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -30,8 +33,10 @@ public class SecurityConfig {
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
+  private final LogoutHandler logoutHandler;
 
-  @Bean
+
+    @Bean
   public AuthenticationProvider authenticationProvider() {
       DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
       authProvider.setUserDetailsService(userService.userDetailsService());
@@ -58,7 +63,18 @@ public class SecurityConfig {
       .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
       .anyRequest().authenticated()
     )
-    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    .authenticationProvider(authenticationProvider())
+    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout(logout ->
+                    logout.logoutUrl("/api/authentication/logout")
+                    .addLogoutHandler(logoutHandler)
+                    .logoutSuccessHandler((
+                            (request, response, authentication) -> {
+                                System.out.println(request);
+                                SecurityContextHolder.clearContext();
+                            }
+                            )));
+
 
     return http.build();
   }

@@ -37,6 +37,8 @@ public class UserApp implements UserDetails {
   LocalDateTime createdAt;
 
   LocalDateTime updatedAt;
+  @OneToMany(mappedBy = "userApp")
+  private List<Token> tokens;
 
   @OneToMany(mappedBy = "user")
   private Collection<Comment> comments;
