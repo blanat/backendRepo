@@ -1,6 +1,5 @@
-package Ensak.Blanat.Blanat.controllers.DealsController;
+package Ensak.Blanat.Blanat.controllers.dealsController;
 
-import Ensak.Blanat.Blanat.services.DealServices.DealService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/deals")
