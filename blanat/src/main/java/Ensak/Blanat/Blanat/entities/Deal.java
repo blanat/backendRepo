@@ -3,7 +3,6 @@ package Ensak.Blanat.Blanat.entities;
 import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
@@ -36,41 +35,41 @@ public class Deal {
     private Date dateStart;
 
     @Column(nullable = false)
-    private Date date_end;
+    private Date dateEnd;
 
     @Column(nullable = false)
-    private String price_initial;
+    private String priceInitial;
 
     @Column(nullable = false)
-    private String price_final;
+    private String priceFinal;
 
     @Column(nullable = true)
     private String localisation;
 
     @Column(nullable = true)
-    private float delivery_price;
+    private float deliveryPrice;
 
     @Column(nullable = true)
-    private int vote_up;
+    private int voteUp;
 
     @Column(nullable = true)
-    private int vote_down;
+    private int voteDown;
 
     @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_id)")
-    private int comment_count;
+    private int commentCount;
 
     @Column(nullable = false)
     @CreationTimestamp
-    private LocalDate creation_date;
+    private LocalDate creationDate;
 
     @OneToMany(mappedBy = "deal")
     private Collection<Comment> comments;
 
     @OneToMany(mappedBy = "deal")
-    private Collection<SavedDeals> saved_deals;
+    private Collection<SavedDeals> savedDeals;
 
     @ManyToOne
-    private UserApp deal_creator;
+    private UserApp dealCreator;
 
 
 
