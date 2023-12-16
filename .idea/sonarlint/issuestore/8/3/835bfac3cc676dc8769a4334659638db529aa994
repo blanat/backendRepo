@@ -1,4 +1,0 @@
-
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÁÏŒûùÿÿÿÿ
-S
-java:S1128	"6Remove this unused import 'lombok.extern.slf4j.Slf4j'.(ûúÄ®8€–óºÂ1
