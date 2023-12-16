@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>Ensak.Blanat</groupId>
-	<artifactId>blanat</artifactId>
+	<artifactId>Blanat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>blanat</name>
 	<description>Demo project for Spring Boot</description>
