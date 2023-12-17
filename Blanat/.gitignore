@@ -1,7 +1,7 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
-/src/main/resources/application.properties
-
+/blanat/application.properties
+src/main/resources/application.properties
 ### STS ###
 .apt_generated
 .classpath
@@ -200,3 +200,4 @@ README.html
 *.iml
 .idea
 .exercism
+application.properties
