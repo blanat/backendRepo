@@ -1,10 +1,14 @@
 package Ensak.Blanat.Blanat.services.dealService;
 
+import Ensak.Blanat.Blanat.DTOs.DealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 
 import java.util.List;
 public interface DealServiceInterface {
+
+    List<ListDealDTO> getListDealsDTO();
+
     List<Deal> getAllDeals();
 
     Deal getDealById(Long dealId);

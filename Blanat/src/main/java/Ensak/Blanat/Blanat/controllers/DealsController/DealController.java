@@ -1,6 +1,7 @@
 package Ensak.Blanat.Blanat.controllers.DealsController;
 
 import Ensak.Blanat.Blanat.DTOs.DealDTO.CreateDealDTO;
+import Ensak.Blanat.Blanat.DTOs.DealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
@@ -75,5 +76,18 @@ public class DealController {
             return new ResponseEntity<>("Error processing deal data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    @GetMapping("/listDeals")
+    public ResponseEntity<List<ListDealDTO>> getListDealsDTO() {
+        try {
+            List<ListDealDTO> listDealDTOs = dealService.getListDealsDTO();
+            return ResponseEntity.ok(listDealDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 }
 

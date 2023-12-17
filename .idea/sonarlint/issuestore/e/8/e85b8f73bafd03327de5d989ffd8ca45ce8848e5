@@ -1,0 +1,25 @@
+
+g	java:S112S"FDefine and throw a dedicated exception instead of using a generic one.(íÌ®¬ÿÿÿÿÿ8ßÌ÷®Ç1
+c	java:S112“"FDefine and throw a dedicated exception instead of using a generic one.(¯”À8àÌ÷®Ç1
+h	java:S112—"FDefine and throw a dedicated exception instead of using a generic one.(¿º˜½şÿÿÿÿ8Ê½¯Ç1
+n	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(£›ôÌúÿÿÿÿ8âÌ÷®Ç1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÀçªØÿÿÿÿÿ8äÌ÷®Ç1
+k
+java:S2259K"NA "NullPointerException" could be thrown; "originalFilename" is nullable here.(áòî½8ìÍ÷®Ç1
+|	java:S116†"ZRename this field "BASE_IMAGE_PATH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€‰ïùÿÿÿÿ8 ¾¯Ç1
+D
+java:S1170†"!Make this final field static too.(€‰ïùÿÿÿÿ8 ¾¯Ç1
+R
+java:S2209^"5Change this instance-reference to a static reference.(°åÿü8˜Ï÷®Ç1
+R
+java:S2209j"5Change this instance-reference to a static reference.(ú§Ñ8Ï÷®Ç1
+d
+java:S1075†"ARefactor your code to get this URI from a customizable parameter.(€‰ïùÿÿÿÿ8Å¾¯Ç1
+X	java:S125u"<This block of commented-out lines of code should be removed.(«¾ËÂ8íñù®Ç1
+H	java:S106"+Replace this use of System.out by a logger.(üÂôÂ8Ï¾¯Ç1
+M	java:S106’"+Replace this use of System.err by a logger.(¦Ëæğşÿÿÿÿ8Ï¾¯Ç1
+M	java:S106–"+Replace this use of System.err by a logger.(ÙéØºøÿÿÿÿ8Ñ¾¯Ç1
+P
+java:S1128"4Remove this unused import 'org.apache.log4j.Logger'.(ñè½8Ó¾¯Ç1
+Q
+java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚŞ8Ó¾¯Ç1
