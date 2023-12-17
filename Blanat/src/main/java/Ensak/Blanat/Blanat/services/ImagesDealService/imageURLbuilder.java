@@ -13,7 +13,7 @@ public class imageURLbuilder {
 
 
     // Load the base URL from properties file or configuration
-    private static final String BASE_URL = "http://localhost:8085/images/api";
+    private static final String BASE_URL = "http://localhost:8085/api/images/";
 
     public static String buildImageUrl(ImagesDeal image) {
         String filename = extractFilename(image.getFilePath());
