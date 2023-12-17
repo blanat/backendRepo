@@ -57,12 +57,22 @@ public class DealServiceImp implements DealServiceInterface {
         Duration duration = Duration.between(creationTime, now);
 
         long hours = duration.toHours();
-        if (hours <= 23) {
-            listDealDTO.setTimePassedSinceCreation(hours + " hours");
+        long minutes = duration.toMinutes() % 60; // Calculate remaining minutes
+
+        if (hours > 0) {
+            if (hours <= 23) {
+                // If the difference is less than 23 hours, show in hours
+                listDealDTO.setTimePassedSinceCreation(hours + " h " + minutes + " min");
+            } else {
+                // If the difference is more than 23 hours, show in days
+                long days = duration.toDays();
+                listDealDTO.setTimePassedSinceCreation(days + " d");
+            }
         } else {
-            long days = duration.toDays();
-            listDealDTO.setTimePassedSinceCreation(days + " days");
+            // If the difference is less than 1 hour, show in minutes
+            listDealDTO.setTimePassedSinceCreation(minutes + " min");
         }
+
 
         return listDealDTO;
     }
