@@ -43,16 +43,12 @@ public class Deal {
     @Column(nullable = false)
     private String priceFinal;
 
-    @Column(nullable = true)
     private String localisation;
 
-    @Column(nullable = true)
     private float deliveryPrice;
 
-    @Column(nullable = true)
     private int voteUp;
 
-    @Column(nullable = true)
     private int voteDown;
 
     @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_id)")
