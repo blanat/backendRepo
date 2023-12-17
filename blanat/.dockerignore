@@ -1,0 +1,6 @@
+st#eliminer tout
+*
+#garder
+!target/*.jar
+!src
+!pom.xml
