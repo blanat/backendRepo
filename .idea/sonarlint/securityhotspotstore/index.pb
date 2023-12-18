@@ -59,3 +59,11 @@ IBlanat/src/main/java/Ensak/Blanat/Blanat/repositories/DealRepository.java,8\b\
 WBlanat/src/main/java/Ensak/Blanat/Blanat/services/dealService/DealServiceInterface.java,6\1\61b94dda37f2ea07f3d64f86d2a20098345df3dc
 ~
 NBlanat/src/main/java/Ensak/Blanat/Blanat/config/authConfig/SecurityConfig.java,5\3\53963cef6fa4f5ec55649b9fe0719f334553b33a
+x
+HBlanat/src/main/java/Ensak/Blanat/Blanat/DTOs/CommentDTO/CommentDTO.java,7\a\7abf76290826d1b3ea1ddad8434cb38089c317ea
+
+OBlanat/src/main/java/Ensak/Blanat/Blanat/config/Appconfig/AppConfiguration.java,e\a\eae834c42a6c7b3fb8a5469979a9f340b6764595
+r
+BBlanat/src/main/java/Ensak/Blanat/Blanat/DTOs/UserDTO/UserDTO.java,6\7\67bcbfd393106693987031542edf0d65d752f035
+D
+Blanat/.dockerignore,c\0\c04ceac024421b097db0f5909ce2a757c41b1544

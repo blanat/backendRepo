@@ -64,10 +64,7 @@ public class imagesServiceImp implements imagesServiceInterface {
     }
 
     private String saveImageToFileSystem(MultipartFile file) {
-        // Implement logic to save the file to a folder and return the local path
-        // You may use a unique identifier for the file name to prevent conflicts
 
-        // Example code (replace with your logic):
         try {
             Path folderPath = Path.of("E:\\ImagesTest");
 
@@ -110,28 +107,10 @@ public class imagesServiceImp implements imagesServiceInterface {
         }
     }
 
+    //==================================================================================
+    //==================================================================================
 
-  /*  private final String BASE_IMAGE_PATH = "E:\\ImagesTest"; // Replace with your actual image storage path
-
-    @Override
-    public Resource loadImageAsResource(String fileName) {
-        try {
-            Path filePath = Paths.get(BASE_IMAGE_PATH).resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-
-            if (resource.exists() && resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Could not read the image: " + fileName);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Malformed URL for image: " + fileName, e);
-        }
-    }*/
-
-
-
-    private final String BASE_IMAGE_PATH = "E:\\ImagesTest"; // Replace with your actual image storage path
+    private final String BASE_IMAGE_PATH = "E:\\ImagesTest";
 
     @Override
     public Resource loadImageAsResource(String fileName) {

@@ -52,8 +52,14 @@ public class DealServiceImp implements DealServiceInterface {
         listDealDTO.setFirstImageURL(firstImageUrl);
 
         // Calculate timePassedSinceCreation
+        String timePassed = calculateTimePassed(deal.getDateCreation());
+        listDealDTO.setTimePassedSinceCreation(timePassed);
+
+        return listDealDTO;
+    }
+
+    private String calculateTimePassed(LocalDateTime creationTime) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime creationTime = deal.getDateCreation();
         Duration duration = Duration.between(creationTime, now);
 
         long hours = duration.toHours();
@@ -62,21 +68,32 @@ public class DealServiceImp implements DealServiceInterface {
         if (hours > 0) {
             if (hours <= 23) {
                 // If the difference is less than 23 hours, show in hours
-                listDealDTO.setTimePassedSinceCreation(hours + " h " + minutes + " min");
+                return hours + "h" + minutes + "min";
             } else {
                 // If the difference is more than 23 hours, show in days
                 long days = duration.toDays();
-                listDealDTO.setTimePassedSinceCreation(days + " d");
+                return days + "d";
             }
         } else {
             // If the difference is less than 1 hour, show in minutes
-            listDealDTO.setTimePassedSinceCreation(minutes + " min");
+            return minutes + "min";
         }
-
-
-        return listDealDTO;
     }
+
     //==================================================
+
+
+
+
+
+
+
+
+
+
+
+    //==================================================
+
 
     @Override
     public List<Deal> getAllDeals() {
