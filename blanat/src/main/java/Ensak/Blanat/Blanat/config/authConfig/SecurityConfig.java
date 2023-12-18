@@ -55,11 +55,8 @@ public class SecurityConfig {
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     )
     .authorizeHttpRequests(authorize -> authorize
-      .requestMatchers(HttpMethod.POST, "/api/authentication/signin").permitAll()
-      .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
+      .requestMatchers(HttpMethod.POST, "/api/authentication/signup", "/api/authentication/signin").permitAll()
       .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
-    //.requestMatchers(HttpMethod.POST, "/api/deals/**").permitAll()
       .anyRequest().authenticated()
     )
     .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

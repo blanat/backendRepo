@@ -1,11 +1,0 @@
-
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÚŒ€ÿ
-E
-java:S1948*"*Make "comments" transient or serializable.(£”¶‰ÿÿÿÿÿ
-B
-java:S1948-",Make "savedDeals" transient or serializable.(¿Ï›²
-B
-java:S19480"'Make "deals" transient or serializable.(‰ïòÝúÿÿÿÿ
-H
-java:S19484"-Make "discussions" transient or serializable.(›Ý„Ðýÿÿÿÿ
-Q	java:S125"<This block of commented-out lines of code should be removed.(¬²ÉŸ

@@ -1,12 +1,0 @@
-
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ôô¬Şúÿÿÿÿ8ÈÆˆÅÇ1
-u	java:S116"TRename this field "ImagesURL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½ÙÃ‡üÿÿÿÿ8ƒò‰ÅÇ1
-r	java:S116"VRename this field "DealCreator" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ôÉ8¬˜¬ÅÇ1
-t	java:S116"SRename this field "Comments" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(š½ªûşÿÿÿÿ8«ã·ÅÇ1
-]	java:S125"<This block of commented-out lines of code should be removed.(¸“ïÖüÿÿÿÿ8¸ÊºÅÇ1
-O
-java:S1068"-Remove this unused "ImagesURL" private field.(½ÙÃ‡üÿÿÿÿ8ò‰ÅÇ1
-L
-java:S1068"/Remove this unused "DealCreator" private field.(ôÉ8®˜¬ÅÇ1
-N
-java:S1068",Remove this unused "Comments" private field.(š½ªûşÿÿÿÿ8­ã·ÅÇ1

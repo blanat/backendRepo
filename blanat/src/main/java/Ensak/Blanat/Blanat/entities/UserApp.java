@@ -23,8 +23,9 @@ public class UserApp implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
-
+  
   String userName;
+  //String lastName;
 
   @Column(unique = true)
   String email;
@@ -55,33 +56,33 @@ public class UserApp implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(role.name()));
+      return List.of(new SimpleGrantedAuthority(role.name()));
   }
 
   @Override
   public String getUsername() {
-    // our "username" for security is the email field
-    return email;
+      // our "username" for security is the email field
+      return email;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return true;
+      return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return true;
+      return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return true;
+      return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return true;
+      return true;
   }
 
   public void setDiscussions(List<Discussion> discussions) {

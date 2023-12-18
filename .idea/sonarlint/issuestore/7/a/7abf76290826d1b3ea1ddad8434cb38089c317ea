@@ -1,14 +1,0 @@
-
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÀÏóÒÿÿÿÿÿ
-v	java:S116"ZRename this field "TimeSincePosted" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘¿ó8¡‚™ÅÇ1
-m	java:S116"RRename this field "Content" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Çî—8µÜ•ÅÇ1
-o	java:S116	"SRename this field "UserName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È”¸„8Ê¾šÅÇ1
-W	java:S125"<This block of commented-out lines of code should be removed.(ÎN8îà©ÅÇ1
-H
-java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8»¡ÅÇ1
-P
-java:S1068"3Remove this unused "TimeSincePosted" private field.(‘¿ó8ª‚™ÅÇ1
-G
-java:S1068"+Remove this unused "Content" private field.(Çî—8»Ü•ÅÇ1
-I
-java:S1068	",Remove this unused "UserName" private field.(È”¸„8Í¾šÅÇ1
