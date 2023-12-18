@@ -1,0 +1,9 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ôô¬Şúÿÿÿÿ8åŠœÇ1
+n	java:S116"RRename this field "deal_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æßÔü8§Ç1
+o	java:S116"SRename this field "date_fin" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³ˆı˜8âÕ¥Ç1
+m	java:S116"QRename this field "prix_A" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜«²‡8Ô‘“œÇ1
+r	java:S116"QRename this field "prix_N" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶”±ˆıÿÿÿÿ8›Ä“œÇ1
+u	java:S116"YRename this field "livraison_prix" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼çó‰8ãÕ¥Ç1
+s	java:S116"WRename this field "nbre_comment" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ó÷ƒ°8ãÕ¥Ç1
+t	java:S116"XRename this field "FirstImageURL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×¹ÀĞ8ù™†¥Ç1
