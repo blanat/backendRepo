@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
   private final UserRepository userRepository;
+    private final JwtService jwtService;
 
   public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
@@ -47,6 +48,27 @@ public class UserService {
 
     public List<UserApp> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public UserApp getUserFromToken(String token) {
+
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        // Extract email from the token
+        String email = jwtService.extractUserName(token);
+
+        log.debug("User from token: {}", email);
+
+
+        // Retrieve the user from the database by email
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Log the user for debugging
+        log.debug("User from token: {}", user);
+
+        return user;
     }
 
 }

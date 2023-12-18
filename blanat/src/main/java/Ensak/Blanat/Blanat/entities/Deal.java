@@ -3,10 +3,9 @@ package Ensak.Blanat.Blanat.entities;
 import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -17,46 +16,48 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deal {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,name = "deal_id")
-    private long dealId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private long dealID;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = true)//testing
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)//testing
+    private String lienDeal;
+
+    @Column(nullable = true)//testing
     private Categories category;
 
-    @Column(nullable = false)
-    private Date dateStart;
+    @Column(nullable = true)//testing
+    private Date dateDebut;
 
-    @Column(nullable = false)
-    private Date dateEnd;
+    @Column(nullable = true)//testing
+    private Date dateFin;
 
-    @Column(nullable = false)
-    private String priceInitial;
+    @Column(nullable = true)//testing
+    private float price;
 
-    @Column(nullable = false)
-    private String priceFinal;
-
+    @Column(nullable = true)
     private String localisation;
 
+    @Column(nullable = true)
+    private boolean deliveryExist;
+
+    @Column(nullable = true)
     private float deliveryPrice;
 
-    private int voteUp;
+    @Column(nullable = true)
+    private int deg;
 
-    private int voteDown;
+    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = dealID)")
+    private int numberComment;
 
-    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_id)")
-    private int commentCount;
-
-    @Column(nullable = false)
-    @CreationTimestamp
-    private LocalDate creationDate;
+    @Column(nullable = true)// should be false, but because we want to test we will be changing it to true
+    private LocalDateTime dateCreation;
 
     @OneToMany(mappedBy = "deal")
     private Collection<Comment> comments;
@@ -67,9 +68,8 @@ public class Deal {
     @ManyToOne
     private UserApp dealCreator;
 
-
-
-
+    @OneToMany(mappedBy = "deal")
+    private Collection<ImagesDeal> imagesDeals;
 
 
 }

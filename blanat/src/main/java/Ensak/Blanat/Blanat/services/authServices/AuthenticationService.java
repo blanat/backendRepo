@@ -8,7 +8,6 @@ import Ensak.Blanat.Blanat.enums.Role;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.TokenRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 

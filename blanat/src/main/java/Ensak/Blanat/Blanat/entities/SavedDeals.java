@@ -17,7 +17,7 @@ public class SavedDeals {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    private Date date_saving;
+    private Date dateSaving;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

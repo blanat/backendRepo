@@ -5,11 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface DealRepository extends CrudRepository<Deal, Long> {
-
-    Deal findByDealId(@Param("deal_id") long deal_id);
-
-
-
-
-
+    Deal findByDealID(@Param("deal_id") long deal_id);
 }

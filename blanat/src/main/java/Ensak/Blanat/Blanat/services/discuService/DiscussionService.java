@@ -1,5 +1,4 @@
 package Ensak.Blanat.Blanat.services.discuService;
-import Ensak.Blanat.Blanat.DTOs.dealDTO.DealDTO;
 import Ensak.Blanat.Blanat.DTOs.discDTO.DiscussionDTO;
 import Ensak.Blanat.Blanat.entities.Discussion;
 import Ensak.Blanat.Blanat.entities.UserApp;
