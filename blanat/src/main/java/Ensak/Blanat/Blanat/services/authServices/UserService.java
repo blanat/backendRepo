@@ -5,6 +5,7 @@ import java.util.List;
 
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,8 +22,10 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final JwtService jwtService;
 
-  public UserDetailsService userDetailsService() {
+
+    public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
           public UserDetails loadUserByUsername(String username) {
@@ -49,4 +52,25 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
+    public UserApp getUserFromToken(String token) {
+
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        // Extract email from the token
+        String email = jwtService.extractUserName(token);
+
+        log.debug("User from token: {}", email);
+
+
+        // Retrieve the user from the database by email
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Log the user for debugging
+        log.debug("User from token: {}", user);
+
+        return user;
+    }
 }

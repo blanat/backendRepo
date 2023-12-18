@@ -1,0 +1,15 @@
+
+m	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(â©¹„8ˆ½ ÂÇ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ãşş¹8½ ÂÇ1
+L	java:S106-"+Replace this use of System.out by a logger.(ôÁ“ñûÿÿÿÿ8Š¾ ÂÇ1
+L	java:S106;"+Replace this use of System.out by a logger.(ğŞÍİıÿÿÿÿ8¾ ÂÇ1
+L	java:S106<"+Replace this use of System.out by a logger.(—Ëä„úÿÿÿÿ8¾ ÂÇ1
+G	java:S106="+Replace this use of System.out by a logger.(ÚºÇŠ8‘¾ ÂÇ1
+L	java:S106@"+Replace this use of System.out by a logger.(ÒãÈŸùÿÿÿÿ8’¾ ÂÇ1
+L	java:S106B"+Replace this use of System.out by a logger.(êøßÉùÿÿÿÿ8“¾ ÂÇ1
+L	java:S106C"+Replace this use of System.out by a logger.(ƒ¹­˜ùÿÿÿÿ8•¾ ÂÇ1
+n
+java:S1128"LRemove this unused import 'Ensak.Blanat.Blanat.repositories.UserRepository'.(ë¸™øÿÿÿÿ8›¾ ÂÇ1
+y
+java:S1128
+"\Remove this unused import 'Ensak.Blanat.Blanat.services.authServices.AuthenticationService'.(¿ô«ğ8›¾ ÂÇ1
