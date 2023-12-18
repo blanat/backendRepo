@@ -23,17 +23,18 @@ public class CreateDealDTO {
 
     private Categories category;
 
-    private Date date_debut;
+    private Date dateDebut;
 
-    private Date date_fin;
+    private Date dateFin;
 
-    private float prix;
+    private float price;
 
     private String localisation;
 
-    private boolean livraisonExist;
+    private boolean deliveryExist;
 
-    private float livraison_prix;
+    private float deliveryPrice;
+
 */
 
 }
