@@ -1,6 +1,7 @@
 
 package Ensak.Blanat.Blanat.services.dealService;
 
+
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
@@ -31,8 +32,7 @@ public class DealServiceImp implements DealServiceInterface {
     @Override
     public Deal saveDeal(Deal deal) {
         deal.setDateCreation(LocalDateTime.now());
-        Deal createdDeal = dealRepository.save(deal);
-        return createdDeal;
+        return dealRepository.save(deal);
     }
     //==================================================
 
