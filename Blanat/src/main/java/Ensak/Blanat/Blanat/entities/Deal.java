@@ -4,9 +4,7 @@ import Ensak.Blanat.Blanat.enums.Categories;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Formula;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +18,7 @@ import java.util.Date;
 public class Deal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private long deal_ID;
+    private long dealID;
 
     @Column(nullable = false)
     private String title;
@@ -31,43 +29,35 @@ public class Deal {
     @Column(nullable = true)//testing
     private String lienDeal;
 
-
     @Column(nullable = true)//testing
     private Categories category;
 
     @Column(nullable = true)//testing
-    private Date date_debut;
+    private Date dateDebut;
 
     @Column(nullable = true)//testing
-    private Date date_fin;
+    private Date dateFin;
 
     @Column(nullable = true)//testing
-    private float prix;
+    private float price;
 
     @Column(nullable = true)
     private String localisation;
 
     @Column(nullable = true)
-    private boolean livraisonExist;
+    private boolean deliveryExist;
 
     @Column(nullable = true)
-    private float livraison_prix;
+    private float deliveryPrice;
 
     @Column(nullable = true)
     private int deg;
 
-    /*@Column(nullable = true)
-    private int vote_up;
-
-    @Column(nullable = true)
-    private int vote_down;
-*/
     @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = deal_ID)")
-    private int nbre_comment;
+    private int numberComment;
 
     @Column(nullable = true)// should be false, but because we want to test we will be changing it to true
     private LocalDateTime dateCreation;
-
 
     @OneToMany(mappedBy = "deal")
     private Collection<Comment> comments;

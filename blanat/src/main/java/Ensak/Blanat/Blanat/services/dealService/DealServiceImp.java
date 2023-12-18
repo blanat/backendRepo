@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class DealServiceImp implements DealServiceInterface {
@@ -38,18 +40,19 @@ public class DealServiceImp implements DealServiceInterface {
     //Lister Deal
     @Override
     public List<ListDealDTO> getListDealsDTO() {
-        List<Deal> allDeals = dealRepository.findAll();
+        List<Deal> allDeals = (List<Deal>) dealRepository.findAll();
         return allDeals.stream()
                 .map(this::enrichDealDTO)
                 .toList();
     }
+
 
     private ListDealDTO enrichDealDTO(Deal deal) {
         ListDealDTO listDealDTO = dealMapper.dealToListDealDTO(deal);
 
         // Fetch the first image of the deal
         String firstImageUrl = imagesService.getFirstImageUrlForDeal(deal);
-        listDealDTO.setFirstImageURL(firstImageUrl);
+        listDealDTO.setFirstImageUrl(firstImageUrl);
 
         // Calculate timePassedSinceCreation
         String timePassed = calculateTimePassed(deal.getDateCreation());

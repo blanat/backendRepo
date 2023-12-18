@@ -15,10 +15,10 @@ import java.util.Date;
 public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long comment_id;
+    private long commentId;
 
     private Date date;
-    private String Content;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

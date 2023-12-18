@@ -13,22 +13,21 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListDealDTO {
-    private long deal_ID;
+    private long dealID; // corresponds to deal_ID in the entity
     private String title;
     private String description;
-    private Categories category;//filtrer
-    private Date date_fin;//pour mentionner l approche de fin d un deal
-    private float prix_A;
-    private float prix_N;
+    private Categories category; // corresponds to category in the entity
+    private Date dateFin; // corresponds to date_fin in the entity
+    private float price; // corresponds to prix_A in the entity
+    private float newPrice; // corresponds to prix_N in the entity
     private String localisation;
-    private boolean livraisonExist;
-    private float livraison_prix;
-    private int deg;//filter
-    private int nbre_comment;//filter
+    private boolean deliveryExist; // corresponds to livraisonExist in the entity
+    private float deliveryPrice; // corresponds to livraison_prix in the entity
+    private int deg; // corresponds to deg in the entity
+    private int numberOfComments; // corresponds to nbre_comment in the entity
     private String lienDeal;
 
-    //image and time will be added to the dto
-    private String FirstImageURL;
-    private String timePassedSinceCreation;//filter
+    // Image and time will be added to the DTO
+    private String firstImageUrl;
+    private String timePassedSinceCreation; // corresponds to the same name in the entity
 }
-
