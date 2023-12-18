@@ -1,5 +1,5 @@
 
-package ensak.blanat.blanat.services.dealService;
+package Ensak.Blanat.Blanat.services.dealService;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
