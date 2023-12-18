@@ -22,7 +22,7 @@ import java.util.List;
 public class DealController {
 
     private final DealServiceInterface dealService;
-    private final imagesServiceInterface iamgeService;
+    private final imagesServiceInterface imageService;
 
     private final UserService userService;
     private final DealMapper dealMapper;
@@ -32,7 +32,7 @@ public class DealController {
         this.dealService = dealService;
         this.userService = userService;
         this.dealMapper = dealMapper;
-        this.iamgeService = iamgeService;
+        this.imageService = iamgeService;
     }
 
     @PostMapping("/create")
@@ -53,7 +53,7 @@ public class DealController {
 
             Deal CDeal = dealService.saveDeal(dealEntity);
 
-            iamgeService.saveImagesAndPaths(images, CDeal);
+            imageService.saveImagesAndPaths(images, CDeal);
 
             // Print out the received deal data
             System.out.println("Received Deal Data:");
