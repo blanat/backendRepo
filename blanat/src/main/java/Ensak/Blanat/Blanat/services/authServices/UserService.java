@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.services.authServices;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,6 +37,8 @@ public class UserService {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
         }
+        Path filePath = Path.of("E:\\ImageprofileUser\\imagesDefault.png");
+        newUser.setProfileFilePath(filePath.toString());
 
         newUser.setUpdatedAt(LocalDateTime.now());
         UserApp savedUser = userRepository.save(newUser);

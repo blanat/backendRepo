@@ -21,7 +21,13 @@ public class imageURLbuilder {
         return BASE_URL + filename;
     }
 
-    private static String extractFilename(String filePath) {
+    public static String buildProfileImageUrl(String image) {
+        // Construct the full URL by combining the base URL and the filename
+        return BASE_URL + image;
+    }
+
+
+    public static String extractFilename(String filePath) {
         Path path = Paths.get(filePath);
 
         // Get the filename from the path

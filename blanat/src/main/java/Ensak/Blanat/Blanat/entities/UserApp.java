@@ -31,12 +31,19 @@ public class UserApp implements UserDetails {
   String email;
 
   String password;
+
   @Enumerated(EnumType.STRING)
   Role role;
 
   LocalDateTime createdAt;
 
   LocalDateTime updatedAt;
+
+
+//new====================== local path
+  String profileFilePath;
+//=========================
+
 
   @OneToMany(mappedBy = "userApp")
   private List<Token> tokens;
@@ -88,4 +95,6 @@ public class UserApp implements UserDetails {
   public void setDiscussions(List<Discussion> discussions) {
     this.discussions = discussions;
   }
+
+
 }

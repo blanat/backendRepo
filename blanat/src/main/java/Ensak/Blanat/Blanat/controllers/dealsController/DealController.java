@@ -1,6 +1,7 @@
 package Ensak.Blanat.Blanat.controllers.dealsController;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.CreateDealDTO;
+import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.UserApp;
@@ -88,6 +89,19 @@ public class DealController {
     }
 
     //==================================
+
+
+    @GetMapping("/{dealId}")
+    public ResponseEntity<DetailDealDTO> getDealDetails(@PathVariable Long dealId) {
+        DetailDealDTO detailDealDTO = dealService.getDealDetails(dealId);
+
+        if (detailDealDTO == null) {
+            // Handle deal not found
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(detailDealDTO);
+    }
 
 
 }
