@@ -19,4 +19,5 @@ public interface imagesServiceInterface {
     String getFirstImageUrlForDeal(Deal deal);
 
     Resource loadImageAsResource(String fileName);
+
 }

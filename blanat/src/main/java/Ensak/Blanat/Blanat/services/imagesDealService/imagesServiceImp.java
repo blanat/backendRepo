@@ -109,12 +109,12 @@ public class imagesServiceImp implements imagesServiceInterface {
     //==================================================================================
     //==================================================================================
 
-    private final String BASE_IMAGE_PATH = "E:\\ImagesTest";
+    private final String BASE_DEAL_IMAGE_PATH = "E:\\ImagesTest";
 
     @Override
     public Resource loadImageAsResource(String fileName) {
         try {
-            Path filePath = Paths.get(BASE_IMAGE_PATH).resolve(fileName).normalize();
+            Path filePath = Paths.get(BASE_DEAL_IMAGE_PATH).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {
