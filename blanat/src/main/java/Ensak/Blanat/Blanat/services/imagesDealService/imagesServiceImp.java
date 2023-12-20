@@ -110,11 +110,15 @@ public class imagesServiceImp implements imagesServiceInterface {
     //==================================================================================
 
     private final String BASE_DEAL_IMAGE_PATH = "E:\\ImagesTest";
+    private final String BASE_PROFILE_IMAGE_PATH = "E:\\ImageprofileUser";
 
     @Override
-    public Resource loadImageAsResource(String fileName) {
+    public Resource loadImageAsResource(String fileName, String imageType) {
         try {
-            Path filePath = Paths.get(BASE_DEAL_IMAGE_PATH).resolve(fileName).normalize();
+            String basePath = imageType.equals("DealReq") ? BASE_DEAL_IMAGE_PATH : BASE_PROFILE_IMAGE_PATH;
+
+            // Use the correct basePath variable here
+            Path filePath = Paths.get(basePath).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {

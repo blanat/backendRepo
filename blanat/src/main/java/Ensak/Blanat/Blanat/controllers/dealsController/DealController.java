@@ -91,7 +91,7 @@ public class DealController {
     //==================================
 
 
-    @GetMapping("/{dealId}")
+    @GetMapping("details/{dealId}")
     public ResponseEntity<DetailDealDTO> getDealDetails(@PathVariable Long dealId) {
         DetailDealDTO detailDealDTO = dealService.getDealDetails(dealId);
 

@@ -23,7 +23,7 @@ public class ImageController {
     @GetMapping("/Deal/{fileName}")
     public ResponseEntity<Resource> getImageDeal(@PathVariable String fileName) {
         System.out.println("Controller image: " + fileName);
-        Resource resource = imageService.loadImageAsResource(fileName);
+        Resource resource = imageService.loadImageAsResource(fileName,"DealReq");
 
         // Set the Content-Type header
         HttpHeaders headers = new HttpHeaders();
@@ -38,7 +38,7 @@ public class ImageController {
     @GetMapping("/Profile/{fileName}")
     public ResponseEntity<Resource> getImageProfile(@PathVariable String fileName) {
         System.out.println("Controller image: " + fileName);
-        Resource resource = imageService.loadImageAsResource(fileName);
+        Resource resource = imageService.loadImageAsResource(fileName,"ProfileReq");
 
         // Set the Content-Type header
         HttpHeaders headers = new HttpHeaders();
