@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,10 +15,10 @@ import java.util.Date;
 public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long comment_id;
+    private long commentId;
 
-    private Date date;
-    private String Content;
+    private LocalDateTime date;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

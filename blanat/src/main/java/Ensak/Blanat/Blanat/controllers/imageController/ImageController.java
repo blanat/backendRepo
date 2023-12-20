@@ -20,10 +20,25 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("{fileName}")
-    public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
+    @GetMapping("/Deal/{fileName}")
+    public ResponseEntity<Resource> getImageDeal(@PathVariable String fileName) {
         System.out.println("Controller image: " + fileName);
-        Resource resource = imageService.loadImageAsResource(fileName);
+        Resource resource = imageService.loadImageAsResource(fileName,"DealReq");
+
+        // Set the Content-Type header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Set the appropriate content type
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+    }
+
+
+    @GetMapping("/Profile/{fileName}")
+    public ResponseEntity<Resource> getImageProfile(@PathVariable String fileName) {
+        System.out.println("Controller image: " + fileName);
+        Resource resource = imageService.loadImageAsResource(fileName,"ProfileReq");
 
         // Set the Content-Type header
         HttpHeaders headers = new HttpHeaders();
