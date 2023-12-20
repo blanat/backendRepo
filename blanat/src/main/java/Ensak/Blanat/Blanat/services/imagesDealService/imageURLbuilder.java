@@ -16,12 +16,16 @@ public class imageURLbuilder {
 
     public static String buildImageUrl(ImagesDeal image) {
         String filename = extractFilename(image.getFilePath());
-
-        // Construct the full URL by combining the base URL and the filename
-        return BASE_URL + filename;
+        return BASE_URL + "Deal/" + filename;
     }
 
-    private static String extractFilename(String filePath) {
+    public static String buildProfileImageUrl(String image) {
+        String filename = extractFilename(image);
+        return BASE_URL + "Profile/" + filename;
+    }
+
+
+    public static String extractFilename(String filePath) {
         Path path = Paths.get(filePath);
 
         // Get the filename from the path
