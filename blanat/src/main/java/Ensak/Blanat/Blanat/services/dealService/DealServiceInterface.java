@@ -24,4 +24,5 @@ public interface DealServiceInterface {
 
     void getActiveDeals(Long dealId);
 
+    List<ListDealDTO> getListDealsDTOByUserId(long id);
 }

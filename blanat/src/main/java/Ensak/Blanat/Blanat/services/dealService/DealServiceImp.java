@@ -131,4 +131,12 @@ public class DealServiceImp implements DealServiceInterface {
     public void getActiveDeals(Long dealId) {
         // Implement logic to get active deals
     }
+
+    @Override
+    public List<ListDealDTO> getListDealsDTOByUserId(long id) {
+        List<Deal> allDeals = (List<Deal>) dealRepository.findAllByDealCreatorId(id);
+        return allDeals.stream()
+                .map(this::enrichDealDTO)
+                .toList();
+    }
 }

@@ -33,7 +33,7 @@ public class DealController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<String> createDeal(
             @RequestHeader("Authorization") String token,
             @RequestPart("deal") CreateDealDTO dealDTO,
@@ -49,9 +49,9 @@ public class DealController {
 
             dealEntity.setDealCreator(user);
 
-            Deal CDeal = dealService.saveDeal(dealEntity);
+            Deal newDeal = dealService.saveDeal(dealEntity);
 
-            imageService.saveImagesAndPaths(images, CDeal);
+            //imageService.saveImagesAndPaths(images, newDeal);
 
             // Print out the received deal data
             System.out.println("Received Deal Data:");
@@ -77,11 +77,30 @@ public class DealController {
 
 
 
-    @GetMapping("/listDeals")
+    @GetMapping
     public ResponseEntity<List<ListDealDTO>> getListDealsDTO() {
         try {
             List<ListDealDTO> listDealDTOs = dealService.getListDealsDTO();
-            return ResponseEntity.ok(listDealDTOs);
+            return new ResponseEntity<>(listDealDTOs, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Deal> getDealById(@PathVariable("id") long id) {
+        try {
+            Deal deal = dealService.getDealById(id);
+            return new ResponseEntity<>(deal, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<ListDealDTO>> getListDealsDTOByUserId(@PathVariable("id") long id) {
+        try {
+            List<ListDealDTO> listDealDTOs = dealService.getListDealsDTOByUserId(id);
+            return new ResponseEntity<>(listDealDTOs, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
