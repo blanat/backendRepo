@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -17,7 +18,7 @@ public class ListDealDTO {
     private String title;
     private String description;
     private Categories category; // corresponds to category in the entity
-    private Date dateFin; // corresponds to date_fin in the entity
+    private LocalDate dateFin; // corresponds to date_fin in the entity
     private float price; // corresponds to prix_A in the entity
     private float newPrice; // corresponds to prix_N in the entity
     private String localisation;

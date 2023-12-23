@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Formula;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class Deal {
     private String lienDeal;
 
     @Column(nullable = true)//testing
+    @Enumerated(EnumType.STRING)
     private Categories category;
 
     @Column(nullable = true)//testing
@@ -40,6 +42,9 @@ public class Deal {
 
     @Column(nullable = true)//testing
     private float price;
+
+    @Column(nullable = true)//testing
+    private float newPrice;
 
     @Column(nullable = true)
     private String localisation;
