@@ -4,10 +4,15 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
+import Ensak.Blanat.Blanat.entities.UserApp;
+import Ensak.Blanat.Blanat.repositories.UserRepository;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -15,19 +20,25 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 
+
+@RequiredArgsConstructor
 @Service
 public class JwtService {
 
+private final UserRepository userRepository;
   String jwtSecretKey="1cd6a9c75006cdc80314f7e2813a9513f0ae46d17d652e34711fc4167325fb41";
-
   Long jwtExpirationMs=3600000L;
 
-  public String extractUserName(String token) {
-      return extractClaim(token, Claims::getSubject);
-  }
+    public String extractUserName(String token) {
+        String userName = extractClaim(token, Claims::getSubject);
+        return userName;
+    }
 
-  public String generateToken(UserDetails userDetails) {
+
+
+    public String generateToken(UserDetails userDetails) {
       return generateToken(new HashMap<>(), userDetails);
   }
 
@@ -73,5 +84,15 @@ public class JwtService {
       byte[] keyBytes = Decoders.BASE64.decode(jwtSecretKey);
       return Keys.hmacShaKeyFor(keyBytes);
   }
-  
+
+
+
+    // Méthode pour extraire le nom d'utilisateur du JWT
+
+    public String ExtractUserName(String jwt) {
+        String userName = extractClaim(jwt, Claims::getSubject);
+        return userName;
+    }
+
+
 }

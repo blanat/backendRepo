@@ -46,7 +46,6 @@ public class UserAppAuthTest {
     public void setUp(){
         userRepository = mock(UserRepository.class,RETURNS_DEEP_STUBS);
         tokenRepository = mock(TokenRepository.class,RETURNS_DEEP_STUBS);
-        jwtService = new JwtService();
         userService = mock(UserService.class, RETURNS_DEEP_STUBS);
         authenticationService = new AuthenticationService(userRepository,tokenRepository,userService,passwordEncoderMock,jwtService,authenticationManager);
     }

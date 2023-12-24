@@ -1,7 +1,16 @@
 package Ensak.Blanat.Blanat.entities;
 import Ensak.Blanat.Blanat.enums.Categories;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -12,6 +21,7 @@ import lombok.*;
 @ToString
 @Table(name = "Discussion")
 public class Discussion {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,36 +29,53 @@ public class Discussion {
     private String description;
     private int nbrvue;
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "discussion_views",
+            joinColumns = @JoinColumn(name = "discussion_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @JsonIgnore // Pour éviter la sérialisation cyclique
+    private Set<UserApp> viewers = new HashSet<>();
+
     @Enumerated(EnumType.STRING)
     Categories categories;
 
+
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserApp createur;
 
-    public void setId(Long id) {
-        this.id = id;
+    @OneToMany(mappedBy = "discussion")
+    @JsonBackReference
+    private List<DiscMessage> discMessage;
+
+        public Discussion(String titre, String description, Categories categories) {
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setDiscMessage(List<DiscMessage> discMessage) {
+        this.discMessage = discMessage;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setNbrvue(int nbrvue) {
-        this.nbrvue = nbrvue;
-    }
-
-    public void setCategories(Categories categories) {
-        this.categories = categories;
-    }
-
-    public void setCreateur(UserApp createur) {
-        this.createur = createur;
+    public String getDescription() {
+        return description;
     }
 
 
+
+    public Categories getCategories() {
+        return categories;
+    }
+
+
+    public List<DiscMessage> getDiscMessage() {
+        return discMessage;
+    }
 }

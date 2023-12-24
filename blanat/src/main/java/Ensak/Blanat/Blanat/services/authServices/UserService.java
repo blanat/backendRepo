@@ -3,15 +3,17 @@ package Ensak.Blanat.Blanat.services.authServices;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 
 
 import lombok.RequiredArgsConstructor;
@@ -73,6 +75,11 @@ public class UserService {
 
         return user;
     }
+    public UserApp getUserByUsername(String email) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user;
+    }
 
     public UserApp updatePassword(String email, String newPassword) {
         UserApp user = userRepository.findByEmail(email)
@@ -87,5 +94,10 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         userRepository.delete(user);
     }
+
+
+
+
+
 
 }
