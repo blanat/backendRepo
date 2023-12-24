@@ -58,6 +58,13 @@ public class DealController {
             System.out.println("Received Deal Data:");
             System.out.println("Title: " + dealEntity.getTitle());
             System.out.println("Description: " + dealEntity.getDescription());
+            System.out.println("getLienDeal: " + dealEntity.getLienDeal());
+            System.out.println("getLocalisation: " + dealEntity.getLocalisation());
+            System.out.println("getPrice: " + dealEntity.getPrice());
+            System.out.println("getNewPrice: " + dealEntity.getNewPrice());
+            System.out.println("getCategory: " + dealEntity.getCategory());
+
+            //liveraison
 
             // Print out the received image data
             System.out.println("Received Images:");
