@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/images")
 public class ImageController {
@@ -48,5 +50,13 @@ public class ImageController {
                 .headers(headers)
                 .body(resource);
     }
+
+
+    @GetMapping("/Deal/urls/{dealId}")
+    public ResponseEntity<List<String>> getImageUrlsForDeal(@PathVariable long dealId) {
+        List<String> imageUrls = imageService.getImagesUrlsForDeal(dealId);
+        return ResponseEntity.ok(imageUrls);
+    }
+
 
 }

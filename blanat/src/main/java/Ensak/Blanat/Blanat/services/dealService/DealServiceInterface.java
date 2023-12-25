@@ -1,6 +1,5 @@
 package Ensak.Blanat.Blanat.services.dealService;
 
-import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 
@@ -8,7 +7,7 @@ import java.util.List;
 public interface DealServiceInterface {
 
     List<ListDealDTO> getListDealsDTO();
-    DetailDealDTO getDealDetails(long dealId);
+    //DetailDealDTO getDealDetails(long dealId);
 
 
         List<Deal> getAllDeals();

@@ -21,8 +21,8 @@ public class CommentMapper {
 
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         commentDTO.setTimeSincePosted(timePassed);
-        commentDTO.setUserName(comment.getUser().getUsername());
-        commentDTO.setProfileImageUrl(imageURLbuilder.buildProfileImageUrl(comment.getUser().getProfileFilePath()));
+        //commentDTO.setUserName(comment.getUser().getUsername());
+        //commentDTO.setProfileImageUrl(imageURLbuilder.buildProfileImageUrl(comment.getUser().getProfileFilePath()));
         return commentDTO;
     }
 }
