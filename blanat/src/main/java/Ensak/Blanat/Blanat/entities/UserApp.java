@@ -96,5 +96,8 @@ public class UserApp implements UserDetails {
     this.discussions = discussions;
   }
 
+  public String getUserName() {
+    return userName;
+  }
 
 }
