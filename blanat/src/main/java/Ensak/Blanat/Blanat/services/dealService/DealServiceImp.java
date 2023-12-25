@@ -7,6 +7,7 @@ import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
+import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.mappers.CommentMapper;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
@@ -109,13 +110,10 @@ public class DealServiceImp implements DealServiceInterface {
                 .build();
     }
 
-
-
-
-
-
-
-
+    @Override
+    public List<ImagesDeal> getDealImages(long dealId) {
+        return imagesDealRepository.findByDeal(dealRepository.findByDealID(dealId));
+    }
 
 
     //==================================================
@@ -128,12 +126,15 @@ public class DealServiceImp implements DealServiceInterface {
 
     @Override
     public Deal getDealById(Long dealId) {
-        return null;
+
+        return dealRepository.findByDealID(dealId);
+
+
     }
 
     @Override
     public void updateDeal(Deal deal) {
-        // Implement update logic
+
     }
 
     @Override
