@@ -85,8 +85,17 @@ public class DiscussionController {
     }
 
 
+    @GetMapping("/created-by-current-user")
+    public ResponseEntity<List<Discussion>> getDiscussionsCreatedByCurrentUser() {
+        List<Discussion> discussions = discussionService.getDiscussionsCreatedByCurrentUser();
+        return ResponseEntity.ok(discussions);
+    }
 
 
-
+    @DeleteMapping("/{discussionId}")
+    public ResponseEntity<String> deleteDiscussionAndComments(@PathVariable Long discussionId) {
+        discussionService.deleteDiscussionAndComments(discussionId);
+        return new ResponseEntity<>("Discussion and associated comments deleted successfully.", HttpStatus.OK);
+    }
 
 }

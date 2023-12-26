@@ -6,6 +6,7 @@ import Ensak.Blanat.Blanat.entities.Discussion;
 import Ensak.Blanat.Blanat.entities.DiscussionView;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.exeptions.*;
+import Ensak.Blanat.Blanat.repositories.DiscMessageRepository;
 import Ensak.Blanat.Blanat.repositories.DiscussionRepository;
 import Ensak.Blanat.Blanat.repositories.DiscussionViewRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
@@ -35,6 +36,8 @@ public class DiscussionServiceImpl implements IDiscussionService{
     @Autowired
     private final imageURLbuilder imageBuilder;
 
+    private final DiscMessageRepository discMessageRepository;
+
 
 
     private final JwtService jwtTokenService;
@@ -42,7 +45,10 @@ public class DiscussionServiceImpl implements IDiscussionService{
     private final UserRepository userRepository;
 
     @Autowired
-    public DiscussionServiceImpl(JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository,imageURLbuilder imageBuilder) {
+    public DiscussionServiceImpl(DiscussionViewRepository discussionViewRepository, UserService userService, DiscMessageRepository discMessageRepository, JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository, imageURLbuilder imageBuilder) {
+        this.discussionViewRepository = discussionViewRepository;
+        this.userService = userService;
+        this.discMessageRepository = discMessageRepository;
         this.jwtTokenService = jwtTokenService;
         this.discussionRepository = discussionRepository;
         this.userRepository = userRepository;
@@ -184,5 +190,28 @@ public class DiscussionServiceImpl implements IDiscussionService{
     public Discussion getDiscussionById(Long discussionId) {
         Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
         return discussionOptional.orElseThrow(() -> new EntityNotFoundException("Discussion not found"));
+    }
+
+
+    public List<Discussion> getDiscussionsCreatedByCurrentUser() {
+        // Récupérer l'utilisateur actuellement authentifié
+        UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Récupérer toutes les discussions créées par l'utilisateur connecté
+        return discussionRepository.findByCreateur(currentUser);
+    }
+
+    @Transactional
+    public void deleteDiscussionAndComments(Long discussionId) {
+        Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
+        discussionOptional.ifPresent(discussion -> {
+            List<DiscMessage> comments = discussion.getDiscMessage();
+            discMessageRepository.deleteAll(comments);
+
+            List<DiscussionView> discussionViews = discussionViewRepository.findByDiscussion(discussion);
+            discussionViewRepository.deleteAll(discussionViews);
+
+            discussionRepository.delete(discussion);
+        });
     }
 }
