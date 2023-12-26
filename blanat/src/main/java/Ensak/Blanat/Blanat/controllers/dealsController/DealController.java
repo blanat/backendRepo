@@ -4,6 +4,7 @@ import Ensak.Blanat.Blanat.DTOs.dealDTO.CreateDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
+import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
@@ -40,43 +41,14 @@ public class DealController {
             @RequestPart("deal") CreateDealDTO dealDTO,
             @RequestPart("images") List<MultipartFile> images) {
         try {
-            //token info
-            System.out.println("Received token :" + token);
-
+            //token information
             UserApp user = userService.getUserFromToken(token);
-
             // Convert the CreateDealDTO to a Deal entity using DealMapper
             Deal dealEntity = dealMapper.createDealDTOToDeal(dealDTO);
-
             dealEntity.setDealCreator(user);
-
             Deal newDeal = dealService.saveDeal(dealEntity);
-
             //imageService.saveImagesAndPaths(images, newDeal);
 
-            // Print out the received deal data
-            System.out.println("Received Deal Data:");
-            System.out.println("Title: " + dealEntity.getTitle());
-            System.out.println("Description: " + dealEntity.getDescription());
-            System.out.println("getLienDeal: " + dealEntity.getLienDeal());
-            System.out.println("getLocalisation: " + dealEntity.getLocalisation());
-            System.out.println("getPrice: " + dealEntity.getPrice());
-            System.out.println("getNewPrice: " + dealEntity.getNewPrice());
-            System.out.println("getCategory: " + dealEntity.getCategory());
-
-            //liveraison
-
-            // Print out the received image data
-            System.out.println("Received Images:");
-            for (MultipartFile image : images) {
-                System.out.println("Image Name: " + image.getOriginalFilename());
-                System.out.println("Image Size: " + image.getSize() + " bytes");
-                // You can add more details about each image if needed
-            }
-
-
-
-            // Instead of saving, just return a success response
             return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error processing deal data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -94,6 +66,8 @@ public class DealController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    // this method is used to get the details of a specific deal
     @GetMapping("/{id}")
     public ResponseEntity<Deal> getDealById(@PathVariable("id") long id) {
         try {
@@ -104,6 +78,7 @@ public class DealController {
         }
     }
 
+    // this method is used to get the list of deals of a specific user
     @GetMapping("/user/{id}")
     public ResponseEntity<List<ListDealDTO>> getListDealsDTOByUserId(@PathVariable("id") long id) {
         try {
@@ -129,5 +104,11 @@ public class DealController {
         return ResponseEntity.ok(detailDealDTO);
     }
 
+
+    @GetMapping("/{dealId}/images")
+    public ResponseEntity<List<ImagesDeal>> getAllDealImages(@PathVariable Long dealId) {
+        List<ImagesDeal> images = imageService.getAllImages();
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
 
 }
