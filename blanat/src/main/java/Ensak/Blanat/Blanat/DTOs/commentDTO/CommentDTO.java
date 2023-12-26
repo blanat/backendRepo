@@ -1,6 +1,7 @@
 package Ensak.Blanat.Blanat.DTOs.commentDTO;
 
 
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDTO {
 
+    //private Long id;
     private String timeSincePosted;
     private String content;
-    private String userName;
-    private String profileImageUrl;
+    //---------------------------
+    private UserDTO dealCreator;
+    //userName (+ profile image)
+    //---------------------------
+
 
 }

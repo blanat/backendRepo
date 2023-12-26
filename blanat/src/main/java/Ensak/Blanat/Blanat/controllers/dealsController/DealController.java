@@ -1,7 +1,6 @@
 package Ensak.Blanat.Blanat.controllers.dealsController;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.CreateDealDTO;
-import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
@@ -47,7 +46,8 @@ public class DealController {
             Deal dealEntity = dealMapper.createDealDTOToDeal(dealDTO);
             dealEntity.setDealCreator(user);
             Deal newDeal = dealService.saveDeal(dealEntity);
-            //imageService.saveImagesAndPaths(images, newDeal);
+
+            imageService.saveImagesAndPaths(images, newDeal);
 
             return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
         } catch (Exception e) {
@@ -91,6 +91,7 @@ public class DealController {
 
     //==================================
 
+/*
 
     @GetMapping("details/{dealId}")
     public ResponseEntity<DetailDealDTO> getDealDetails(@PathVariable Long dealId) {
@@ -103,6 +104,9 @@ public class DealController {
 
         return ResponseEntity.ok(detailDealDTO);
     }
+*/
+
+
 
 
     @GetMapping("/{dealId}/images")

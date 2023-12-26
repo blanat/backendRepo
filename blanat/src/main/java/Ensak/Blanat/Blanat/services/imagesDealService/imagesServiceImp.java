@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.services.imagesDealService;
 
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
+import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -23,13 +24,15 @@ import java.util.List;
 public class imagesServiceImp implements imagesServiceInterface {
 
     private final ImagesDealRepository imagesDealRepository;
+    private final DealRepository dealRepository;
     private final imageURLbuilder imageUrlBuilder;
 
 
     @Autowired
-    public imagesServiceImp(ImagesDealRepository imagesDealRepository, imageURLbuilder imageUrlBuilder) {
+    public imagesServiceImp(ImagesDealRepository imagesDealRepository, imageURLbuilder imageUrlBuilder,DealRepository dealRepository) {
         this.imagesDealRepository = imagesDealRepository;
         this.imageUrlBuilder = imageUrlBuilder;
+        this.dealRepository = dealRepository;
     }
 
     @Override
@@ -94,17 +97,30 @@ public class imagesServiceImp implements imagesServiceInterface {
         }
     }
 
-    public List<String> getImagesUrlsForDeal(Deal deal) {
-        // Assuming you have a method to get images associated with a deal
-        List<ImagesDeal> imagesList = imagesDealRepository.findByDeal(deal);
-        if (imagesList != null) {
-            // Construct URLs for the images
-            return imageUrlBuilder.buildImageUrls(imagesList);
+
+
+    public List<String> getImagesUrlsForDeal(long dealId) {
+        // Retrieve the Deal entity by dealId
+        Deal deal = dealRepository.findById(dealId).orElse(null);
+
+        if (deal != null) {
+            // Assuming you have a method to get images associated with a deal
+            List<ImagesDeal> imagesList = imagesDealRepository.findByDeal(deal);
+
+            if (imagesList != null) {
+                // Construct URLs for the images
+                return imageUrlBuilder.buildImageUrls(imagesList);
+            } else {
+                // Handle the case when there are no images associated with the deal
+                return new ArrayList<>();
+            }
         } else {
-            // Handle the case when there are no images associated with the deal
+            // Handle the case when the deal with the given ID is not found
             return new ArrayList<>();
         }
     }
+
+
 
     //==================================================================================
     //==================================================================================

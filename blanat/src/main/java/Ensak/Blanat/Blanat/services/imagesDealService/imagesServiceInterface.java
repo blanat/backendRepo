@@ -20,4 +20,5 @@ public interface imagesServiceInterface {
 
     Resource loadImageAsResource(String fileName,String imageType);
 
+    List<String> getImagesUrlsForDeal(long dealId);
 }

@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.DTOs.dealDTO;
 
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.enums.Categories;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,11 @@ public class ListDealDTO {
     private int deg; // corresponds to deg in the entity
     private int numberOfComments; // corresponds to nbre_comment in the entity
     private String lienDeal;
+
+    //---------------------------
+    private UserDTO dealCreator;
+    //userName (+ profile image)
+    //---------------------------
 
     // Image and time will be added to the DTO
     private String firstImageUrl;
