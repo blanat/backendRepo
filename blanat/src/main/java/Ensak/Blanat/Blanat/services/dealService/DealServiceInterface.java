@@ -28,4 +28,8 @@ public interface DealServiceInterface {
     void getActiveDeals(Long dealId);
 
     List<ListDealDTO> getListDealsDTOByUserId(long id);
+
+    void updateCommentCount(long dealId);
+    void incrementDeg(Long dealId);
+    void decrementDeg(Long dealId);
 }

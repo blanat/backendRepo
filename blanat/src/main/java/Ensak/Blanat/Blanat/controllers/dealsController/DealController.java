@@ -115,4 +115,18 @@ public class DealController {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+
+
+    @PostMapping("/{dealId}/increment")
+    public ResponseEntity<String> incrementDeg(@PathVariable Long dealId) {
+        dealService.incrementDeg(dealId);
+        return ResponseEntity.ok("Deg incremented successfully");
+    }
+
+    @PostMapping("/{dealId}/decrement")
+    public ResponseEntity<String> decrementDeg(@PathVariable Long dealId) {
+        dealService.decrementDeg(dealId);
+        return ResponseEntity.ok("Deg decremented successfully");
+    }
+
 }

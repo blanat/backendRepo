@@ -72,7 +72,6 @@ public class CreateDiscussionTest {
         discussionDTO.setDescription("description de cette discussion");
         discussionDTO.setCategories(Categories.FASHION);
 
-        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> discussionService.createDiscussion(discussionDTO, userEmail));
     }

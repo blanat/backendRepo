@@ -9,6 +9,7 @@ import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.CommentRepository;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
+import Ensak.Blanat.Blanat.services.dealService.DealServiceImp;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,15 +23,16 @@ public class commentServiceImpl implements commentServiceInterface {
     private final DealRepository dealRepository;
     private final CommentMapper commentMapper;
     private final UserService userService;
-    private final UserMapper userMapper;
+    private DealServiceImp dealService;
+
 
     public commentServiceImpl(CommentRepository commentRepository, DealRepository dealRepository,
-                              CommentMapper commentMapper, UserMapper userMapper,UserService userService) {
+                              CommentMapper commentMapper,UserService userService,DealServiceImp dealService) {
         this.commentRepository = commentRepository;
         this.dealRepository = dealRepository;
         this.commentMapper = commentMapper;
-        this.userMapper = userMapper;
         this.userService = userService;
+        this.dealService = dealService;
     }
 
     @Override
@@ -63,6 +65,10 @@ public class commentServiceImpl implements commentServiceInterface {
             // Implement logic to set the deal for the comment (dealRepository.findById(dealId).orElse(null))
             Deal deal = dealRepository.findById(dealId).orElse(null);
             comment.setDeal(deal);
+
+            //update the number of comment of the deal
+            dealService.updateCommentCount(comment.getDeal().getDealID());
+            System.out.println("=========== - Deal ID: " + deal.getDealID() + ", Comment Count: " + deal.getNumberOfComments());
 
             return commentRepository.save(comment);
         }
