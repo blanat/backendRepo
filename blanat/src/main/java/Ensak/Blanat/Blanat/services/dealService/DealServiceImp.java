@@ -61,6 +61,10 @@ public class DealServiceImp implements DealServiceInterface {
                 .toList();
     }
 
+    @Override
+    public List<ImagesDeal> getDealImages(long dealId) {
+        return null;
+    }
 
 
     private ListDealDTO enrichDealDTO(Deal deal) {
@@ -111,10 +115,13 @@ public class DealServiceImp implements DealServiceInterface {
                 .build();
     }
 
-    @Override
-    public List<ImagesDeal> getDealImages(long dealId) {
-        return imagesDealRepository.findByDeal(dealRepository.findByDealID(dealId));
-    }
+*/
+
+
+
+
+
+
 
 
     //==================================================
@@ -127,15 +134,12 @@ public class DealServiceImp implements DealServiceInterface {
 
     @Override
     public Deal getDealById(Long dealId) {
-
-        return dealRepository.findByDealID(dealId);
-
-
+        return null;
     }
 
     @Override
     public void updateDeal(Deal deal) {
-
+        // Implement update logic
     }
 
     @Override
