@@ -11,6 +11,7 @@ import Ensak.Blanat.Blanat.repositories.DiscussionViewRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,16 +32,24 @@ public class DiscussionServiceImpl implements IDiscussionService{
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private final imageURLbuilder imageBuilder;
+
+
+
     private final JwtService jwtTokenService;
     private final DiscussionRepository discussionRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public DiscussionServiceImpl(JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository) {
+    public DiscussionServiceImpl(JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository,imageURLbuilder imageBuilder) {
         this.jwtTokenService = jwtTokenService;
         this.discussionRepository = discussionRepository;
         this.userRepository = userRepository;
+        this.imageBuilder = imageBuilder;
     }
+
+
 
     public DiscussionDTO createDiscussion(DiscussionDTO discussionDTO, String email) {
         Optional<UserApp> userOptional = userRepository.findByEmail(email);
@@ -66,11 +74,9 @@ public class DiscussionServiceImpl implements IDiscussionService{
             responseDTO.setDescription(savedDiscussion.getDescription());
             responseDTO.setCategories(savedDiscussion.getCategories());
             responseDTO.setCreateurUsername(createur.getUserName());
-            // Si nécessaire, ajoutez la logique pour récupérer nbrvue depuis savedDiscussion
 
             return responseDTO;
         } else {
-            // Gérer le cas où l'utilisateur n'est pas trouvé
             throw new UserNotFoundException("User not found for email: " + email);
         }
     }
@@ -101,10 +107,8 @@ public class DiscussionServiceImpl implements IDiscussionService{
         return discussionRepository.save(discussion);
     }
 
-    @Override
-    public void updateViews(Long discussionId) {
 
-    }
+
 
     public List<DiscussionDTO> getAllDiscussionsInfo() {
         try {
@@ -117,18 +121,15 @@ public class DiscussionServiceImpl implements IDiscussionService{
                             discussion.getCategories(),
                             discussion.getCreateur().getUserName(),
                             discussion.getNbrvue(),
-                            discussion.getCreateur().getProfileFilePath()// Récupérer l'URL de l'image de profil depuis l'entité Profile
+                            // Utilisation de la méthode buildProfileImageUrl pour récupérer l'URL de l'image de profil
+                            imageBuilder.buildProfileImageUrl(discussion.getCreateur().getProfileFilePath())
                     ))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            // Gérer l'exception, par exemple, en journalisant l'erreur
             e.printStackTrace();
             throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
         }
     }
-
-
-
 
     @Transactional
     public Long updateViews(Long discussionId, String token) {
