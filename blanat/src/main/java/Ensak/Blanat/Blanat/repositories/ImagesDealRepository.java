@@ -11,6 +11,9 @@ public interface ImagesDealRepository extends JpaRepository<ImagesDeal, Long> {
     // Custom method to save an ImagesDeal entity
     ImagesDeal save(ImagesDeal image);
 
+    //
+    List<ImagesDeal> getImagesDealByDeal(Deal deal);
+
     // Custom method to retrieve all ImagesDeal entities
     List<ImagesDeal> findAll();
 
