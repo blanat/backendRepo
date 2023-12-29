@@ -56,12 +56,12 @@ public class AuthenticationService {
         var jwt = jwtService.generateToken(user);
         //---
         revokeAllUserTokens(user);
-        saveUserToken(user,jwt);
+        //saveUserToken(user,jwt);
         //---
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
-    private void saveUserToken(UserApp userApp, String jwtToken) {
+    /*private void saveUserToken(UserApp userApp, String jwtToken) {
         var token = Token.builder()
                 .userApp(userApp)
                 .token(jwtToken)
@@ -69,7 +69,7 @@ public class AuthenticationService {
                 .revoked(false)
                 .build();
         tokenRepository.save(token);
-    }
+    }*/
 
     private void revokeAllUserTokens(UserApp user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());

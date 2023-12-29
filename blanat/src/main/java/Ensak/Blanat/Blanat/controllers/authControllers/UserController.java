@@ -29,10 +29,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{email}/password")
-    public UserApp updatePassword(@PathVariable String email, @RequestBody String newPassword) {
-        return userService.updatePassword(email, newPassword);
-    }
+
 
     @DeleteMapping("/{email}")
     public void deleteUser(@PathVariable String email) {

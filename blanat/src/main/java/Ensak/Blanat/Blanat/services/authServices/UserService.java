@@ -8,6 +8,7 @@ import java.util.Optional;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
+    @Autowired
   private final UserRepository userRepository;
     private final JwtService jwtService;
 
@@ -81,13 +83,7 @@ public class UserService {
         return user;
     }
 
-    public UserApp updatePassword(String email, String newPassword) {
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        user.setPassword(newPassword);
-        user.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(user);
-    }
+
 
     public void deleteUser(String email) {
         UserApp user = userRepository.findByEmail(email)
