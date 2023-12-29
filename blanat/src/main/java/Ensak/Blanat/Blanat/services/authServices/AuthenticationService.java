@@ -41,8 +41,8 @@ public class AuthenticationService {
         user = userService.save(user);
         var jwt = jwtService.generateToken(user);
         //---
-        revokeAllUserTokens(user);
-        saveUserToken(user,jwt);
+        //revokeAllUserTokens(user);
+        //saveUserToken(user,jwt);
         //--
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
@@ -55,7 +55,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
         //---
-        revokeAllUserTokens(user);
+        //revokeAllUserTokens(user);
         //saveUserToken(user,jwt);
         //---
         return JwtAuthenticationResponse.builder().token(jwt).build();
