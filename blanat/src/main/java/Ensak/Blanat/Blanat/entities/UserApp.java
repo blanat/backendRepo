@@ -45,7 +45,8 @@ public class UserApp implements UserDetails {
 //=========================
 
 
-
+  @OneToMany(mappedBy = "userApp")
+  private List<Token> tokens;
 
   @OneToMany(mappedBy = "user")
   private Collection<Comment> comments;

@@ -62,7 +62,16 @@ public class SecurityConfig {
       .requestMatchers(HttpMethod.POST, "/notification").permitAll()
       .anyRequest().authenticated()
     )
-    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout(logout ->
+                    logout.logoutUrl("/api/authentication/logout")
+                            .addLogoutHandler(logoutHandler)
+                            .logoutSuccessHandler((
+                                    (request, response, authentication) -> {
+                                        System.out.println(request);
+                                        SecurityContextHolder.clearContext();
+                                    }
+                            )));
 
     return http.build();
   }
