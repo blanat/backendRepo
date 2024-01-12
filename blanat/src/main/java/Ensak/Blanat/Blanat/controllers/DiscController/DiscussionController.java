@@ -86,8 +86,8 @@ public class DiscussionController {
 
 
     @GetMapping("/created-by-current-user")
-    public ResponseEntity<List<Discussion>> getDiscussionsCreatedByCurrentUser() {
-        List<Discussion> discussions = discussionService.getDiscussionsCreatedByCurrentUser();
+    public ResponseEntity<List<DiscussionDTO>> getDiscussionsCreatedByCurrentUser() {
+        List<DiscussionDTO> discussions = discussionService.getDiscussionsCreatedByCurrentUser();
         return ResponseEntity.ok(discussions);
     }
 

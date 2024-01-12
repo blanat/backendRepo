@@ -15,4 +15,6 @@ public interface DiscussionRepository extends JpaRepository<Discussion,Long> {
 
     @Override
     List<Discussion> findAll();
+
+    List<Discussion> findAllByViewersContaining(UserApp user);
 }

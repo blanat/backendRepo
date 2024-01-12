@@ -73,7 +73,6 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             Discussion savedDiscussion = discussionRepository.save(discussion);
 
-            // Créer et retourner un objet DiscussionDTO avec les détails requis
             DiscussionDTO responseDTO = new DiscussionDTO();
             responseDTO.setId(savedDiscussion.getId());
             responseDTO.setTitre(savedDiscussion.getTitre());
@@ -83,7 +82,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             return responseDTO;
         } else {
-            throw new UserNotFoundException("User not found for email: " + email);
+            throw new UserNotFoundException("User not found ");
         }
     }
 
@@ -133,7 +132,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
                     .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+            throw new DiscussionServiceException("ERREUR LORS de la recuperation des discussions");
         }
     }
 
@@ -141,7 +140,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     public Long updateViews(Long discussionId, String token) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
-                String jwt = token.substring(7); // Extrait le JWT sans "Bearer "
+                String jwt = token.substring(7);
                 String email = jwtTokenService.ExtractUserName(jwt);
 
                 if (email != null) {
@@ -172,13 +171,13 @@ public class DiscussionServiceImpl implements IDiscussionService{
             }
             throw new UnauthorizedException("Unauthorized access");
         } catch (DiscussionNotFoundException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (UnauthorizedException | MalformedJwtException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (Exception e) {
-            e.printStackTrace(); // Logger l'erreur
+            e.printStackTrace();
             throw new RuntimeException("Error updating views for discussion: " + discussionId, e);
         }
     }
@@ -193,12 +192,25 @@ public class DiscussionServiceImpl implements IDiscussionService{
     }
 
 
-    public List<Discussion> getDiscussionsCreatedByCurrentUser() {
-        // Récupérer l'utilisateur actuellement authentifié
-        UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Récupérer toutes les discussions créées par l'utilisateur connecté
-        return discussionRepository.findByCreateur(currentUser);
+    public List<DiscussionDTO> getDiscussionsCreatedByCurrentUser() {
+        try {
+            UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Discussion> discussions=discussionRepository.findByCreateur(currentUser);
+            return discussions.stream()
+                    .map(discussion -> new DiscussionDTO(
+                            discussion.getId(),
+                            discussion.getTitre(),
+                            discussion.getCategories(),
+                            discussion.getCreateur().getUserName(),
+                            discussion.getNbrvue(),
+                            // Utilisation de la méthode buildProfileImageUrl pour récupérer l'URL de l'image de profil
+                            imageBuilder.buildProfileImageUrl(discussion.getCreateur().getProfileFilePath())
+                    ))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+        }
     }
 
     @Transactional
@@ -213,5 +225,28 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             discussionRepository.delete(discussion);
         });
+
+
+    }
+
+    public void deleteDiscussionAndMessages(Long discussionId) {
+        // Récupérer l'utilisateur connecté
+        UserApp connectedUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Récupérer la discussion à supprimer
+        Discussion discussionToDelete = discussionRepository.findById(discussionId)
+                .orElseThrow(() -> new RuntimeException("Discussion not found"));
+
+        // Vérifier si l'utilisateur connecté est le créateur de la discussion
+        if (discussionToDelete.getCreateur().equals(connectedUser)) {
+            // Supprimer tous les commentaires de la discussion
+            List<DiscMessage> messagesToDelete = discussionToDelete.getDiscMessage();
+            discMessageRepository.deleteAll(messagesToDelete);
+
+            // Supprimer la discussion elle-même
+            discussionRepository.delete(discussionToDelete);
+        } else {
+            throw new RuntimeException("You are not allowed to delete this discussion");
+        }
     }
 }

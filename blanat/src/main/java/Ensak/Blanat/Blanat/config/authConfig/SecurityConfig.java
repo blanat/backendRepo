@@ -28,7 +28,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final LogoutHandler logoutHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -55,23 +54,20 @@ public class SecurityConfig {
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     )
     .authorizeHttpRequests(authorize -> authorize
-      .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
+
+      .anyRequest().permitAll()
+    )
+    .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+    ;
+
+    /* later on we'll add this for permissions if we want to
+    .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
       .requestMatchers(HttpMethod.POST, "/api/authentication/signin").permitAll()
       .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
       .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
       .requestMatchers(HttpMethod.POST, "/notification").permitAll()
-      .anyRequest().authenticated()
-    )
-    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .logout(logout ->
-                    logout.logoutUrl("/api/authentication/logout")
-                            .addLogoutHandler(logoutHandler)
-                            .logoutSuccessHandler((
-                                    (request, response, authentication) -> {
-                                        System.out.println(request);
-                                        SecurityContextHolder.clearContext();
-                                    }
-                            )));
+      .anyRequest().authenticated() */
 
     return http.build();
   }

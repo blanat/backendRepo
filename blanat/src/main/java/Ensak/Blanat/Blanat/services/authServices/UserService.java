@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import Ensak.Blanat.Blanat.entities.UserApp;
-import Ensak.Blanat.Blanat.repositories.UserRepository;
+import Ensak.Blanat.Blanat.entities.*;
+import Ensak.Blanat.Blanat.repositories.*;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,12 @@ public class UserService {
 
   private final UserRepository userRepository;
     private final JwtService jwtService;
+
+    // Injectez les différents repositories nécessaires
+    private final DiscussionRepository discussionRepository;
+    private final CommentRepository commentRepository;
+    private final DealRepository dealRepository;
+    private final DiscMessageRepository discMessageRepository;
 
   public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
@@ -89,11 +96,39 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
+
+
+
+    @Transactional
     public void deleteUser(String email) {
         UserApp user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Remove associations
+        for (Discussion discussion : user.getDiscussions()) {
+            discussion.getViewers().remove(user);
+            discussion.getDiscMessage().clear();
+        }
+
+        // Remove user from views of other discussions
+        List<Discussion> otherDiscussions = discussionRepository.findAllByViewersContaining(user);
+        for (Discussion discussion : otherDiscussions) {
+            discussion.getViewers().remove(user);
+        }
+
+        // Clear associations from comments and deals
+        for (Comment comment : user.getComments()) {
+            comment.getDeal().getComments().remove(comment);
+        }
+        for (Deal deal : user.getDeals()) {
+            deal.getComments().clear();
+            deal.getDealCreator().getDeals().remove(deal);
+        }
+
         userRepository.delete(user);
     }
+
 
 
 
