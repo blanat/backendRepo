@@ -133,7 +133,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
                     .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+            throw new DiscussionServiceException("ERREUR LORS de la recuperation des discussions");
         }
     }
 
@@ -141,7 +141,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     public Long updateViews(Long discussionId, String token) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
-                String jwt = token.substring(7); 
+                String jwt = token.substring(7);
                 String email = jwtTokenService.ExtractUserName(jwt);
 
                 if (email != null) {
