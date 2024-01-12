@@ -58,8 +58,8 @@ public class Deal {
     @Column(nullable = true)
     private int deg;
 
-    @Formula("(SELECT COUNT(c.comment_id) FROM Comment c WHERE c.deal_id = dealID)")
-    private int numberComment;
+    @Column(nullable = true)
+    private int numberOfComments;
 
     @Column(nullable = true)// should be false, but because we want to test we will be changing it to true
     private LocalDateTime dateCreation;

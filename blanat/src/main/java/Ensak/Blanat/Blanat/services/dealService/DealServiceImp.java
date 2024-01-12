@@ -87,46 +87,6 @@ public class DealServiceImp implements DealServiceInterface {
 
 
 
-    //==================================================
-
-
-/*
-    public DetailDealDTO getDealDetails(long dealId) {
-        Deal deal = dealRepository.findByDealID(dealId);
-
-        if (deal == null) {
-            // Handle the case where the deal with the specified ID is not found
-            // You can throw an exception or return a special response based on your requirements
-            return null;
-        }
-
-        // Map entities to DTOs
-        List<String> imagesUrl = imageURLbuilder.buildImageUrls(imagesDealRepository.findByDeal(deal));
-        UserDTO dealCreatorDTO = userMapper.userToUserDTO(deal.getDealCreator());
-        List<CommentDTO> commentDTOs = commentRepository.findByDealOrderByDateAsc(deal).stream()
-                .map(commentMapper::commentToCommentDTO)
-                .collect(Collectors.toList());
-
-        // Create and return the DetailDealDTO
-        return DetailDealDTO.builder()
-                .imagesUrl(imagesUrl)
-                .dealCreator(dealCreatorDTO)
-                .comments(commentDTOs)
-                .build();
-    }
-
-*/
-
-
-
-
-
-
-
-
-    //==================================================
-
-
     @Override
     public List<Deal> getAllDeals() {
         return null;
@@ -169,4 +129,43 @@ public class DealServiceImp implements DealServiceInterface {
                 .map(this::enrichDealDTO)
                 .toList();
     }
+
+
+    public void updateCommentCount(long dealId) {
+        // Fetch the Deal entity
+        Deal deal = dealRepository.findById(dealId).orElse(null);
+
+        if (deal != null) {
+            // Update the numberComment field based on the current number of comments
+            int commentCount = dealRepository.countCommentsByDealId(dealId);
+            deal.setNumberOfComments(commentCount);
+
+            System.out.println("******** - Deal ID: " + deal.getDealID() + ", Comment Count: " + deal.getNumberOfComments());
+
+            // Save the updated Deal entity
+            dealRepository.save(deal);
+        }
+    }
+
+    //========================================
+    public void incrementDeg(Long dealId) {
+        Deal deal = dealRepository.findById(dealId).orElse(null);
+
+        if (deal != null) {
+            deal.setDeg(deal.getDeg() + 1);
+            dealRepository.save(deal);
+        } else {
+            // Deal not found, handle accordingly (throw exception, log, etc.)
+        }
+    }
+
+    public void decrementDeg(Long dealId) {
+        Deal deal = dealRepository.findById(dealId).orElse(null);
+
+        if (deal != null) {
+            deal.setDeg(Math.max(0, deal.getDeg() - 1));
+            dealRepository.save(deal);
+        }
+    }
+
 }
