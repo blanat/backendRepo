@@ -12,4 +12,7 @@ public interface IDiscussionService {
     Discussion addMessage(Long discussionId, MessageDTO messageDTO);
     Long updateViews(Long discussionId, String token);
     Discussion getDiscussionById(Long discussionId);
+
+    void deleteDiscussionAndMessages(Long discussionId);
+
 }

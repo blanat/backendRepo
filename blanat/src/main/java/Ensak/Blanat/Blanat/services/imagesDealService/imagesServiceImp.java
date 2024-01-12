@@ -68,7 +68,7 @@ public class imagesServiceImp implements imagesServiceInterface {
     private String saveImageToFileSystem(MultipartFile file) {
 
         try {
-            Path folderPath = Path.of("E:\\ImagesTest");
+            Path folderPath = Path.of("C:\\ImagesTest");
 
             String originalFilename = file.getOriginalFilename();
             String extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
