@@ -28,7 +28,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final LogoutHandler logoutHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -58,7 +57,8 @@ public class SecurityConfig {
 
       .anyRequest().permitAll()
     )
-    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+    .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
     ;
 
     /* later on we'll add this for permissions if we want to
