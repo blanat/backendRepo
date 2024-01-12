@@ -73,7 +73,6 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             Discussion savedDiscussion = discussionRepository.save(discussion);
 
-            // Créer et retourner un objet DiscussionDTO avec les détails requis
             DiscussionDTO responseDTO = new DiscussionDTO();
             responseDTO.setId(savedDiscussion.getId());
             responseDTO.setTitre(savedDiscussion.getTitre());
@@ -83,7 +82,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             return responseDTO;
         } else {
-            throw new UserNotFoundException("User not found for email: " + email);
+            throw new UserNotFoundException("User not found ");
         }
     }
 
