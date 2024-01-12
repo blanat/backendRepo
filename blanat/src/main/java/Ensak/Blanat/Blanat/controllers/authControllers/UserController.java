@@ -39,7 +39,10 @@ public class UserController {
         userService.deleteUser(email);
     }
 
-
+    @PostMapping("/userDetails/{email}")
+    public UserApp getUserDetails(@PathVariable String email){
+        return new UserApp();
+    }
 
 
 
