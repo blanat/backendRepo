@@ -85,6 +85,7 @@ public class DiscMessageService {
 
 
     public List<MessageDTO> getCommentsByDiscussionId(Long discussionId) {
+
         Discussion discussion = getDiscussionById(discussionId);
         List<DiscMessage> discMessages = discussion.getDiscMessage();
 
@@ -93,6 +94,7 @@ public class DiscMessageService {
                 .collect(Collectors.toList());
     }
 
+    //mapping between messagedto and discmessage
     private MessageDTO mapToCommentDTO(DiscMessage discMessage) {
         MessageDTO commentDTO = new MessageDTO();
         commentDTO.setContent(discMessage.getContent());
