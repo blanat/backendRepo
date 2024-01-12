@@ -229,5 +229,31 @@ public class DiscussionServiceImpl implements IDiscussionService{
         }
     }
 
+    @Transactional
+    public Discussion updateSave(Long discussionId) {
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
+
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
+
+            // Check if save is 0, then increment it to 1, otherwise leave it as is
+            if (discussion.getSave() == 0) {
+                discussion.setSave(1);
+
+                // Save the changes to the database
+                return discussionRepository.save(discussion);
+            }
+
+            // If save is already 1, no need to increment
+            return discussion;
+        } else {
+            // Discussion with the given ID not found
+            throw new IllegalArgumentException("Discussion not found with ID: " + discussionId);
+        }
+    }
+
+
+
+
 
 }

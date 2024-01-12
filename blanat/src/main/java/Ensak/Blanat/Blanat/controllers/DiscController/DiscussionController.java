@@ -110,4 +110,9 @@ public class DiscussionController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{discussionId}/updateSave")
+    public Discussion updateSave(@PathVariable Long discussionId) {
+        return discussionService.updateSave(discussionId);
+    }
+
 }
