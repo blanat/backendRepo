@@ -33,42 +33,46 @@ public class SecurityConfig {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-      authProvider.setUserDetailsService(userService.userDetailsService());
-      authProvider.setPasswordEncoder(passwordEncoder);
-      return authProvider;
-  }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userService.userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return authProvider;
+    }
 
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-      return config.getAuthenticationManager();
-  }
-  
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-    .csrf(AbstractHttpConfigurer::disable
-    )
-    .sessionManagement(session -> session
-      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    )
-    .authorizeHttpRequests(authorize -> authorize
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
-      .anyRequest().permitAll()
-    )
-    .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-    ;
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/authentication/signin").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/notification").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout ->
+                        logout.logoutUrl("/api/authentication/logout")
+                                .addLogoutHandler(logoutHandler)
+                                .logoutSuccessHandler((
+                                        (request, response, authentication) -> {
+                                            System.out.println(request);
+                                            SecurityContextHolder.clearContext();
+                                        }
+                                )));
 
-    /* later on we'll add this for permissions if we want to
-    .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
-      .requestMatchers(HttpMethod.POST, "/api/authentication/signin").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
-      .requestMatchers(HttpMethod.POST, "/notification").permitAll()
-      .anyRequest().authenticated() */
-
-    return http.build();
-  }
+        return http.build();
+    }
 }

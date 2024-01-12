@@ -192,6 +192,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
         return discussionOptional.orElseThrow(() -> new EntityNotFoundException("Discussion not found"));
     }
 
+
     public List<DiscussionDTO> getDiscussionsCreatedByCurrentUser() {
         try {
             UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -213,7 +214,6 @@ public class DiscussionServiceImpl implements IDiscussionService{
         }
     }
 
-
     @Transactional
     public void deleteDiscussionAndComments(Long discussionId) {
         Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
@@ -226,5 +226,28 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             discussionRepository.delete(discussion);
         });
+
+
+    }
+
+    public void deleteDiscussionAndMessages(Long discussionId) {
+        // Récupérer l'utilisateur connecté
+        UserApp connectedUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Récupérer la discussion à supprimer
+        Discussion discussionToDelete = discussionRepository.findById(discussionId)
+                .orElseThrow(() -> new RuntimeException("Discussion not found"));
+
+        // Vérifier si l'utilisateur connecté est le créateur de la discussion
+        if (discussionToDelete.getCreateur().equals(connectedUser)) {
+            // Supprimer tous les commentaires de la discussion
+            List<DiscMessage> messagesToDelete = discussionToDelete.getDiscMessage();
+            discMessageRepository.deleteAll(messagesToDelete);
+
+            // Supprimer la discussion elle-même
+            discussionRepository.delete(discussionToDelete);
+        } else {
+            throw new RuntimeException("You are not allowed to delete this discussion");
+        }
     }
 }
