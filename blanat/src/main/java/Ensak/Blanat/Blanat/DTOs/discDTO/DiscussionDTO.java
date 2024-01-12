@@ -15,6 +15,7 @@ public class DiscussionDTO {
         private int nbrvue;
         private String profileImageUrl;
         private List<MessageDTO> messageDTO;
+        private int save;
 
         public String getProfileImageUrl() {
                 return profileImageUrl;

@@ -17,6 +17,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
@@ -214,39 +215,45 @@ public class DiscussionServiceImpl implements IDiscussionService{
     }
 
     @Transactional
-    public void deleteDiscussionAndComments(Long discussionId) {
-        Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
-        discussionOptional.ifPresent(discussion -> {
-            List<DiscMessage> comments = discussion.getDiscMessage();
-            discMessageRepository.deleteAll(comments);
+    public void deleteDiscussionAndMessages(Long discussionId) {
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
 
-            List<DiscussionView> discussionViews = discussionViewRepository.findByDiscussion(discussion);
-            discussionViewRepository.deleteAll(discussionViews);
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
+
+            discMessageRepository.deleteByDiscussion(discussion);
+
+            discussionViewRepository.deleteByDiscussion(discussion);
 
             discussionRepository.delete(discussion);
-        });
-
-
-    }
-
-    public void deleteDiscussionAndMessages(Long discussionId) {
-        // Récupérer l'utilisateur connecté
-        UserApp connectedUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Récupérer la discussion à supprimer
-        Discussion discussionToDelete = discussionRepository.findById(discussionId)
-                .orElseThrow(() -> new RuntimeException("Discussion not found"));
-
-        // Vérifier si l'utilisateur connecté est le créateur de la discussion
-        if (discussionToDelete.getCreateur().equals(connectedUser)) {
-            // Supprimer tous les commentaires de la discussion
-            List<DiscMessage> messagesToDelete = discussionToDelete.getDiscMessage();
-            discMessageRepository.deleteAll(messagesToDelete);
-
-            // Supprimer la discussion elle-même
-            discussionRepository.delete(discussionToDelete);
-        } else {
-            throw new RuntimeException("You are not allowed to delete this discussion");
         }
     }
+
+    @Transactional
+    public Discussion updateSave(Long discussionId) {
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
+
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
+
+            // Check if save is 0, then increment it to 1, otherwise leave it as is
+            if (discussion.getSave() == 0) {
+                discussion.setSave(1);
+
+                // Save the changes to the database
+                return discussionRepository.save(discussion);
+            }
+
+            // If save is already 1, no need to increment
+            return discussion;
+        } else {
+            // Discussion with the given ID not found
+            throw new IllegalArgumentException("Discussion not found with ID: " + discussionId);
+        }
+    }
+
+
+
+
+
 }
