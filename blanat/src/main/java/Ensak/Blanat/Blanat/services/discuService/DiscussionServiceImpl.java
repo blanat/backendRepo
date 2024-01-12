@@ -17,6 +17,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
@@ -228,25 +229,23 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
 
     }
-
+    @Transactional
     public void deleteDiscussionAndMessages(Long discussionId) {
-        // Récupérer l'utilisateur connecté
-        UserApp connectedUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
 
-        // Récupérer la discussion à supprimer
-        Discussion discussionToDelete = discussionRepository.findById(discussionId)
-                .orElseThrow(() -> new RuntimeException("Discussion not found"));
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
 
-        // Vérifier si l'utilisateur connecté est le créateur de la discussion
-        if (discussionToDelete.getCreateur().equals(connectedUser)) {
-            // Supprimer tous les commentaires de la discussion
-            List<DiscMessage> messagesToDelete = discussionToDelete.getDiscMessage();
-            discMessageRepository.deleteAll(messagesToDelete);
+            // Supprimer les commentaires associés
+            discMessageRepository.deleteByDiscussion(discussion);
+
+            // Supprimer les vues associées
+            discussionViewRepository.deleteByDiscussion(discussion);
 
             // Supprimer la discussion elle-même
-            discussionRepository.delete(discussionToDelete);
-        } else {
-            throw new RuntimeException("You are not allowed to delete this discussion");
+            discussionRepository.delete(discussion);
         }
     }
+
+
 }

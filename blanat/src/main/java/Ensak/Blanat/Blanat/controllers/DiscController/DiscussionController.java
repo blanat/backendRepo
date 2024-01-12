@@ -15,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/discussions")
@@ -92,10 +95,19 @@ public class DiscussionController {
     }
 
 
+
+
+
+
+
     @DeleteMapping("/{discussionId}")
-    public ResponseEntity<String> deleteDiscussionAndComments(@PathVariable Long discussionId) {
-        discussionService.deleteDiscussionAndComments(discussionId);
-        return new ResponseEntity<>("Discussion and associated comments deleted successfully.", HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> deleteDiscussionAndMessages(@PathVariable Long discussionId) {
+        discussionService.deleteDiscussionAndMessages(discussionId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "La discussion a été supprimée avec succès.");
+
+        return ResponseEntity.ok(response);
     }
 
 }

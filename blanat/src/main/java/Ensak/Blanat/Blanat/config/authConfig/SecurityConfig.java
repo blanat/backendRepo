@@ -60,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/notification").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/discussions/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
