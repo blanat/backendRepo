@@ -192,14 +192,27 @@ public class DiscussionServiceImpl implements IDiscussionService{
         return discussionOptional.orElseThrow(() -> new EntityNotFoundException("Discussion not found"));
     }
 
-
-    public List<Discussion> getDiscussionsCreatedByCurrentUser() {
-        // Récupérer l'utilisateur actuellement authentifié
-        UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Récupérer toutes les discussions créées par l'utilisateur connecté
-        return discussionRepository.findByCreateur(currentUser);
+    public List<DiscussionDTO> getDiscussionsCreatedByCurrentUser() {
+        try {
+            UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Discussion> discussions=discussionRepository.findByCreateur(currentUser);
+            return discussions.stream()
+                    .map(discussion -> new DiscussionDTO(
+                            discussion.getId(),
+                            discussion.getTitre(),
+                            discussion.getCategories(),
+                            discussion.getCreateur().getUserName(),
+                            discussion.getNbrvue(),
+                            // Utilisation de la méthode buildProfileImageUrl pour récupérer l'URL de l'image de profil
+                            imageBuilder.buildProfileImageUrl(discussion.getCreateur().getProfileFilePath())
+                    ))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+        }
     }
+
 
     @Transactional
     public void deleteDiscussionAndComments(Long discussionId) {
