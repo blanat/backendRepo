@@ -29,7 +29,6 @@ public class UserAppAuthTest {
 
     //    @Mock
     private UserRepository userRepository;
-    private TokenRepository tokenRepository;
     @Mock
     private PasswordEncoder passwordEncoderMock;
     @Mock
@@ -44,9 +43,8 @@ public class UserAppAuthTest {
     @BeforeEach
     public void setUp(){
         userRepository = mock(UserRepository.class,RETURNS_DEEP_STUBS);
-        tokenRepository = mock(TokenRepository.class,RETURNS_DEEP_STUBS);
         userService = mock(UserService.class, RETURNS_DEEP_STUBS);
-        authenticationService = new AuthenticationService(userRepository,tokenRepository,userService,passwordEncoderMock,jwtService,authenticationManager);
+        authenticationService = new AuthenticationService(userRepository,userService,passwordEncoderMock,jwtService,authenticationManager);
     }
 
 
