@@ -30,7 +30,7 @@ public class FirebaseMessagingService {
 
         try{
             firebaseMessaging.send(message);
-            return "Succes Sending Notificatin";
+            return "Success Sending Notification";
         }catch (FirebaseMessagingException e){
             e.printStackTrace();
             return  "Error Sending Notification";
