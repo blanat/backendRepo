@@ -141,7 +141,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     public Long updateViews(Long discussionId, String token) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
-                String jwt = token.substring(7); // Extrait le JWT sans "Bearer "
+                String jwt = token.substring(7); 
                 String email = jwtTokenService.ExtractUserName(jwt);
 
                 if (email != null) {
@@ -172,13 +172,13 @@ public class DiscussionServiceImpl implements IDiscussionService{
             }
             throw new UnauthorizedException("Unauthorized access");
         } catch (DiscussionNotFoundException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (UnauthorizedException | MalformedJwtException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (Exception e) {
-            e.printStackTrace(); // Logger l'erreur
+            e.printStackTrace();
             throw new RuntimeException("Error updating views for discussion: " + discussionId, e);
         }
     }
