@@ -12,8 +12,7 @@ public class imageURLbuilder {
 
 
     // Load the base URL from properties file or configuration
-    private static final String BASE_URL = "http://192.168.100.4:8085/api/images/";
-
+    private static final String BASE_URL = "http://192.168.1.103:8085/api/images/";
 
     public static String buildImageUrl(ImagesDeal image) {
         String filename = extractFilename(image.getFilePath());

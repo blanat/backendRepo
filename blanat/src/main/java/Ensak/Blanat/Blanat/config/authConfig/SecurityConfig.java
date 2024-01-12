@@ -1,27 +1,27 @@
 package Ensak.Blanat.Blanat.config.authConfig;
 
-import Ensak.Blanat.Blanat.filters.authFilters.JwtAuthenticationFilter;
-import Ensak.Blanat.Blanat.services.authServices.UserService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+        import Ensak.Blanat.Blanat.filters.authFilters.JwtAuthenticationFilter;
+        import Ensak.Blanat.Blanat.services.authServices.UserService;
+        import org.springframework.context.annotation.Bean;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.http.HttpMethod;
 
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
+        import lombok.RequiredArgsConstructor;
+        import org.springframework.security.authentication.AuthenticationManager;
+        import org.springframework.security.authentication.AuthenticationProvider;
+        import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+        import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+        import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+        import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+        import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+        import org.springframework.security.config.http.SessionCreationPolicy;
+        import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+        import org.springframework.security.core.context.SecurityContextHolder;
+        import org.springframework.security.crypto.password.PasswordEncoder;
+        import org.springframework.security.web.SecurityFilterChain;
+        import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+        import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -61,13 +61,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         ;
 
-    /* later on we'll add this for permissions if we want to
-    .requestMatchers(HttpMethod.POST, "/api/authentication/signup").permitAll()
-      .requestMatchers(HttpMethod.POST, "/api/authentication/signin").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/authentication/test/**").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
-      .requestMatchers(HttpMethod.POST, "/notification").permitAll()
-      .anyRequest().authenticated() */
+
 
         return http.build();
     }
