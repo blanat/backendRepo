@@ -215,34 +215,16 @@ public class DiscussionServiceImpl implements IDiscussionService{
     }
 
     @Transactional
-    public void deleteDiscussionAndComments(Long discussionId) {
-        Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
-        discussionOptional.ifPresent(discussion -> {
-            List<DiscMessage> comments = discussion.getDiscMessage();
-            discMessageRepository.deleteAll(comments);
-
-            List<DiscussionView> discussionViews = discussionViewRepository.findByDiscussion(discussion);
-            discussionViewRepository.deleteAll(discussionViews);
-
-            discussionRepository.delete(discussion);
-        });
-
-
-    }
-    @Transactional
     public void deleteDiscussionAndMessages(Long discussionId) {
         Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
 
         if (optionalDiscussion.isPresent()) {
             Discussion discussion = optionalDiscussion.get();
 
-            // Supprimer les commentaires associés
             discMessageRepository.deleteByDiscussion(discussion);
 
-            // Supprimer les vues associées
             discussionViewRepository.deleteByDiscussion(discussion);
 
-            // Supprimer la discussion elle-même
             discussionRepository.delete(discussion);
         }
     }
