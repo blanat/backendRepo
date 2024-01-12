@@ -37,11 +37,9 @@ public class DiscMessageService {
         Discussion discussion = discussionRepository.findById(discussionId)
                 .orElseThrow(() -> new RuntimeException("Discussion not found"));
 
-        // Récupérer l'utilisateur actuellement authentifié depuis SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserApp currentUser = (UserApp) authentication.getPrincipal();
 
-        // Construire un nouveau DiscMessage
         DiscMessage newMessage = DiscMessage.builder()
                 .discussion(discussion)
                 .user(currentUser)
@@ -77,7 +75,6 @@ public class DiscMessageService {
         Discussion discussion = discussionRepository.findById(discussionId)
                 .orElseThrow(() -> new EntityNotFoundException("Discussion not found"));
 
-        // Mapping de l'entité Discussion à DiscussionDTO
 
         return discussion;
     }
