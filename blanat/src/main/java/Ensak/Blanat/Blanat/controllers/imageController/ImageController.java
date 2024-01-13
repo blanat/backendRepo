@@ -53,5 +53,11 @@ public class ImageController {
     }
 
 
+    @GetMapping("/Deal/urls/{dealId}")
+    public ResponseEntity<List<String>> getImageUrlsForDeal(@PathVariable long dealId) {
+        List<String> imageUrls = imageService.getImagesUrlsForDeal(dealId);
+        return ResponseEntity.ok(imageUrls);
+    }
+
 
 }

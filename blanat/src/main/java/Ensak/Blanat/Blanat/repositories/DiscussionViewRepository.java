@@ -6,7 +6,13 @@ import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface DiscussionViewRepository extends JpaRepository<DiscussionView, Long> {
     DiscussionView findByDiscussionAndUser(Discussion discussion, UserApp user);
     Long countByDiscussionId(Long discussionId);
+
+    List<DiscussionView> findByDiscussion(Discussion discussion);
+
+    void deleteByDiscussion(Discussion discussion);
 }

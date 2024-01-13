@@ -19,6 +19,7 @@ public class ImagesDeal {
     private String filePath;
 
     @ManyToOne
+    @JoinColumn(name = "deal_id")
     private Deal deal;
 
 }

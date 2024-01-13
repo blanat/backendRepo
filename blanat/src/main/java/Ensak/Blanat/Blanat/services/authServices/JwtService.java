@@ -29,7 +29,7 @@ public class JwtService {
 
 private final UserRepository userRepository;
   String jwtSecretKey="1cd6a9c75006cdc80314f7e2813a9513f0ae46d17d652e34711fc4167325fb41";
-  Long jwtExpirationMs=3600000L;
+  Long jwtExpirationMs =7739999999000L;
 
     public String extractUserName(String token) {
         String userName = extractClaim(token, Claims::getSubject);

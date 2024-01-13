@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.repositories;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface ImagesDealRepository extends JpaRepository<ImagesDeal, Long> {
     List<ImagesDeal> findByDeal(Deal deal);
 
     ImagesDeal findFirstByDeal(Deal deal);
+
+
 }

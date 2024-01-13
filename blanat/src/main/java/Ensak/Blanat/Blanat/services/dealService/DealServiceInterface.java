@@ -1,6 +1,5 @@
 package Ensak.Blanat.Blanat.services.dealService;
 
-import Ensak.Blanat.Blanat.DTOs.dealDTO.DetailDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
@@ -9,7 +8,7 @@ import java.util.List;
 public interface DealServiceInterface {
 
     List<ListDealDTO> getListDealsDTO();
-    DetailDealDTO getDealDetails(long dealId);
+    //DetailDealDTO getDealDetails(long dealId);
 
     List<ImagesDeal> getDealImages(long dealId);
     List<Deal> getAllDeals();
@@ -29,4 +28,8 @@ public interface DealServiceInterface {
     void getActiveDeals(Long dealId);
 
     List<ListDealDTO> getListDealsDTOByUserId(long id);
+
+    void updateCommentCount(long dealId);
+    void incrementDeg(Long dealId);
+    void decrementDeg(Long dealId);
 }

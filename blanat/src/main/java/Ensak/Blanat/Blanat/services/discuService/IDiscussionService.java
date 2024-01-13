@@ -10,7 +10,11 @@ public interface IDiscussionService {
     DiscussionDTO createDiscussion(DiscussionDTO discussionDTO, String email);
     List<DiscussionDTO> getAllDiscussionsInfo();
     Discussion addMessage(Long discussionId, MessageDTO messageDTO);
-    void updateViews(Long discussionId);
-
+    Long updateViews(Long discussionId, String token);
     Discussion getDiscussionById(Long discussionId);
+
+    void deleteDiscussionAndMessages(Long discussionId);
+
+    Discussion updateSave(Long discussionId);
+
 }
