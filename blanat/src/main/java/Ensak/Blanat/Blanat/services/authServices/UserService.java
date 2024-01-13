@@ -144,14 +144,17 @@ public class UserService {
         LocalDateTime joinedAt = user.getCreatedAt();
         String profileFilePath = user.getProfileFilePath();
 
-        userInfo.setUserName(userName);
-        userInfo.setDateJoined(joinedAt);
-        userInfo.setId(id);
-        userInfo.setProfileImageUrl(profileFilePath);
-        userInfo.setNumberOfDeals(numberOfSavedDeals);
-        userInfo.setNumberOfSavedDis(numberOfSavedDiscu);
+        return userInfo.builder()
+                .numberOfDeals(numberOfSavedDeals)
+                .DateJoined(joinedAt)
+                .id(id)
+                .userName(userName)
+                .profileImageUrl(profileFilePath)
+                .numberOfSavedDis(numberOfSavedDiscu)
+                .build();
 
-        return userInfo;
+
+        
 
     }
 
