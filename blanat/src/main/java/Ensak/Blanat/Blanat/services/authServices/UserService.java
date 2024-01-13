@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -32,8 +33,17 @@ public class UserService {
     private final CommentRepository commentRepository;
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
+
+    public UserApp updatePassword(String email, String newPassword) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+    }
     public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
@@ -89,13 +99,7 @@ public class UserService {
         return user;
     }
 
-    public UserApp updatePassword(String email, String newPassword) {
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        user.setPassword(newPassword);
-        user.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(user);
-    }
+
 
 
 

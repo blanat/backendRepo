@@ -39,6 +39,16 @@ public class UserController {
         userService.deleteUser(email);
     }
 
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+        String newPassword = requestBody.get("password");
+        userService.updatePassword(email, newPassword);
+        return ResponseEntity.ok().build();
+    }
+
+
+
     @PostMapping("/userDetails")
     public UserProfileStatisticsDTO getUserDetails(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
