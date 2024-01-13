@@ -13,4 +13,6 @@ public interface DiscussionViewRepository extends JpaRepository<DiscussionView, 
     Long countByDiscussionId(Long discussionId);
 
     List<DiscussionView> findByDiscussion(Discussion discussion);
+
+    void deleteByDiscussion(Discussion discussion);
 }
