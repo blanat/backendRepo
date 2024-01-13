@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
 import Ensak.Blanat.Blanat.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,16 +26,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
-
-    // Injectez les différents repositories nécessaires
     private final DiscussionRepository discussionRepository;
     private final CommentRepository commentRepository;
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
 
-  public UserDetailsService userDetailsService() {
+
+    public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
           public UserDetails loadUserByUsername(String username) {
@@ -130,7 +131,35 @@ public class UserService {
     }
 
 
+    public UserProfileStatisticsDTO getUserDetails(String email){
+        UserProfileStatisticsDTO userInfo = new UserProfileStatisticsDTO();
+        Optional<UserApp> byEmail = userRepository.findByEmail(email);
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        Long id = user.getId();
+        int numberOfSavedDeals = user.getSavedDeals().size();
+        int numberOfSavedDiscu = user.getDiscussions().size();
+        String userName = user.getUserName();
+        LocalDateTime joinedAt = user.getCreatedAt();
+        String profileFilePath = user.getProfileFilePath();
+
+        userInfo.setUserName(userName);
+        userInfo.setDateJoined(joinedAt);
+        userInfo.setId(id);
+        userInfo.setProfileImageUrl(profileFilePath);
+        userInfo.setNumberOfDeals(numberOfSavedDeals);
+        userInfo.setNumberOfSavedDis(numberOfSavedDiscu);
+
+        return userInfo;
+
+    }
+
+/*
+* SELECT COUNT(*) AS num_saved_deals
+FROM saved_deals
+WHERE user_id = :userId;
+* */
 
 
 

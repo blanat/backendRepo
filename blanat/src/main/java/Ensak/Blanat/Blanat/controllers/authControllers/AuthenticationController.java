@@ -23,16 +23,7 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
-//    @PostMapping("/signupp")
-//    public void signupFront(@RequestBody User user) {
-//        System.out.println("in it");
-//        SignUpRequest request = new SignUpRequest();
-//        request.setEmail(user.getEmail());
-//        request.setPassword(user.getPassword());
-//        request.setFirstName(user.getFirstName());
-//        request.setLastName(user.getLastName());
-//        signup(request);
-//    }
+
 
     @PostMapping("/signup")
     public JwtAuthenticationResponse signup(@RequestBody SignUpRequest request) {
