@@ -2,6 +2,7 @@ package Ensak.Blanat.Blanat.repositories;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
+import Ensak.Blanat.Blanat.entities.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +15,7 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
 
 
     List<Deal> findAllByDealCreatorId(long id);
+
     @Query("SELECT COUNT(c.commentId) FROM Comment c WHERE c.deal.id = :dealId")
     int countCommentsByDealId(@Param("dealId") long dealId);
 

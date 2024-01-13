@@ -28,6 +28,7 @@ public class Discussion {
     private String titre;
     private String description;
     private int nbrvue;
+    private int save;
 
 
     @ManyToMany
@@ -49,7 +50,7 @@ public class Discussion {
     @JsonBackReference
     private UserApp createur;
 
-    @OneToMany(mappedBy = "discussion")
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<DiscMessage> discMessage;
 
@@ -73,6 +74,10 @@ public class Discussion {
     public Categories getCategories() {
         return categories;
     }
+
+    public int getSave() {return save;}
+
+    public void setSave(int save) {this.save = save;}
 
 
     public List<DiscMessage> getDiscMessage() {

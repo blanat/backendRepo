@@ -4,7 +4,6 @@ import Ensak.Blanat.Blanat.DTOs.ethDoa.JwtAuthenticationResponse;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignInRequest;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.SignUpRequest;
 import Ensak.Blanat.Blanat.entities.UserApp;
-import Ensak.Blanat.Blanat.repositories.TokenRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.AuthenticationService;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
@@ -30,7 +29,6 @@ public class UserAppAuthTest {
 
     //    @Mock
     private UserRepository userRepository;
-    private TokenRepository tokenRepository;
     @Mock
     private PasswordEncoder passwordEncoderMock;
     @Mock
@@ -45,9 +43,8 @@ public class UserAppAuthTest {
     @BeforeEach
     public void setUp(){
         userRepository = mock(UserRepository.class,RETURNS_DEEP_STUBS);
-        tokenRepository = mock(TokenRepository.class,RETURNS_DEEP_STUBS);
         userService = mock(UserService.class, RETURNS_DEEP_STUBS);
-        authenticationService = new AuthenticationService(userRepository,tokenRepository,userService,passwordEncoderMock,jwtService,authenticationManager);
+        authenticationService = new AuthenticationService(userRepository,userService,passwordEncoderMock,jwtService,authenticationManager);
     }
 
 

@@ -17,6 +17,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
@@ -73,7 +74,6 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             Discussion savedDiscussion = discussionRepository.save(discussion);
 
-            // Créer et retourner un objet DiscussionDTO avec les détails requis
             DiscussionDTO responseDTO = new DiscussionDTO();
             responseDTO.setId(savedDiscussion.getId());
             responseDTO.setTitre(savedDiscussion.getTitre());
@@ -83,7 +83,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
             return responseDTO;
         } else {
-            throw new UserNotFoundException("User not found for email: " + email);
+            throw new UserNotFoundException("User not found ");
         }
     }
 
@@ -133,7 +133,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
                     .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+            throw new DiscussionServiceException("ERREUR LORS de la recuperation des discussions");
         }
     }
 
@@ -141,7 +141,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     public Long updateViews(Long discussionId, String token) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
-                String jwt = token.substring(7); // Extrait le JWT sans "Bearer "
+                String jwt = token.substring(7);
                 String email = jwtTokenService.ExtractUserName(jwt);
 
                 if (email != null) {
@@ -172,13 +172,13 @@ public class DiscussionServiceImpl implements IDiscussionService{
             }
             throw new UnauthorizedException("Unauthorized access");
         } catch (DiscussionNotFoundException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (UnauthorizedException | MalformedJwtException ex) {
-            ex.printStackTrace(); // Logger l'erreur
+            ex.printStackTrace();
             throw ex;
         } catch (Exception e) {
-            e.printStackTrace(); // Logger l'erreur
+            e.printStackTrace();
             throw new RuntimeException("Error updating views for discussion: " + discussionId, e);
         }
     }
@@ -193,25 +193,67 @@ public class DiscussionServiceImpl implements IDiscussionService{
     }
 
 
-    public List<Discussion> getDiscussionsCreatedByCurrentUser() {
-        // Récupérer l'utilisateur actuellement authentifié
-        UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Récupérer toutes les discussions créées par l'utilisateur connecté
-        return discussionRepository.findByCreateur(currentUser);
+    public List<DiscussionDTO> getDiscussionsCreatedByCurrentUser() {
+        try {
+            UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Discussion> discussions=discussionRepository.findByCreateur(currentUser);
+            return discussions.stream()
+                    .map(discussion -> new DiscussionDTO(
+                            discussion.getId(),
+                            discussion.getTitre(),
+                            discussion.getCategories(),
+                            discussion.getCreateur().getUserName(),
+                            discussion.getNbrvue(),
+                            // Utilisation de la méthode buildProfileImageUrl pour récupérer l'URL de l'image de profil
+                            imageBuilder.buildProfileImageUrl(discussion.getCreateur().getProfileFilePath())
+                    ))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DiscussionServiceException("Une erreur s'est produite lors de la récupération des discussions.");
+        }
     }
 
     @Transactional
-    public void deleteDiscussionAndComments(Long discussionId) {
-        Optional<Discussion> discussionOptional = discussionRepository.findById(discussionId);
-        discussionOptional.ifPresent(discussion -> {
-            List<DiscMessage> comments = discussion.getDiscMessage();
-            discMessageRepository.deleteAll(comments);
+    public void deleteDiscussionAndMessages(Long discussionId) {
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
 
-            List<DiscussionView> discussionViews = discussionViewRepository.findByDiscussion(discussion);
-            discussionViewRepository.deleteAll(discussionViews);
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
+
+            discMessageRepository.deleteByDiscussion(discussion);
+
+            discussionViewRepository.deleteByDiscussion(discussion);
 
             discussionRepository.delete(discussion);
-        });
+        }
     }
+
+    @Transactional
+    public Discussion updateSave(Long discussionId) {
+        Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
+
+        if (optionalDiscussion.isPresent()) {
+            Discussion discussion = optionalDiscussion.get();
+
+            // Check if save is 0, then increment it to 1, otherwise leave it as is
+            if (discussion.getSave() == 0) {
+                discussion.setSave(1);
+
+                // Save the changes to the database
+                return discussionRepository.save(discussion);
+            }
+
+            // If save is already 1, no need to increment
+            return discussion;
+        } else {
+            // Discussion with the given ID not found
+            throw new IllegalArgumentException("Discussion not found with ID: " + discussionId);
+        }
+    }
+
+
+
+
+
 }
