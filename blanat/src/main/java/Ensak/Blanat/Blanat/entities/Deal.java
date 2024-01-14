@@ -64,6 +64,10 @@ public class Deal {
     @Column(nullable = true)// should be false, but because we want to test we will be changing it to true
     private LocalDateTime dateCreation;
 
+
+    @Column(name = "isValidated", nullable = false)
+    private boolean isValidated = false;
+
     @OneToMany(mappedBy = "deal")
     private Collection<Comment> comments;
 

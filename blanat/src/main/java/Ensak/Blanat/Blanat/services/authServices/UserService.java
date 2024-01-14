@@ -16,10 +16,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Slf4j
@@ -32,8 +34,17 @@ public class UserService {
     private final CommentRepository commentRepository;
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
+
+    public UserApp updatePassword(String email, String newPassword) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+    }
     public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
@@ -63,6 +74,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public UserApp getUserFromToken(String token) {
 
         if (token != null && token.startsWith("Bearer ")) {
@@ -89,13 +101,7 @@ public class UserService {
         return user;
     }
 
-    public UserApp updatePassword(String email, String newPassword) {
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        user.setPassword(newPassword);
-        user.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(user);
-    }
+
 
 
 
@@ -156,6 +162,22 @@ public class UserService {
 
         
 
+    }
+
+    public void follow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().add(follower);
+        userRepository.save(user);
+    }
+
+    public void unFollow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().remove(follower);
+        userRepository.save(user);
     }
 
 /*

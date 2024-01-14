@@ -48,6 +48,7 @@ public class DealServiceImp implements DealServiceInterface {
     @Override
     public Deal saveDeal(Deal deal) {
         deal.setDateCreation(LocalDateTime.now());
+        deal.setValidated(false);
         return dealRepository.save(deal);
     }
     //==================================================
@@ -57,6 +58,24 @@ public class DealServiceImp implements DealServiceInterface {
     public List<ListDealDTO> getListDealsDTO() {
         List<Deal> allDeals = (List<Deal>) dealRepository.findAll();
         return allDeals.stream()
+                .map(this::enrichDealDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ListDealDTO> getValidatedDeals() {
+        List<Deal> allDeals = (List<Deal>) dealRepository.findAll();
+        return allDeals.stream()
+                .filter(Deal::isValidated)
+                .map(this::enrichDealDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ListDealDTO> getUnvalidatedDeals() {
+        List<Deal> allDeals = (List<Deal>) dealRepository.findAll();
+        return allDeals.stream()
+                .filter(deal -> !deal.isValidated())
                 .map(this::enrichDealDTO)
                 .toList();
     }
@@ -166,6 +185,21 @@ public class DealServiceImp implements DealServiceInterface {
             deal.setDeg(Math.max(0, deal.getDeg() - 1));
             dealRepository.save(deal);
         }
+    }
+
+    @Override
+    public void validateDeal(Long dealId) {
+        try{
+            Deal deal = dealRepository.findByDealID(dealId);
+            deal.setValidated(true);
+            dealRepository.save(deal);
+
+        }
+        catch (Exception e){
+        throw new RuntimeException("Deal not found");
+        }
+
+
     }
 
 }
