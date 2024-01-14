@@ -1,11 +1,14 @@
 package Ensak.Blanat.Blanat.controllers.authControllers;
 
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,29 +27,52 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping
+    @GetMapping("/AllUsers")
     public List<UserApp> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{email}/password")
-    public UserApp updatePassword(@PathVariable String email, @RequestBody String newPassword) {
-        return userService.updatePassword(email, newPassword);
-    }
+
 
     @DeleteMapping("/{email}")
     public void deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
     }
 
-    @PostMapping("/userDetails/{email}")
-    public UserApp getUserDetails(@PathVariable String email){
-        return new UserApp();
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+        String newPassword = requestBody.get("password");
+        userService.updatePassword(email, newPassword);
+        return ResponseEntity.ok().build();
     }
 
 
+    @PostMapping("/userDetails/{email}")
+    public UserProfileStatisticsDTO getUserDetails(@PathVariable("email") String email) {
+        //String email = email;
+        UserProfileStatisticsDTO userDetails = userService.getUserDetails(email);
+        return userDetails;
+    }
 
 
+    @PostMapping("/follow")
+    public void  followUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.follow(userId,followerId);
+    }
 
+    @PostMapping("/unfollow")
+    public void  unFollowUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.unFollow(userId,followerId);
+    }
+
+    @GetMapping("/userFromToken")
+    public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken(authorizationHeader);
+    }
 
 }

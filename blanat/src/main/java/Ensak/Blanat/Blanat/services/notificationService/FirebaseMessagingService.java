@@ -28,13 +28,20 @@ public class FirebaseMessagingService {
                 .putAllData(notificationMessage.getData())
                 .build();
 
-        try{
+
+        try {
+            // Log recipientToken and other relevant information
+            System.out.println("Recipient Token: " + notificationMessage.getRecipientToken());
+            System.out.println("Title: " + notificationMessage.getTitle());
+            System.out.println("Body: " + notificationMessage.getBody());
+
             firebaseMessaging.send(message);
             return "Success Sending Notification";
-        }catch (FirebaseMessagingException e){
+        } catch (FirebaseMessagingException e) {
             e.printStackTrace();
-            return  "Error Sending Notification";
+            return "Error Sending Notification";
         }
+
 
     }
 }

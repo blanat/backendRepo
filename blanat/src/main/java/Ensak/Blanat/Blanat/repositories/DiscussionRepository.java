@@ -17,4 +17,9 @@ public interface DiscussionRepository extends JpaRepository<Discussion,Long> {
     List<Discussion> findAll();
 
     List<Discussion> findAllByViewersContaining(UserApp user);
+
+    List<Discussion> findBySave(int save);
+
+    List<Discussion>findByViewersAndSave(UserApp user, int save);
+
 }

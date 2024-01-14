@@ -1,6 +1,5 @@
 package Ensak.Blanat.Blanat.DTOs.dealDTO;
 
-import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.enums.Categories;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,13 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListDealDTO {
+public class DealDetailsDTO {
     private long dealID; // corresponds to deal_ID in the entity
     private String title;
     private String description;
@@ -27,16 +25,5 @@ public class ListDealDTO {
     private float deliveryPrice; // corresponds to livraison_prix in the entity
     private int deg; // corresponds to deg in the entity
     private int numberOfComments; // corresponds to nbre_comment in the entity
-    private String lienDeal;
-    //Adding isValidated for Moderation purposes
-    private boolean isValidated; // corresponds to validated in the entity
-
-    //---------------------------
-    private UserDTO dealCreator;
-    //userName (+ profile image)
-    //---------------------------
-
-    // Image and time will be added to the DTO
-    private String firstImageUrl;
-    private String timePassedSinceCreation; // corresponds to the same name in the entity
+    private String dealLink;
 }

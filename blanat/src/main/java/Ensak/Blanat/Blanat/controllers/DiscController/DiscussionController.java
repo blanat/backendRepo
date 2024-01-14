@@ -111,8 +111,13 @@ public class DiscussionController {
     }
 
     @PostMapping("/{discussionId}/updateSave")
-    public Discussion updateSave(@PathVariable Long discussionId) {
+    public int updateSave(@PathVariable Long discussionId) {
         return discussionService.updateSave(discussionId);
     }
 
+
+    @GetMapping("/saved")
+    public List<Discussion> getSavedDiscussionsByUser(@AuthenticationPrincipal UserApp user) {
+        return discussionService.getSavedDiscussionsByUser(user);
+    }
 }

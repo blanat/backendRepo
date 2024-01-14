@@ -68,7 +68,7 @@ public class imagesServiceImp implements imagesServiceInterface {
     private String saveImageToFileSystem(MultipartFile file) {
 
         try {
-            Path folderPath = Path.of("E:\\ImagesTest");
+            Path folderPath = Path.of("D:\\ImagesTest");
 
             String originalFilename = file.getOriginalFilename();
             String extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
@@ -125,8 +125,9 @@ public class imagesServiceImp implements imagesServiceInterface {
     //==================================================================================
     //==================================================================================
 
-    private final String BASE_DEAL_IMAGE_PATH = "E:\\ImagesTest";
-    private final String BASE_PROFILE_IMAGE_PATH = "E:\\ImageprofileUser";
+    private final String BASE_DEAL_IMAGE_PATH = "C:\\ImagesTest";
+    private final String BASE_PROFILE_IMAGE_PATH = "C:\\ImageprofileUser";
+
 
     @Override
     public Resource loadImageAsResource(String fileName, String imageType) {

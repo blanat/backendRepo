@@ -5,35 +5,47 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
 import Ensak.Blanat.Blanat.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
-
-    // Injectez les différents repositories nécessaires
     private final DiscussionRepository discussionRepository;
     private final CommentRepository commentRepository;
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
+    private final PasswordEncoder passwordEncoder;
 
-  public UserDetailsService userDetailsService() {
+
+
+    public UserApp updatePassword(String email, String newPassword) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+    }
+    public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
           public UserDetails loadUserByUsername(String username) {
@@ -46,7 +58,7 @@ public class UserService {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
         }
-        Path filePath = Path.of("E:\\ImageprofileUser\\imagesDefault.png");
+        Path filePath = Path.of("C:\\ImageprofileUser\\nassima.jpg");
         newUser.setProfileFilePath(filePath.toString());
 
         newUser.setUpdatedAt(LocalDateTime.now());
@@ -61,6 +73,7 @@ public class UserService {
     public List<UserApp> getAllUsers() {
         return userRepository.findAll();
     }
+
 
     public UserApp getUserFromToken(String token) {
 
@@ -88,13 +101,7 @@ public class UserService {
         return user;
     }
 
-    public UserApp updatePassword(String email, String newPassword) {
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        user.setPassword(newPassword);
-        user.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(user);
-    }
+
 
 
 
@@ -130,7 +137,54 @@ public class UserService {
     }
 
 
+    public UserProfileStatisticsDTO getUserDetails(String email){
+        UserProfileStatisticsDTO userInfo = new UserProfileStatisticsDTO();
+        Optional<UserApp> byEmail = userRepository.findByEmail(email);
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        Long id = user.getId();
+        int numberOfSavedDeals = user.getSavedDeals().size();
+        int numberOfSavedDiscu = user.getDiscussions().size();
+        String userName = user.getUserName();
+        LocalDateTime joinedAt = user.getCreatedAt();
+        String profileFilePath = user.getProfileFilePath();
+
+        return userInfo.builder()
+                .numberOfDeals(numberOfSavedDeals)
+                .DateJoined(joinedAt)
+                .id(id)
+                .userName(userName)
+                .profileImageUrl(profileFilePath)
+                .numberOfSavedDis(numberOfSavedDiscu)
+                .build();
+
+
+        
+
+    }
+
+    public void follow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().add(follower);
+        userRepository.save(user);
+    }
+
+    public void unFollow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().remove(follower);
+        userRepository.save(user);
+    }
+
+/*
+* SELECT COUNT(*) AS num_saved_deals
+FROM saved_deals
+WHERE user_id = :userId;
+* */
 
 
 
