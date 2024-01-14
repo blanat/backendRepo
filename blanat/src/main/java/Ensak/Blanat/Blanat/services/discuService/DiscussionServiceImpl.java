@@ -230,7 +230,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     }
 
     @Transactional
-    public Discussion updateSave(Long discussionId) {
+    public int updateSave(Long discussionId) {
         Optional<Discussion> optionalDiscussion = discussionRepository.findById(discussionId);
 
         if (optionalDiscussion.isPresent()) {
@@ -241,11 +241,12 @@ public class DiscussionServiceImpl implements IDiscussionService{
                 discussion.setSave(1);
 
                 // Save the changes to the database
-                return discussionRepository.save(discussion);
+                 Discussion discussion1=discussionRepository.save(discussion);
+                 return discussion1.getSave();
             }
 
             // If save is already 1, no need to increment
-            return discussion;
+            return discussion.getSave();
         } else {
             // Discussion with the given ID not found
             throw new IllegalArgumentException("Discussion not found with ID: " + discussionId);
@@ -254,6 +255,10 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
 
 
+    @Override
+    public List<Discussion> getSavedDiscussionsByUser(UserApp user) {
+        return discussionRepository.findByViewersAndSave(user, 1);
+    }
 
 
 }

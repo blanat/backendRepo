@@ -58,7 +58,7 @@ public class UserService {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
         }
-        Path filePath = Path.of("E:\\ImageprofileUser\\imagesDefault.png");
+        Path filePath = Path.of("C:\\ImageprofileUser\\nassima.jpg");
         newUser.setProfileFilePath(filePath.toString());
 
         newUser.setUpdatedAt(LocalDateTime.now());
