@@ -111,8 +111,9 @@ public class DiscussionController {
     }
 
     @PostMapping("/{discussionId}/updateSave")
-    public Discussion updateSave(@PathVariable Long discussionId) {
+    public int updateSave(@PathVariable Long discussionId) {
         return discussionService.updateSave(discussionId);
     }
+
 
 }

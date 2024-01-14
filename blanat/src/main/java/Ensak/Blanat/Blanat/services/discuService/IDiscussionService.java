@@ -15,6 +15,6 @@ public interface IDiscussionService {
 
     void deleteDiscussionAndMessages(Long discussionId);
 
-    Discussion updateSave(Long discussionId);
+    int updateSave(Long discussionId);
 
 }
