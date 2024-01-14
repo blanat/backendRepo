@@ -116,4 +116,8 @@ public class DiscussionController {
     }
 
 
+    @GetMapping("/saved")
+    public List<Discussion> getSavedDiscussionsByUser(@AuthenticationPrincipal UserApp user) {
+        return discussionService.getSavedDiscussionsByUser(user);
+    }
 }
