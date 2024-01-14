@@ -2,6 +2,7 @@ package Ensak.Blanat.Blanat.controllers.dealsController;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.CreateDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
+import Ensak.Blanat.Blanat.DTOs.dealDTO.ModifyDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.entities.UserApp;
@@ -56,7 +57,7 @@ public class DealController {
             dealEntity.setDealCreator(user);
             Deal newDeal = dealService.saveDeal(dealEntity);
 
-            imageService.saveImagesAndPaths(images, newDeal);
+            //imageService.saveImagesAndPaths(images, newDeal);
 
             return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
         } catch (Exception e) {
@@ -195,6 +196,26 @@ public class DealController {
     ) {
         dealService.deleteDeal(dealId);
         return ResponseEntity.ok("Deal deleted successfully");
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("{dealId}/modify")
+public ResponseEntity<String> modifyDeal(
+            @RequestBody ModifyDealDTO modifyDealDTO,
+            @PathVariable Long dealId){
+        try {
+            dealService.modifyDeal(dealId,modifyDealDTO);
+            dealService.validateDeal(dealId);
+            return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error processing deal data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //get validate deals
+    @GetMapping("/validated")
+    public ResponseEntity<List<ListDealDTO>> getValidatedDeals() {
+        List<ListDealDTO> listDealDTOs = dealService.getValidatedDeals();
+        return new ResponseEntity<>(listDealDTOs, HttpStatus.OK);
     }
 
 }

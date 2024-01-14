@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.services.dealService;
 
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
+import Ensak.Blanat.Blanat.DTOs.dealDTO.ModifyDealDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
@@ -200,6 +201,27 @@ public class DealServiceImp implements DealServiceInterface {
         }
 
 
+    }
+
+    @Override
+    public void modifyDeal(Long dealId, ModifyDealDTO modifyDealDTO) {
+        try{
+            Deal deal = dealRepository.findByDealID(dealId);
+            deal.setTitle(modifyDealDTO.getTitle());
+            deal.setDescription(modifyDealDTO.getDescription());
+            deal.setCategory(modifyDealDTO.getCategory());
+            deal.setPrice(modifyDealDTO.getPrice());
+            deal.setNewPrice(modifyDealDTO.getNewPrice());
+            deal.setLocalisation(modifyDealDTO.getLocalisation());
+            deal.setDeliveryExist(modifyDealDTO.isDeliveryExist());
+            deal.setDeliveryPrice(modifyDealDTO.getDeliveryPrice());
+            deal.setLienDeal(modifyDealDTO.getLienDeal());
+            dealRepository.save(deal);
+
+        }
+        catch (Exception e){
+            throw new RuntimeException("Deal not found");
+        }
     }
 
 }

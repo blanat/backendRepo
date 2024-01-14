@@ -1,6 +1,7 @@
 package Ensak.Blanat.Blanat.services.dealService;
 
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
+import Ensak.Blanat.Blanat.DTOs.dealDTO.ModifyDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
 
@@ -37,4 +38,6 @@ public interface DealServiceInterface {
     void decrementDeg(Long dealId);
 
     void validateDeal(Long dealId);
+
+    void modifyDeal(Long dealId, ModifyDealDTO modifyDealDTO);
 }
