@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.services.dealService;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
+import Ensak.Blanat.Blanat.entities.UserApp;
 
 import java.util.List;
 public interface DealServiceInterface {
@@ -30,6 +31,6 @@ public interface DealServiceInterface {
     List<ListDealDTO> getListDealsDTOByUserId(long id);
 
     void updateCommentCount(long dealId);
-    void incrementDeg(Long dealId);
-    void decrementDeg(Long dealId);
+    void incrementDeg(Long dealId, UserApp user);
+    void decrementDeg(Long dealId, UserApp user);
 }

@@ -6,17 +6,22 @@ import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
+import Ensak.Blanat.Blanat.entities.UserApp;
+import Ensak.Blanat.Blanat.entities.Vote;
 import Ensak.Blanat.Blanat.mappers.CommentMapper;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.CommentRepository;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
+import Ensak.Blanat.Blanat.repositories.VoteRepository;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
 import Ensak.Blanat.Blanat.util.General;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,11 +36,13 @@ public class DealServiceImp implements DealServiceInterface {
     private final imagesServiceInterface imagesService;
     private final ImagesDealRepository imagesDealRepository;
     private final CommentRepository commentRepository;
+    private VoteRepository voteRepository;
+
 
 
 
     @Autowired
-    public DealServiceImp(DealRepository dealRepository, DealMapper dealMapper, CommentMapper commentMapper, UserMapper userMapper, imagesServiceInterface imagesService, ImagesDealRepository imagesDealRepository, CommentRepository commentRepository) {
+    public DealServiceImp(DealRepository dealRepository, DealMapper dealMapper, CommentMapper commentMapper, UserMapper userMapper, imagesServiceInterface imagesService, ImagesDealRepository imagesDealRepository, CommentRepository commentRepository,VoteRepository voteRepository) {
         this.dealRepository = dealRepository;
         this.dealMapper = dealMapper;
         this.commentMapper = commentMapper;
@@ -43,6 +50,7 @@ public class DealServiceImp implements DealServiceInterface {
         this.imagesService = imagesService;
         this.imagesDealRepository = imagesDealRepository;
         this.commentRepository = commentRepository;
+        this.voteRepository = voteRepository;
     }
 
     //===============working on ==========================
@@ -148,22 +156,55 @@ public class DealServiceImp implements DealServiceInterface {
         }
     }
 
-    //========================================
-    public void incrementDeg(Long dealId) {
+
+
+    public void incrementDeg(Long dealId, UserApp user) {
+
         Deal deal = dealRepository.findById(dealId).orElse(null);
 
-        if (deal != null) {
-            deal.setDeg(deal.getDeg() + 1);
-            dealRepository.save(deal);
-            // Log success message
-            log.info("Degree incremented successfully for dealId: {}", dealId);
+        if (deal != null && checkAndCreateVote(deal, user)) {
+
+                log.info("Incrementing degree for dealId: {} by userId: {}", dealId, user.getId());
+
+                // Update the degree in the deal
+                deal.setDeg(deal.getDeg() + 1);
+                dealRepository.save(deal);
+
+                // Log success message
+                log.info("Degree incremented successfully for dealId: {} by userId: {}", dealId, user.getId());
+
+                // Separate method for checking and creating Vote
+
         } else {
-            // Deal not found, handle accordingly (throw exception, log, etc.)
             log.error("Failed to increment degree. Deal not found for dealId: {}", dealId);
+            throw new IllegalStateException("Vote creation failed");
         }
     }
 
-    public void decrementDeg(Long dealId) {
+    public boolean checkAndCreateVote(Deal deal, UserApp user) {
+        // Check if the user has already voted for this deal
+        boolean hasVoted = voteRepository.existsByUserAndDeal(user, deal);
+        log.info("=============hasVoted==: {}", hasVoted);
+
+        if (!hasVoted) {
+            // Create a vote entry
+            Vote vote = new Vote();
+            vote.setUser(user);
+            vote.setDeal(deal);
+            voteRepository.save(vote);
+
+            // Log success message
+            log.info("Vote created successfully for dealId: {} by userId: {}", deal.getDealID(), user.getId());
+            return true;
+        } else {
+            // User has already voted, handle accordingly
+            log.error("User with userId: {} has already voted for dealId: {}", user.getId(), deal.getDealID());
+            return false;
+        }
+    }
+
+
+   /* public void decrementDeg(Long dealId) {
         Deal deal = dealRepository.findById(dealId).orElse(null);
 
         if (deal != null) {
@@ -174,6 +215,30 @@ public class DealServiceImp implements DealServiceInterface {
         } else {
             // Deal not found, handle accordingly (throw exception, log, etc.)
             log.error("Failed to decrement degree. Deal not found for dealId: {}", dealId);
+        }
+    }
+*/
+
+    public void decrementDeg(Long dealId, UserApp user) {
+
+        Deal deal = dealRepository.findById(dealId).orElse(null);
+
+        if (deal != null && checkAndCreateVote(deal, user)) {
+
+            log.info("decrementing degree for dealId: {} by userId: {}", dealId, user.getId());
+
+            // Update the degree in the deal
+            deal.setDeg(deal.getDeg() - 1);
+            dealRepository.save(deal);
+
+            // Log success message
+            log.info("Degree decremented successfully for dealId: {} by userId: {}", dealId, user.getId());
+
+            // Separate method for checking and creating Vote
+
+        } else {
+            log.error("Failed to decrement degree. Deal not found for dealId: {}", dealId);
+            throw new IllegalStateException("Vote creation failed");
         }
     }
 
