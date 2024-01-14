@@ -14,6 +14,7 @@ import Ensak.Blanat.Blanat.services.dealService.DealServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -114,6 +115,21 @@ public class DealController {
         }
     }
 
+    @PostMapping("/getUserFromToken")
+    public ResponseEntity<String> getUserFromToken(@RequestHeader("Authorization") String token) {
+        try {
+            // Call the getUserFromToken method to retrieve user information
+            UserApp user = userService.getUserFromToken(token);
+
+            // Your logic with the retrieved user...
+
+            return new ResponseEntity<>(user.getEmail(), HttpStatus.OK);
+        } catch (UsernameNotFoundException ex) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error processing request: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 /*
 

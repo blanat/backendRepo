@@ -42,17 +42,12 @@ public class UserController {
         userService.deleteUser(email);
     }
 
-    @PostMapping("/userDetails")
-    public UserProfileStatisticsDTO getUserDetails(@RequestBody Map<String, String> requestBody) {
-        String email = requestBody.get("email");
+    @PostMapping("/userDetails/{email}")
+    public UserProfileStatisticsDTO getUserDetails(@PathVariable("email") String email) {
+        //String email = email;
         UserProfileStatisticsDTO userDetails = userService.getUserDetails(email);
         return userDetails;
     }
-
-
-
-
-
 
 
 }
