@@ -255,7 +255,10 @@ public class DiscussionServiceImpl implements IDiscussionService{
 
 
 
-
+    @Override
+    public List<Discussion> getSavedDiscussionsByUser(UserApp user) {
+        return discussionRepository.findByViewersAndSave(user, 1);
+    }
 
 
 }

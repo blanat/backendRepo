@@ -3,6 +3,7 @@ package Ensak.Blanat.Blanat.services.discuService;
 import Ensak.Blanat.Blanat.DTOs.discDTO.DiscussionDTO;
 import Ensak.Blanat.Blanat.DTOs.discDTO.MessageDTO;
 import Ensak.Blanat.Blanat.entities.Discussion;
+import Ensak.Blanat.Blanat.entities.UserApp;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface IDiscussionService {
 
     int updateSave(Long discussionId);
 
+    List<Discussion> getSavedDiscussionsByUser(UserApp user);
 }
