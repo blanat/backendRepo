@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
 import Ensak.Blanat.Blanat.repositories.*;
@@ -92,9 +93,39 @@ public class UserService {
 
         // Log the user for debugging
         log.debug("User from token: {}", user);
+        System.out.println("nono"+user.getUserName());
+        String userName=user.getUserName();
+        System.out.println("nono"+user.getUserName());
 
         return user;
     }
+
+    public ProfileDTO getUserFromToken2(String token) {
+
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        // Extract email from the token
+        String email = jwtService.extractUserName(token);
+
+        log.debug("User from token: {}", email);
+
+
+        // Retrieve the user from the database by email
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Log the user for debugging
+        log.debug("User from token: {}", user);
+        System.out.println("nono"+user.getUserName());
+        String userName=user.getUserName();
+        System.out.println("nono"+user.getUserName());
+        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail());
+        System.out.println("nono"+profileDTO);
+
+        return profileDTO;
+    }
+
     public UserApp getUserByUsername(String email) {
         UserApp user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

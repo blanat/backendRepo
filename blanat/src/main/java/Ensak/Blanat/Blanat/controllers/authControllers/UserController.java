@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.controllers.authControllers;
 
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
@@ -73,6 +74,11 @@ public class UserController {
     @GetMapping("/userFromToken")
     public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
         return userService.getUserFromToken(authorizationHeader);
+    }
+
+    @GetMapping("/userFromToken2")
+    public ProfileDTO fromToke2(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken2(authorizationHeader);
     }
 
 }

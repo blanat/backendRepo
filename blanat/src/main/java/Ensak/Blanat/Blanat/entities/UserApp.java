@@ -70,6 +70,14 @@ public class UserApp implements UserDetails {
   private List<Discussion> discussions;
 
   @Override
+  public String toString() {
+    return "UserApp{" +
+            "id='"+id+'\'' +
+            "userName='" + userName + '\'' +
+            ", email='" + email + '\'' +
+            '}';
+  }
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority(role.name()));
   }

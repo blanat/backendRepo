@@ -117,7 +117,8 @@ public class DiscussionController {
 
 
     @GetMapping("/saved")
-    public List<Discussion> getSavedDiscussionsByUser(@AuthenticationPrincipal UserApp user) {
-        return discussionService.getSavedDiscussionsByUser(user);
+    public ResponseEntity<List<Discussion>>getSavedDiscussionsByUser(@AuthenticationPrincipal UserApp user) {
+        List<Discussion> discussion= discussionService.getSavedDiscussionsByUser(user);
+        return ResponseEntity.ok(discussion);
     }
 }
