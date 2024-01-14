@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Slf4j
@@ -62,6 +63,7 @@ public class UserService {
     public List<UserApp> getAllUsers() {
         return userRepository.findAll();
     }
+
 
     public UserApp getUserFromToken(String token) {
 

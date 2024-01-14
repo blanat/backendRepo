@@ -64,4 +64,9 @@ public class UserController {
         userService.unFollow(userId,followerId);
     }
 
+    @GetMapping("/userFromToken")
+    public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken(authorizationHeader);
+    }
+
 }
