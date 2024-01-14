@@ -49,7 +49,7 @@ public class DealController {
             dealEntity.setDealCreator(user);
             Deal newDeal = dealService.saveDeal(dealEntity);
 
-            imageService.saveImagesAndPaths(images, newDeal);
+            //imageService.saveImagesAndPaths(images, newDeal);
 
             return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
         } catch (Exception e) {
@@ -129,6 +129,32 @@ public class DealController {
     public ResponseEntity<String> decrementDeg(@PathVariable Long dealId) {
         dealService.decrementDeg(dealId);
         return ResponseEntity.ok("Deg decremented successfully");
+    }
+
+
+    //Validation logic
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/notValidated")
+    public ResponseEntity<List<ListDealDTO>> getUnvalidatedDeals() {
+        List<ListDealDTO> listDealDTOs = dealService.getUnvalidatedDeals();
+        return new ResponseEntity<>(listDealDTOs, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/{dealId}/validate")
+    public ResponseEntity<String> validateDeal(@PathVariable Long dealId) {
+        dealService.validateDeal(dealId);
+        return ResponseEntity.ok("Deal validated successfully");
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @DeleteMapping("/{dealId}")
+    public ResponseEntity<String> deleteDeal(
+            @PathVariable Long dealId,
+            @RequestHeader("Authorization") String token
+    ) {
+        dealService.deleteDeal(dealId);
+        return ResponseEntity.ok("Deal deleted successfully");
     }
 
 }

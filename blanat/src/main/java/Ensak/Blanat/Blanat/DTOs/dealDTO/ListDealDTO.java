@@ -28,6 +28,8 @@ public class ListDealDTO {
     private int deg; // corresponds to deg in the entity
     private int numberOfComments; // corresponds to nbre_comment in the entity
     private String lienDeal;
+    //Adding isValidated for Moderation purposes
+    private boolean isValidated; // corresponds to validated in the entity
 
     //---------------------------
     private UserDTO dealCreator;

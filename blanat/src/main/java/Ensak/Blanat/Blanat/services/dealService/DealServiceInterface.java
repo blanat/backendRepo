@@ -10,6 +10,9 @@ public interface DealServiceInterface {
     List<ListDealDTO> getListDealsDTO();
     //DetailDealDTO getDealDetails(long dealId);
 
+    List<ListDealDTO> getValidatedDeals();
+    List<ListDealDTO> getUnvalidatedDeals();
+
     List<ImagesDeal> getDealImages(long dealId);
     List<Deal> getAllDeals();
 
@@ -32,4 +35,6 @@ public interface DealServiceInterface {
     void updateCommentCount(long dealId);
     void incrementDeg(Long dealId);
     void decrementDeg(Long dealId);
+
+    void validateDeal(Long dealId);
 }
