@@ -14,12 +14,13 @@ import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
 import Ensak.Blanat.Blanat.util.General;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 public class DealServiceImp implements DealServiceInterface {
 
@@ -154,8 +155,11 @@ public class DealServiceImp implements DealServiceInterface {
         if (deal != null) {
             deal.setDeg(deal.getDeg() + 1);
             dealRepository.save(deal);
+            // Log success message
+            log.info("Degree incremented successfully for dealId: {}", dealId);
         } else {
             // Deal not found, handle accordingly (throw exception, log, etc.)
+            log.error("Failed to increment degree. Deal not found for dealId: {}", dealId);
         }
     }
 
@@ -165,7 +169,13 @@ public class DealServiceImp implements DealServiceInterface {
         if (deal != null) {
             deal.setDeg(Math.max(0, deal.getDeg() - 1));
             dealRepository.save(deal);
+            // Log success message
+            log.info("Degree decremented successfully for dealId: {}", dealId);
+        } else {
+            // Deal not found, handle accordingly (throw exception, log, etc.)
+            log.error("Failed to decrement degree. Deal not found for dealId: {}", dealId);
         }
     }
+
 
 }

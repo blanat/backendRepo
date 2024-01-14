@@ -119,14 +119,22 @@ public class DealController {
 
     @PostMapping("/{dealId}/increment")
     public ResponseEntity<String> incrementDeg(@PathVariable Long dealId) {
+        // Log the deal ID before calling the service method
+        System.out.println("Incrementing degree for deal ID: " + dealId);
+
         dealService.incrementDeg(dealId);
         return ResponseEntity.ok("Deg incremented successfully");
     }
 
     @PostMapping("/{dealId}/decrement")
     public ResponseEntity<String> decrementDeg(@PathVariable Long dealId) {
+        // Log the deal ID before calling the service method
+        System.out.println("Decrementing degree for deal ID: " + dealId);
+
         dealService.decrementDeg(dealId);
         return ResponseEntity.ok("Deg decremented successfully");
     }
+
+
 
 }
