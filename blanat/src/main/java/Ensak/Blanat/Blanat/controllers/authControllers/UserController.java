@@ -27,7 +27,7 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping
+    @GetMapping("/AllUsers")
     public List<UserApp> getAllUsers() {
         return userService.getAllUsers();
     }
