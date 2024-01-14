@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Slf4j
@@ -72,6 +73,7 @@ public class UserService {
     public List<UserApp> getAllUsers() {
         return userRepository.findAll();
     }
+
 
     public UserApp getUserFromToken(String token) {
 
@@ -160,6 +162,22 @@ public class UserService {
 
         
 
+    }
+
+    public void follow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().add(follower);
+        userRepository.save(user);
+    }
+
+    public void unFollow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().remove(follower);
+        userRepository.save(user);
     }
 
 /*

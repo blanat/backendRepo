@@ -27,7 +27,7 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping
+    @GetMapping("/AllUsers")
     public List<UserApp> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -48,18 +48,31 @@ public class UserController {
     }
 
 
-
-    @PostMapping("/userDetails")
-    public UserProfileStatisticsDTO getUserDetails(@RequestBody Map<String, String> requestBody) {
-        String email = requestBody.get("email");
+    @PostMapping("/userDetails/{email}")
+    public UserProfileStatisticsDTO getUserDetails(@PathVariable("email") String email) {
+        //String email = email;
         UserProfileStatisticsDTO userDetails = userService.getUserDetails(email);
         return userDetails;
     }
 
 
+    @PostMapping("/follow")
+    public void  followUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.follow(userId,followerId);
+    }
 
+    @PostMapping("/unfollow")
+    public void  unFollowUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.unFollow(userId,followerId);
+    }
 
-
-
+    @GetMapping("/userFromToken")
+    public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken(authorizationHeader);
+    }
 
 }

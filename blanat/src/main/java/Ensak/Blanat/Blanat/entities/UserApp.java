@@ -45,6 +45,15 @@ public class UserApp implements UserDetails {
 //=========================
 
 
+  @ManyToMany
+  @JoinTable(
+          name = "user_followers",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "follower_id"))
+  private List<UserApp> followers;
+
+  @ManyToMany(mappedBy = "followers")
+  private List<UserApp> following;
 
 
   @OneToMany(mappedBy = "user")
