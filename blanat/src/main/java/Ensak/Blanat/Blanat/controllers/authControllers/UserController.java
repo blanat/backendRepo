@@ -27,32 +27,52 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping
+    @GetMapping("/AllUsers")
     public List<UserApp> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{email}/password")
-    public UserApp updatePassword(@PathVariable String email, @RequestBody String newPassword) {
-        return userService.updatePassword(email, newPassword);
-    }
+
 
     @DeleteMapping("/{email}")
     public void deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
     }
 
-    @PostMapping("/userDetails")
-    public UserProfileStatisticsDTO getUserDetails(@RequestBody Map<String, String> requestBody) {
-        String email = requestBody.get("email");
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+        String newPassword = requestBody.get("password");
+        userService.updatePassword(email, newPassword);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PostMapping("/userDetails/{email}")
+    public UserProfileStatisticsDTO getUserDetails(@PathVariable("email") String email) {
+        //String email = email;
         UserProfileStatisticsDTO userDetails = userService.getUserDetails(email);
         return userDetails;
     }
 
 
+    @PostMapping("/follow")
+    public void  followUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.follow(userId,followerId);
+    }
 
+    @PostMapping("/unfollow")
+    public void  unFollowUser(@RequestBody Map<String, String> requestBody){
+        String userId = requestBody.get("userId");
+        String followerId=requestBody.get("followerId");
+        userService.unFollow(userId,followerId);
+    }
 
-
-
+    @GetMapping("/userFromToken")
+    public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken(authorizationHeader);
+    }
 
 }
