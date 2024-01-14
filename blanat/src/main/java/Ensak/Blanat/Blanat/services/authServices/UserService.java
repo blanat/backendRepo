@@ -158,6 +158,22 @@ public class UserService {
 
     }
 
+    public void follow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().add(follower);
+        userRepository.save(user);
+    }
+
+    public void unFollow(String userId, String followerId) {
+        UserApp user = userRepository.getById(Long.valueOf(userId));
+        UserApp follower = userRepository.getById(Long.valueOf(followerId));
+
+        user.getFollowers().remove(follower);
+        userRepository.save(user);
+    }
+
 /*
 * SELECT COUNT(*) AS num_saved_deals
 FROM saved_deals

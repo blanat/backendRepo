@@ -54,14 +54,14 @@ public class UserController {
     public void  followUser(@RequestBody Map<String, String> requestBody){
         String userId = requestBody.get("userId");
         String followerId=requestBody.get("followerId");
-//        userService.follow(userId,followerId);
+        userService.follow(userId,followerId);
     }
 
     @PostMapping("/unfollow")
     public void  unFollowUser(@RequestBody Map<String, String> requestBody){
         String userId = requestBody.get("userId");
         String followerId=requestBody.get("followerId");
-//        userService.unFollow(userId,followerId);
+        userService.unFollow(userId,followerId);
     }
 
 }
