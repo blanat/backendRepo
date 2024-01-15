@@ -103,12 +103,7 @@ public class UserService {
         return user;
     }
 
-
-
-
-
-//        return profileDTO;
-//    }
+    
 public ProfileDTO getUserFromToken2(String token) {
     if (token != null && token.startsWith("Bearer ")) {
         token = token.substring(7);
