@@ -104,10 +104,7 @@ public class UserService {
     }
 
 
-//        }
-//        // Extract email from the token
-//        String email = jwtService.extractUserName(token);
-//
+
 //        log.debug("User from token: {}", email);
 //
 //
