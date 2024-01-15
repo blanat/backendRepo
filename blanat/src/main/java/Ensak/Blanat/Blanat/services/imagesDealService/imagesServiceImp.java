@@ -125,8 +125,8 @@ public class imagesServiceImp implements imagesServiceInterface {
     //==================================================================================
     //==================================================================================
 
-    private final String BASE_DEAL_IMAGE_PATH = "C:\\ImagesTest";
-    private final String BASE_PROFILE_IMAGE_PATH = "C:\\ImageprofileUser";
+    private final String BASE_DEAL_IMAGE_PATH = "D:\\ImagesTest";
+    private final String BASE_PROFILE_IMAGE_PATH = "D:\\ImageprofileUser";
 
 
     @Override

@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.controllers.authControllers;
 
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
@@ -42,11 +43,24 @@ public class UserController {
 
 
     @PutMapping("/{email}")
-    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
-        String newPassword = requestBody.get("password");
+    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
         userService.updatePassword(email, newPassword);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("username/{email}")
+    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody String username) {
+        userService.updateUserName(email, username);
+        return ResponseEntity.ok().build();
+    }
+
+
+//    @PutMapping("username/{email}")
+//    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+//        String username = requestBody.get("username");
+//        userService.updateUserName(email, username);
+//        return ResponseEntity.ok().build();
+//    }
 
 
     @PostMapping("/userDetails/{email}")
@@ -74,6 +88,11 @@ public class UserController {
     @GetMapping("/userFromToken")
     public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
         return userService.getUserFromToken(authorizationHeader);
+    }
+
+    @GetMapping("/userFromToken2")
+    public ProfileDTO fromToke2(@RequestHeader("Authorization") String authorizationHeader ){
+        return userService.getUserFromToken2(authorizationHeader);
     }
 
     @PostMapping("/{email}/changeProfilePicture")

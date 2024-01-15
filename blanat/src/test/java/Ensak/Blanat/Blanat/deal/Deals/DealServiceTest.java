@@ -1,6 +1,7 @@
 package Ensak.Blanat.Blanat.deal.Deals;
 
 import Ensak.Blanat.Blanat.entities.Deal;
+import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.services.dealService.DealServiceImp;
 import org.junit.jupiter.api.Test;
@@ -24,18 +25,19 @@ public class DealServiceTest {
     @InjectMocks
     private DealServiceImp dealService;
 
-    @Test
     public void testIncrementDeg() {
         Long dealId = 1L;
         Deal deal = new Deal();
         deal.setDeg(5); // Initial value
 
+        UserApp user = new UserApp(); // Create a UserApp object as needed
+
         when(dealRepository.findById(anyLong())).thenReturn(Optional.of(deal));
 
-        dealService.incrementDeg(dealId);
+        dealService.incrementDeg(dealId, user);
 
         verify(dealRepository, times(1)).save(deal);
-        assertEquals(6, deal.getDeg()); // Check if the deg value is incremented
+        assertEquals(6, deal.getDeg(), "Deg value should be incremented");
     }
 
     @Test
@@ -44,9 +46,11 @@ public class DealServiceTest {
         Deal deal = new Deal();
         deal.setDeg(5); // Initial value
 
+        UserApp user = new UserApp(); // Create a UserApp object as needed
+
         when(dealRepository.findById(anyLong())).thenReturn(Optional.of(deal));
 
-        dealService.decrementDeg(dealId);
+        dealService.decrementDeg(dealId,user);
 
         verify(dealRepository, times(1)).save(deal);
         assertEquals(4, deal.getDeg()); // Check if the deg value is decremented

@@ -161,16 +161,43 @@ public class DealController {
 
 
     @PostMapping("/{dealId}/increment")
-    public ResponseEntity<String> incrementDeg(@PathVariable Long dealId) {
-        dealService.incrementDeg(dealId);
-        return ResponseEntity.ok("Deg incremented successfully");
+    public ResponseEntity<String> incrementDeg(@PathVariable Long dealId,
+                                               @RequestHeader("Authorization") String token) {
+        UserApp user = userService.getUserFromToken(token);
+
+        // Log the deal ID before calling the service method
+        System.out.println("Incrementing degree for deal ID: " + dealId);
+
+        try {
+            dealService.incrementDeg(dealId, user);
+            return ResponseEntity.ok("Degree incremented successfully");
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to increment degree: " + e.getMessage());
+        }
     }
 
+
+
     @PostMapping("/{dealId}/decrement")
-    public ResponseEntity<String> decrementDeg(@PathVariable Long dealId) {
-        dealService.decrementDeg(dealId);
-        return ResponseEntity.ok("Deg decremented successfully");
+    public ResponseEntity<String> decrementDeg(@PathVariable Long dealId,
+                                               @RequestHeader("Authorization") String token) {
+        UserApp user = userService.getUserFromToken(token);
+
+        // Log the deal ID before calling the service method
+        System.out.println("Incrementing degree for deal ID: " + dealId);
+
+        try {
+            dealService.decrementDeg(dealId, user);
+            return ResponseEntity.ok("Degree incremented successfully");
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to increment degree: " + e.getMessage());
+        }
     }
+
 
 
     //Validation logic

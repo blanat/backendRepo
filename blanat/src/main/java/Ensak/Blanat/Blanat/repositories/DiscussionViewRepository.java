@@ -15,4 +15,7 @@ public interface DiscussionViewRepository extends JpaRepository<DiscussionView, 
     List<DiscussionView> findByDiscussion(Discussion discussion);
 
     void deleteByDiscussion(Discussion discussion);
+
+    void deleteByDiscussionAndUser(Discussion discussion, UserApp user);
+    List<DiscussionView> findByUser(UserApp user);
 }

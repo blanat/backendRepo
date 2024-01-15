@@ -12,7 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 
 @Configuration
-public class FirebaseInitializer {
+public class  FirebaseInitializer {
 
     @Bean
     public FirebaseMessaging firebaseMessaging() throws IOException {
