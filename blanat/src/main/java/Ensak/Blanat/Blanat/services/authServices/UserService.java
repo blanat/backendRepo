@@ -51,6 +51,15 @@ public class UserService {
         user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
+
+    public UserApp updateUserName(String email, String username) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setUserName(username);
+        return userRepository.save(user);
+    }
+
+
     public UserDetailsService userDetailsService() {
       return new UserDetailsService() {
           @Override
