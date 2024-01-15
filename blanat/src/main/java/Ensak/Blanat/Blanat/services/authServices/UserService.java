@@ -117,11 +117,7 @@ public class UserService {
 
         // Log the user for debugging
         log.debug("User from token: {}", user);
-        System.out.println("nono"+user.getUserName());
-        String userName=user.getUserName();
-        System.out.println("nono"+user.getUserName());
-        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail());
-        System.out.println("nono"+profileDTO);
+        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
 
         return profileDTO;
     }
