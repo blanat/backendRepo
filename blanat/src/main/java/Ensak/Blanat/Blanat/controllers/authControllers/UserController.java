@@ -48,6 +48,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("username/{email}")
+    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+        String username = requestBody.get("username");
+        userService.updateUserName(email, username);
+        return ResponseEntity.ok().build();
+    }
+
 
     @PostMapping("/userDetails/{email}")
     public UserProfileStatisticsDTO getUserDetails(@PathVariable("email") String email) {
