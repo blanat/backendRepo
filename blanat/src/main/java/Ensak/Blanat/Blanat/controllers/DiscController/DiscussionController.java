@@ -6,16 +6,13 @@ import Ensak.Blanat.Blanat.entities.Discussion;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.exeptions.DiscussionNotFoundException;
 import Ensak.Blanat.Blanat.exeptions.UnauthorizedException;
-import Ensak.Blanat.Blanat.services.authServices.JwtService;
-import Ensak.Blanat.Blanat.services.authServices.UserService;
 import Ensak.Blanat.Blanat.services.discuService.DiscussionServiceImpl;
+import Ensak.Blanat.Blanat.services.notificationService.FirebaseMessagingService;
 import io.jsonwebtoken.MalformedJwtException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -121,4 +118,7 @@ public class DiscussionController {
         List<Discussion> discussion= discussionService.getSavedDiscussionsByUser(user);
         return ResponseEntity.ok(discussion);
     }
+
+
+
 }

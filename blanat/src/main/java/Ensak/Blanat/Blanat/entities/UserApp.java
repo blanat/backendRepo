@@ -44,6 +44,15 @@ public class UserApp implements UserDetails {
   String profileFilePath;
 //=========================
 
+  private String firebaseToken;
+
+public String getFirebaseToken() {
+    return firebaseToken;
+  }
+
+public void setFirebaseToken(String firebaseToken) {
+    this.firebaseToken = firebaseToken;
+  }
 
   @ManyToMany
   @JoinTable(
@@ -66,7 +75,7 @@ public class UserApp implements UserDetails {
   private Collection<Deal> deals;
 
   @Getter
-  @OneToMany(mappedBy ="createur")
+  @OneToMany(mappedBy = "createur", cascade = CascadeType.ALL)
   private List<Discussion> discussions;
 
   @Override

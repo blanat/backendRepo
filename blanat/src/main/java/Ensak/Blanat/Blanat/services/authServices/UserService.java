@@ -39,6 +39,8 @@ public class UserService {
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
     private final PasswordEncoder passwordEncoder;
+    private final DiscussionViewRepository discussionViewRepository;
+
     private final UserMapper userMapper;
 
 
@@ -141,35 +143,66 @@ public ProfileDTO getUserFromToken2(String token) {
 
 
 
-
     @Transactional
     public void deleteUser(String email) {
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        try {
+            UserApp user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // Remove associations
-        for (Discussion discussion : user.getDiscussions()) {
-            discussion.getViewers().remove(user);
-            discussion.getDiscMessage().clear();
-        }
+            // Remove associations from discussions
+            for (Discussion discussion : user.getDiscussions()) {
+                discussion.getViewers().remove(user);
+                discussion.getDiscMessage().clear();
+            }
+            user.getDiscussions().clear();
 
-        // Remove user from views of other discussions
-        List<Discussion> otherDiscussions = discussionRepository.findAllByViewersContaining(user);
-        for (Discussion discussion : otherDiscussions) {
-            discussion.getViewers().remove(user);
-        }
+            // Remove user from views of other discussions
+            List<DiscussionView> userViews = discussionViewRepository.findByUser(user);
+            for (DiscussionView view : userViews) {
+                discussionViewRepository.delete(view);
+            }
+            List<DiscMessage> discMessages = discMessageRepository.findByUserId(user.getId());
+            for (DiscMessage discMessage : discMessages) {
+                discMessageRepository.delete(discMessage);
+            }
 
-        // Clear associations from comments and deals
-        for (Comment comment : user.getComments()) {
-            comment.getDeal().getComments().remove(comment);
-        }
-        for (Deal deal : user.getDeals()) {
-            deal.getComments().clear();
-            deal.getDealCreator().getDeals().remove(deal);
-        }
 
-        userRepository.delete(user);
+            // Remove user from views of other discussions
+            List<Discussion> otherDiscussions = discussionRepository.findAllByViewersContaining(user);
+            for (Discussion discussion : otherDiscussions) {
+                discussion.getViewers().remove(user);
+                discussionViewRepository.deleteByDiscussionAndUser(discussion, user);
+            }
+            // Clear associations from comments
+            for (Comment comment : user.getComments()) {
+                comment.getDeal().getComments().remove(comment);
+            }
+            user.getComments().clear();
+
+            // Clear associations from deals
+            for (Deal deal : user.getDeals()) {
+                deal.getComments().clear();
+                deal.getDealCreator().getDeals().remove(deal);
+            }
+            user.getDeals().clear();
+
+            // Manually delete associated records
+            discMessageRepository.deleteByUserId(user.getId());
+
+            // Finally, delete the user
+            userRepository.delete(user);
+        } catch (UsernameNotFoundException ex) {
+            System.out.println("User not found for email: " + email);
+            // Handle the case where the user is not found
+        } catch (Exception ex) {
+            System.out.println("Error deleting user with email: " + email);
+            ex.printStackTrace(); // Print the stack trace for additional information
+            // Optionally, throw a custom exception or handle it as needed
+        }
     }
+
+
+
 
 
     public UserProfileStatisticsDTO getUserDetails(String email){
