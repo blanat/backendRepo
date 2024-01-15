@@ -103,10 +103,7 @@ public class UserService {
         return user;
     }
 
-//    public ProfileDTO getUserFromToken2(String token) {
-//
-//        if (token != null && token.startsWith("Bearer ")) {
-//            token = token.substring(7);
+
 //        }
 //        // Extract email from the token
 //        String email = jwtService.extractUserName(token);
@@ -144,7 +141,7 @@ public ProfileDTO getUserFromToken2(String token) {
     // Use the mapper to convert UserApp to ProfileDTO
     ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
     profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
-    
+
     return profileDTO;
 }
 
