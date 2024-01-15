@@ -32,15 +32,15 @@ public class DealController {
 
     private final UserService userService;
     private final DealMapper dealMapper;
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    public DealController(DealServiceInterface dealService, UserService userService, DealMapper dealMapper,imagesServiceInterface imageService) {
+    public DealController(DealServiceInterface dealService, UserService userService, DealMapper dealMapper,imagesServiceInterface imageService,UserRepository userRepository) {
         this.dealService = dealService;
         this.userService = userService;
         this.dealMapper = dealMapper;
         this.imageService = imageService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping
@@ -57,7 +57,7 @@ public class DealController {
             dealEntity.setDealCreator(user);
             Deal newDeal = dealService.saveDeal(dealEntity);
 
-            //imageService.saveImagesAndPaths(images, newDeal);
+            imageService.saveImagesAndPaths(images, newDeal);
 
             return new ResponseEntity<>("Deal data received successfully", HttpStatus.OK);
         } catch (Exception e) {
@@ -134,22 +134,6 @@ public class DealController {
         }
     }
 
-/*
-
-    @GetMapping("details/{dealId}")
-    public ResponseEntity<DetailDealDTO> getDealDetails(@PathVariable Long dealId) {
-        DetailDealDTO detailDealDTO = dealService.getDealDetails(dealId);
-
-        if (detailDealDTO == null) {
-            // Handle deal not found
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(detailDealDTO);
-    }
-*/
-
-
 
 
     @GetMapping("/{dealId}/images")
@@ -164,9 +148,6 @@ public class DealController {
     public ResponseEntity<String> incrementDeg(@PathVariable Long dealId,
                                                @RequestHeader("Authorization") String token) {
         UserApp user = userService.getUserFromToken(token);
-
-        // Log the deal ID before calling the service method
-        System.out.println("Incrementing degree for deal ID: " + dealId);
 
         try {
             dealService.incrementDeg(dealId, user);
@@ -185,9 +166,6 @@ public class DealController {
                                                @RequestHeader("Authorization") String token) {
         UserApp user = userService.getUserFromToken(token);
 
-        // Log the deal ID before calling the service method
-        System.out.println("Incrementing degree for deal ID: " + dealId);
-
         try {
             dealService.decrementDeg(dealId, user);
             return ResponseEntity.ok("Degree incremented successfully");
@@ -198,7 +176,7 @@ public class DealController {
         }
     }
 
-
+//========================================================
 
     //Validation logic
     @PreAuthorize("hasRole('ROLE_ADMIN')")

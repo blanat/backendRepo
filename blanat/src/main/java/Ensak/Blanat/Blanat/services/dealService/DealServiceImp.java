@@ -9,64 +9,61 @@ import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.entities.Vote;
-import Ensak.Blanat.Blanat.mappers.CommentMapper;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
-import Ensak.Blanat.Blanat.repositories.CommentRepository;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
-import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
 import Ensak.Blanat.Blanat.repositories.VoteRepository;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
 import Ensak.Blanat.Blanat.util.General;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+
 @Slf4j
 @Service
 public class DealServiceImp implements DealServiceInterface {
 
     private final DealRepository dealRepository;
     private final DealMapper dealMapper;
-    private final CommentMapper commentMapper;
     private final UserMapper userMapper;
     private final imagesServiceInterface imagesService;
-    private final ImagesDealRepository imagesDealRepository;
-    private final CommentRepository commentRepository;
-    private VoteRepository voteRepository;
+    private final VoteRepository voteRepository;
 
 
 
 
     @Autowired
-    public DealServiceImp(DealRepository dealRepository, DealMapper dealMapper, CommentMapper commentMapper, UserMapper userMapper, imagesServiceInterface imagesService, ImagesDealRepository imagesDealRepository, CommentRepository commentRepository,VoteRepository voteRepository) {
+    public DealServiceImp(DealRepository dealRepository, DealMapper dealMapper, UserMapper userMapper, imagesServiceInterface imagesService,VoteRepository voteRepository) {
         this.dealRepository = dealRepository;
         this.dealMapper = dealMapper;
-        this.commentMapper = commentMapper;
         this.userMapper = userMapper;
         this.imagesService = imagesService;
-        this.imagesDealRepository = imagesDealRepository;
-        this.commentRepository = commentRepository;
         this.voteRepository = voteRepository;
     }
 
     //===============working on ==========================
     @Override
     public Deal saveDeal(Deal deal) {
+        if (deal == null) {
+            // Handle the case when deal is null (you can throw an exception or return null)
+            return null;
+        }
         deal.setDateCreation(LocalDateTime.now());
         deal.setValidated(false);
         return dealRepository.save(deal);
     }
+
     //==================================================
 
     //Lister Deal
     @Override
     public List<ListDealDTO> getListDealsDTO() {
-        List<Deal> allDeals = (List<Deal>) dealRepository.findAll();
+        List<Deal> allDeals = dealRepository.findAll();
         return allDeals.stream()
                 .map(this::enrichDealDTO)
                 .toList();
@@ -92,34 +89,38 @@ public class DealServiceImp implements DealServiceInterface {
 
     @Override
     public List<ImagesDeal> getDealImages(long dealId) {
-        return null;
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Deal> getAllDeals() {
+        return new ArrayList<>();
     }
 
 
     private ListDealDTO enrichDealDTO(Deal deal) {
         ListDealDTO listDealDTO = dealMapper.dealToListDealDTO(deal);
 
-        // Fetch the first image of the deal
-        String firstImageUrl = imagesService.getFirstImageUrlForDeal(deal);
-        listDealDTO.setFirstImageUrl(firstImageUrl);
+        // Check if listDealDTO is not null before proceeding
+        if (listDealDTO != null) {
+            // Fetch the first image of the deal
+            String firstImageUrl = imagesService.getFirstImageUrlForDeal(deal);
+            listDealDTO.setFirstImageUrl(firstImageUrl);
 
-        // Calculate timePassedSinceCreation
-        String timePassed = General.calculateTimePassed(deal.getDateCreation());
-        listDealDTO.setTimePassedSinceCreation(timePassed);
+            // Calculate timePassedSinceCreation
+            String timePassed = General.calculateTimePassed(deal.getDateCreation());
+            listDealDTO.setTimePassedSinceCreation(timePassed);
 
-        //new for userCreator we add the usename and imageProfile
-        UserDTO dealCreatorDTO = userMapper.userToUserDTO(deal.getDealCreator());
-        listDealDTO.setDealCreator(dealCreatorDTO);
+            // Add other enrichments if needed
+            UserDTO dealCreatorDTO = userMapper.userToUserDTO(deal.getDealCreator());
+            listDealDTO.setDealCreator(dealCreatorDTO);
+        }
 
         return listDealDTO;
     }
 
 
 
-    @Override
-    public List<Deal> getAllDeals() {
-        return null;
-    }
 
     @Override
     public Deal getDealById(Long dealId) {
@@ -153,7 +154,7 @@ public class DealServiceImp implements DealServiceInterface {
 
     @Override
     public List<ListDealDTO> getListDealsDTOByUserId(long id) {
-        List<Deal> allDeals = (List<Deal>) dealRepository.findAllByDealCreatorId(id);
+        List<Deal> allDeals =  dealRepository.findAllByDealCreatorId(id);
         return allDeals.stream()
                 .map(this::enrichDealDTO)
                 .toList();
@@ -168,8 +169,6 @@ public class DealServiceImp implements DealServiceInterface {
             // Update the numberComment field based on the current number of comments
             int commentCount = dealRepository.countCommentsByDealId(dealId);
             deal.setNumberOfComments(commentCount);
-
-            System.out.println("******** - Deal ID: " + deal.getDealID() + ", Comment Count: " + deal.getNumberOfComments());
 
             // Save the updated Deal entity
             dealRepository.save(deal);
@@ -224,21 +223,6 @@ public class DealServiceImp implements DealServiceInterface {
     }
 
 
-   /* public void decrementDeg(Long dealId) {
-        Deal deal = dealRepository.findById(dealId).orElse(null);
-
-        if (deal != null) {
-            deal.setDeg(Math.max(0, deal.getDeg() - 1));
-            dealRepository.save(deal);
-            // Log success message
-            log.info("Degree decremented successfully for dealId: {}", dealId);
-        } else {
-            // Deal not found, handle accordingly (throw exception, log, etc.)
-            log.error("Failed to decrement degree. Deal not found for dealId: {}", dealId);
-        }
-    }
-*/
-
     public void decrementDeg(Long dealId, UserApp user) {
 
         Deal deal = dealRepository.findById(dealId).orElse(null);
@@ -261,6 +245,12 @@ public class DealServiceImp implements DealServiceInterface {
             throw new IllegalStateException("Vote creation failed");
         }
     }
+
+
+
+
+    //=====================================
+
 
 
     @Override

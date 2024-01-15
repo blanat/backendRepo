@@ -3,7 +3,6 @@ package Ensak.Blanat.Blanat.mappers;
 import Ensak.Blanat.Blanat.DTOs.commentDTO.CommentDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.Comment;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
 import Ensak.Blanat.Blanat.util.General;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

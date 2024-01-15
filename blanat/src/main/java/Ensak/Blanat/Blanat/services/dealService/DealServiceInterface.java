@@ -10,7 +10,6 @@ import java.util.List;
 public interface DealServiceInterface {
 
     List<ListDealDTO> getListDealsDTO();
-    //DetailDealDTO getDealDetails(long dealId);
 
     List<ListDealDTO> getValidatedDeals();
     List<ListDealDTO> getUnvalidatedDeals();

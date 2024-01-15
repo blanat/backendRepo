@@ -12,12 +12,11 @@ import Ensak.Blanat.Blanat.repositories.DiscussionViewRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
@@ -35,7 +34,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     private UserService userService;
 
     @Autowired
-    private final imageURLbuilder imageBuilder;
+    private final imageUrlBuilder imageBuilder;
 
     private final DiscMessageRepository discMessageRepository;
 
@@ -46,7 +45,7 @@ public class DiscussionServiceImpl implements IDiscussionService{
     private final UserRepository userRepository;
 
     @Autowired
-    public DiscussionServiceImpl(DiscussionViewRepository discussionViewRepository, UserService userService, DiscMessageRepository discMessageRepository, JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository, imageURLbuilder imageBuilder) {
+    public DiscussionServiceImpl(DiscussionViewRepository discussionViewRepository, UserService userService, DiscMessageRepository discMessageRepository, JwtService jwtTokenService, DiscussionRepository discussionRepository, UserRepository userRepository, imageUrlBuilder imageBuilder) {
         this.discussionViewRepository = discussionViewRepository;
         this.userService = userService;
         this.discMessageRepository = discMessageRepository;

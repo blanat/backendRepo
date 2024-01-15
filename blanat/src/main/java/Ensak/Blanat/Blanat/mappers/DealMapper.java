@@ -34,9 +34,10 @@ public class DealMapper {
     }
 
     public ListDealDTO dealToListDealDTO(Deal deal) {
-        return modelMapper.map(deal, ListDealDTO.class);
-
+        ListDealDTO listDealDTO = modelMapper.map(deal, ListDealDTO.class);
+        return listDealDTO != null ? listDealDTO : new ListDealDTO();
     }
+
 
     public List<ListDealDTO> dealsToListDealDTOs(List<Deal> deals) {
         Type listType = new TypeToken<List<ListDealDTO>>() {}.getType();
