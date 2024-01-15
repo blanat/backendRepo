@@ -106,9 +106,7 @@ public class UserService {
 
 
 
-//        UserApp user = userRepository.findByEmail(email)
-//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//
+
 //        // Log the user for debugging
 //        log.debug("User from token: {}", user);
 //        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
