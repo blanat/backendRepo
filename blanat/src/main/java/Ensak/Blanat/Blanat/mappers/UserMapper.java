@@ -1,5 +1,6 @@
 package Ensak.Blanat.Blanat.mappers;
 
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
@@ -21,5 +22,9 @@ public class UserMapper {
         return userDTO;
     }
 
-
+    public ProfileDTO profileToProfileDTO(UserApp user){
+        ProfileDTO profileDTO = modelMapper.map(user, ProfileDTO.class);
+        profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+        return profileDTO;
+    }
 }

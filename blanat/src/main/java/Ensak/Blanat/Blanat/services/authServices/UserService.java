@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
+import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.*;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,7 @@ public class UserService {
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final UserMapper userMapper;
 
 
     public UserApp updatePassword(String email, String newPassword) {
@@ -100,27 +103,52 @@ public class UserService {
         return user;
     }
 
-    public ProfileDTO getUserFromToken2(String token) {
-
-        if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-        // Extract email from the token
-        String email = jwtService.extractUserName(token);
-
-        log.debug("User from token: {}", email);
-
-
-        // Retrieve the user from the database by email
-        UserApp user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        // Log the user for debugging
-        log.debug("User from token: {}", user);
-        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
-
-        return profileDTO;
+//    public ProfileDTO getUserFromToken2(String token) {
+//
+//        if (token != null && token.startsWith("Bearer ")) {
+//            token = token.substring(7);
+//        }
+//        // Extract email from the token
+//        String email = jwtService.extractUserName(token);
+//
+//        log.debug("User from token: {}", email);
+//
+//
+//        // Retrieve the user from the database by email
+//        UserApp user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//
+//        // Log the user for debugging
+//        log.debug("User from token: {}", user);
+//        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
+//
+//        return profileDTO;
+//    }
+public ProfileDTO getUserFromToken2(String token) {
+    if (token != null && token.startsWith("Bearer ")) {
+        token = token.substring(7);
     }
+
+    // Extract email from the token
+    String email = jwtService.extractUserName(token);
+
+    log.debug("User from token: {}", email);
+
+    // Retrieve the user from the database by email
+    UserApp user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+    // Log the user for debugging
+    log.debug("User from token: {}", user);
+
+    // Use the mapper to convert UserApp to ProfileDTO
+    ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
+    profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+    
+    return profileDTO;
+}
+
+
 
     public UserApp getUserByUsername(String email) {
         UserApp user = userRepository.findByEmail(email)

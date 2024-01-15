@@ -1,26 +1,26 @@
 package Ensak.Blanat.Blanat.DTOs.ethDoa;
 
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+
 @Data
-@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProfileDTO {
 
-    Long id;
+    private Long id;
 
-    String userName;
+    private String userName;
 
-    String email;
+    private String email;
 
-    LocalDateTime createdAt;
-    
-    String profileFilePath;
+    private LocalDateTime createdAt;
+
+    private String profileFilePath;
 
 
 }
