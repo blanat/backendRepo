@@ -107,8 +107,6 @@ public class UserService {
 
 
 
-//        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
-//
 //        return profileDTO;
 //    }
 public ProfileDTO getUserFromToken2(String token) {
