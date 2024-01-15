@@ -41,19 +41,32 @@ public class UserController {
     }
 
 
+//    @PutMapping("/{email}")
+//    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+//        String newPassword = requestBody.get("password");
+//        userService.updatePassword(email, newPassword);
+//        return ResponseEntity.ok().build();
+//    }
+
     @PutMapping("/{email}")
-    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
-        String newPassword = requestBody.get("password");
+    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
         userService.updatePassword(email, newPassword);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("username/{email}")
-    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
-        String username = requestBody.get("username");
+    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody String username) {
         userService.updateUserName(email, username);
         return ResponseEntity.ok().build();
     }
+
+
+//    @PutMapping("username/{email}")
+//    public ResponseEntity<Void> updateUserName(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+//        String username = requestBody.get("username");
+//        userService.updateUserName(email, username);
+//        return ResponseEntity.ok().build();
+//    }
 
 
     @PostMapping("/userDetails/{email}")
