@@ -107,8 +107,6 @@ public class UserService {
 
 
 
-//        // Log the user for debugging
-//        log.debug("User from token: {}", user);
 //        ProfileDTO profileDTO = new ProfileDTO(user.getId(), user.getUserName(), user.getEmail(),user.getCreatedAt(),user.getProfileFilePath());
 //
 //        return profileDTO;
