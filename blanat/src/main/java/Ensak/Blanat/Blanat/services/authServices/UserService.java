@@ -105,10 +105,7 @@ public class UserService {
 
 
 
-//        log.debug("User from token: {}", email);
-//
-//
-//        // Retrieve the user from the database by email
+
 //        UserApp user = userRepository.findByEmail(email)
 //                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 //
