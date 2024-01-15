@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,19 @@ public class UserController {
     @GetMapping("/userFromToken")
     public UserApp fromToke(@RequestHeader("Authorization") String authorizationHeader ){
         return userService.getUserFromToken(authorizationHeader);
+    }
+
+    @PostMapping("/{email}/changeProfilePicture")
+    public ResponseEntity<Void> changeProfilePicture(@PathVariable String email, @RequestPart("images") MultipartFile images) {
+        try {
+            userService.changeProfilePicture(email, images);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // Handle IO exception
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }

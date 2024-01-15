@@ -1,6 +1,9 @@
 package Ensak.Blanat.Blanat.services.authServices;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
@@ -29,13 +33,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ImageProfileRepository imageProfileRepository;
     private final JwtService jwtService;
     private final DiscussionRepository discussionRepository;
     private final CommentRepository commentRepository;
     private final DealRepository dealRepository;
     private final DiscMessageRepository discMessageRepository;
     private final PasswordEncoder passwordEncoder;
-
 
 
     public UserApp updatePassword(String email, String newPassword) {
@@ -177,6 +181,34 @@ public class UserService {
         UserApp follower = userRepository.getById(Long.valueOf(followerId));
 
         user.getFollowers().remove(follower);
+        userRepository.save(user);
+    }
+
+    public void changeProfilePicture(String email, MultipartFile newPfp) throws IOException {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user.getProfileFilePath() != null) {
+            ImageProfile oldImage = imageProfileRepository.findByUserApp(user);
+            imageProfileRepository.delete(oldImage);
+            Path oldPath = Paths.get(user.getProfileFilePath());
+            Files.delete(oldPath);
+
+        }
+        Path currentPath = Paths.get(".");
+        Path absolutePath = currentPath.toAbsolutePath();
+        String filePath = absolutePath + "/src/main/resources/static/images/";
+        byte[] bytes = newPfp.getBytes();
+        Path path = Paths.get(filePath + newPfp.getOriginalFilename());
+        Files.write(path, bytes);
+
+        ImageProfile imageProfile = new ImageProfile();
+        imageProfile.setName(newPfp.getOriginalFilename());
+        imageProfile.setFilePath(path.toString());
+        imageProfile.setUserApp(user);
+
+        user.setProfileFilePath(path.toString());
+
+        imageProfileRepository.save(imageProfile);
         userRepository.save(user);
     }
 
