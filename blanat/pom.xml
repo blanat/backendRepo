@@ -147,6 +147,12 @@
 					<groupId>org.sonarsource.scanner.maven</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>3.8.0.2131</version>
+					 <configuration>
+                <!-- Disable CI analysis -->
+                <properties>
+                    <sonar.analysis.mode>publish</sonar.analysis.mode>
+                </properties>
+            </configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
