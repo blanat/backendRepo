@@ -1,21 +1,5 @@
 package Ensak.Blanat.Blanat.services.authServices;
 
-import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
-import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
-import Ensak.Blanat.Blanat.entities.*;
-import Ensak.Blanat.Blanat.mappers.UserMapper;
-import Ensak.Blanat.Blanat.repositories.*;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +7,29 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
+import Ensak.Blanat.Blanat.entities.*;
+import Ensak.Blanat.Blanat.mappers.UserMapper;
+import Ensak.Blanat.Blanat.repositories.*;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
@@ -58,14 +65,14 @@ public class UserService {
 
 
     public UserDetailsService userDetailsService() {
-      return new UserDetailsService() {
-          @Override
-          public UserDetails loadUserByUsername(String username) {
-              return userRepository.findByEmail(username)
-                      .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-          }
-      };
-  }
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                return userRepository.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            }
+        };
+    }
     public UserApp save(UserApp newUser) {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
@@ -111,30 +118,30 @@ public class UserService {
         return user;
     }
 
-    
-public ProfileDTO getUserFromToken2(String token) {
-    if (token != null && token.startsWith("Bearer ")) {
-        token = token.substring(7);
+
+    public ProfileDTO getUserFromToken2(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // Extract email from the token
+        String email = jwtService.extractUserName(token);
+
+        log.debug("User from token: {}", email);
+
+        // Retrieve the user from the database by email
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Log the user for debugging
+        log.debug("User from token: {}", user);
+
+        // Use the mapper to convert UserApp to ProfileDTO
+        ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
+        profileDTO.setProfileFilePath(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
+
+        return profileDTO;
     }
-
-    // Extract email from the token
-    String email = jwtService.extractUserName(token);
-
-    log.debug("User from token: {}", email);
-
-    // Retrieve the user from the database by email
-    UserApp user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-    // Log the user for debugging
-    log.debug("User from token: {}", user);
-
-    // Use the mapper to convert UserApp to ProfileDTO
-    ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
-    profileDTO.setProfileFilePath(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
-
-    return profileDTO;
-}
 
 
 
@@ -149,64 +156,12 @@ public ProfileDTO getUserFromToken2(String token) {
 
 
 
-    @Transactional
-    public void deleteUser(String email) {
-        try {
-            UserApp user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-            // Remove associations from discussions
-            for (Discussion discussion : user.getDiscussions()) {
-                discussion.getViewers().remove(user);
-                discussion.getDiscMessage().clear();
-            }
-            user.getDiscussions().clear();
-
-            // Remove user from views of other discussions
-            List<DiscussionView> userViews = discussionViewRepository.findByUser(user);
-            for (DiscussionView view : userViews) {
-                discussionViewRepository.delete(view);
-            }
-            List<DiscMessage> discMessages = discMessageRepository.findByUserId(user.getId());
-            for (DiscMessage discMessage : discMessages) {
-                discMessageRepository.delete(discMessage);
-            }
-
-
-            // Remove user from views of other discussions
-            List<Discussion> otherDiscussions = discussionRepository.findAllByViewersContaining(user);
-            for (Discussion discussion : otherDiscussions) {
-                discussion.getViewers().remove(user);
-                discussionViewRepository.deleteByDiscussionAndUser(discussion, user);
-            }
-            // Clear associations from comments
-            for (Comment comment : user.getComments()) {
-                comment.getDeal().getComments().remove(comment);
-            }
-            user.getComments().clear();
-
-            // Clear associations from deals
-            for (Deal deal : user.getDeals()) {
-                deal.getComments().clear();
-                deal.getDealCreator().getDeals().remove(deal);
-            }
-            user.getDeals().clear();
-
-            // Manually delete associated records
-            discMessageRepository.deleteByUserId(user.getId());
-
-            // Finally, delete the user
-            userRepository.delete(user);
-        } catch (UsernameNotFoundException ex) {
-            System.out.println("User not found for email: " + email);
-            // Handle the case where the user is not found
-        } catch (Exception ex) {
-            System.out.println("Error deleting user with email: " + email);
-            ex.printStackTrace(); // Print the stack trace for additional information
-            // Optionally, throw a custom exception or handle it as needed
-        }
+    public UserApp deleteUser(String email, String password) {
+        UserApp user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setEmail(password);
+        return userRepository.save(user);
     }
-
 
 
 
@@ -234,7 +189,7 @@ public ProfileDTO getUserFromToken2(String token) {
                 .build();
 
 
-        
+
 
     }
 
