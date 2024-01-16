@@ -43,9 +43,11 @@ public class UserController {
 
 
     @PutMapping("/{email}")
-    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
-        userService.updatePassword(email, newPassword);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
+        newPassword = newPassword.replaceAll("\"", "");
+        UserApp userApp = userService.updatePassword(email, newPassword);
+        String successMessage = "Password updated successfully for user: " + userApp.getUsername();
+        return ResponseEntity.ok(successMessage);
     }
 
     @PutMapping("username/{email}")

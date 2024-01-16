@@ -14,7 +14,7 @@ import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.*;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +138,7 @@ public ProfileDTO getUserFromToken2(String token) {
 
     // Use the mapper to convert UserApp to ProfileDTO
     ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
-    profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+    profileDTO.setProfileFilePath(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
 
     return profileDTO;
 }
