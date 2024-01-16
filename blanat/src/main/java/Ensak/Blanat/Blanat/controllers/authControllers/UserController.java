@@ -32,11 +32,9 @@ public class UserController {
 
 
 
-    @DeleteMapping ("/{email}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
-        String mail = requestBody.get("email");
-        userService.deleteUser(email, mail);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{email}")
+    public void deleteUser(@PathVariable String email) {
+        userService.deleteUser(email);
     }
 
 
