@@ -149,9 +149,6 @@
 					<version>3.8.0.2131</version>
 					 <configuration>
                 <!-- Disable CI analysis -->
-                <properties>
-                    <sonar.analysis.mode>publish</sonar.analysis.mode>
-                </properties>
             </configuration>
 				</plugin>
 				<plugin>
