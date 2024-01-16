@@ -42,4 +42,6 @@ public interface DealServiceInterface {
     void validateDeal(Long dealId);
 
     void modifyDeal(Long dealId, ModifyDealDTO modifyDealDTO);
+
+    List<ListDealDTO> getValidatedDealsByCurrentUser();
 }

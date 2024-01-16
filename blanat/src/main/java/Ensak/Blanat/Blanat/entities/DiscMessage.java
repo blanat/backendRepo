@@ -27,11 +27,11 @@ public class DiscMessage {
 
     private Discussion discussion;
 
+    @ManyToOne
     @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
-    private UserApp user;
 
+    private UserApp user;
 
     private String content;
 

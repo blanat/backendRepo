@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DealRepository extends JpaRepository<Deal, Long> {
     Deal findByDealID(@Param("deal_id") long deal_id);
@@ -18,5 +19,8 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
 
     @Query("SELECT COUNT(c.commentId) FROM Comment c WHERE c.deal.id = :dealId")
     int countCommentsByDealId(@Param("dealId") long dealId);
+
+    List<Deal> findByDealCreatorAndIsValidated( UserApp dealCreator, boolean isValidated);
+
 
 }

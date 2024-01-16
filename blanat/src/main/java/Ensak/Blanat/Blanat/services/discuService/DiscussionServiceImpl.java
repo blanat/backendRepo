@@ -259,5 +259,14 @@ public class DiscussionServiceImpl implements IDiscussionService{
         return discussionRepository.findByViewersAndSave(user, 1);
     }
 
+    public Long countDiscussionsCreatedByCurrentUser() {
+        try {
+            UserApp currentUser = (UserApp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return discussionRepository.countByCreateur(currentUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DiscussionServiceException("Une erreur s'est produite lors du comptage des discussions.");
+        }
+    }
 
 }

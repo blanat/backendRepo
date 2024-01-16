@@ -39,7 +39,17 @@ public class UserApp implements UserDetails {
 
   LocalDateTime updatedAt;
 
+  private String fcmToken;
 
+  // Constructors, getters, setters, etc.
+
+  public String getFcmToken() {
+    return fcmToken;
+  }
+
+  public void setFcmToken(String fcmToken) {
+    this.fcmToken = fcmToken;
+  }
 //new====================== local path
   String profileFilePath;
 //=========================
@@ -65,18 +75,19 @@ public void setFirebaseToken(String firebaseToken) {
   private List<UserApp> following;
 
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Collection<Comment> comments;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Collection<SavedDeals> savedDeals;
 
   @OneToMany(mappedBy = "dealCreator")
   private Collection<Deal> deals;
 
   @Getter
-  @OneToMany(mappedBy = "createur", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "createur", cascade = CascadeType.REMOVE)
   private List<Discussion> discussions;
+
 
   @Override
   public String toString() {

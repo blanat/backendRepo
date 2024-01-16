@@ -5,6 +5,7 @@ package Ensak.Blanat.Blanat.services.dealService;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ListDealDTO;
 import Ensak.Blanat.Blanat.DTOs.dealDTO.ModifyDealDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
+import Ensak.Blanat.Blanat.config.notifconfig.FirebaseInitializer;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.entities.UserApp;
@@ -12,24 +13,36 @@ import Ensak.Blanat.Blanat.entities.Vote;
 import Ensak.Blanat.Blanat.mappers.CommentMapper;
 import Ensak.Blanat.Blanat.mappers.DealMapper;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
-import Ensak.Blanat.Blanat.repositories.CommentRepository;
-import Ensak.Blanat.Blanat.repositories.DealRepository;
-import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
-import Ensak.Blanat.Blanat.repositories.VoteRepository;
+import Ensak.Blanat.Blanat.repositories.*;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
 import Ensak.Blanat.Blanat.util.General;
-import jakarta.transaction.Transactional;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
+import Ensak.Blanat.Blanat.config.notifconfig.FirebaseInitializer.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class DealServiceImp implements DealServiceInterface {
-
+    private final UserRepository userRepository;
+    private final FirebaseInitializer firebaseInitializer;
     private final DealRepository dealRepository;
     private final DealMapper dealMapper;
     private final CommentMapper commentMapper;
@@ -40,10 +53,18 @@ public class DealServiceImp implements DealServiceInterface {
     private VoteRepository voteRepository;
 
 
+    private boolean isValidated = false;
+
+
+
 
 
     @Autowired
-    public DealServiceImp(DealRepository dealRepository, DealMapper dealMapper, CommentMapper commentMapper, UserMapper userMapper, imagesServiceInterface imagesService, ImagesDealRepository imagesDealRepository, CommentRepository commentRepository,VoteRepository voteRepository) {
+    public DealServiceImp(UserRepository userRepository, DealRepository dealRepository, DealMapper dealMapper,
+                          CommentMapper commentMapper, UserMapper userMapper, imagesServiceInterface imagesService,
+                          ImagesDealRepository imagesDealRepository, CommentRepository commentRepository,
+                          VoteRepository voteRepository, FirebaseInitializer firebaseInitializer) {
+        this.userRepository = userRepository;
         this.dealRepository = dealRepository;
         this.dealMapper = dealMapper;
         this.commentMapper = commentMapper;
@@ -52,8 +73,8 @@ public class DealServiceImp implements DealServiceInterface {
         this.imagesDealRepository = imagesDealRepository;
         this.commentRepository = commentRepository;
         this.voteRepository = voteRepository;
+        this.firebaseInitializer = firebaseInitializer;
     }
-
     //===============working on ==========================
     @Override
     public Deal saveDeal(Deal deal) {
@@ -184,16 +205,16 @@ public class DealServiceImp implements DealServiceInterface {
 
         if (deal != null && checkAndCreateVote(deal, user)) {
 
-                log.info("Incrementing degree for dealId: {} by userId: {}", dealId, user.getId());
+            log.info("Incrementing degree for dealId: {} by userId: {}", dealId, user.getId());
 
-                // Update the degree in the deal
-                deal.setDeg(deal.getDeg() + 1);
-                dealRepository.save(deal);
+            // Update the degree in the deal
+            deal.setDeg(deal.getDeg() + 1);
+            dealRepository.save(deal);
 
-                // Log success message
-                log.info("Degree incremented successfully for dealId: {} by userId: {}", dealId, user.getId());
+            // Log success message
+            log.info("Degree incremented successfully for dealId: {} by userId: {}", dealId, user.getId());
 
-                // Separate method for checking and creating Vote
+            // Separate method for checking and creating Vote
 
         } else {
             log.error("Failed to increment degree. Deal not found for dealId: {}", dealId);
@@ -270,9 +291,10 @@ public class DealServiceImp implements DealServiceInterface {
             deal.setValidated(true);
             dealRepository.save(deal);
 
+
         }
         catch (Exception e){
-        throw new RuntimeException("Deal not found");
+            throw new RuntimeException("Deal not found");
         }
 
 
@@ -298,5 +320,49 @@ public class DealServiceImp implements DealServiceInterface {
             throw new RuntimeException("Deal not found");
         }
     }
+
+
+
+    @Override
+    public List<ListDealDTO> getValidatedDealsByCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            // Gérer le cas où l'utilisateur n'est pas authentifié
+            return Collections.emptyList();
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String currentUsername = ((UserDetails) principal).getUsername();
+
+            // Assurez-vous que votre méthode de recherche est insensible à la casse
+            UserApp currentUser = userRepository.findByEmailIgnoreCase(currentUsername);
+
+            if (currentUser != null) {
+                List<Deal> validatedDeals = dealRepository.findByDealCreatorAndIsValidated(currentUser, true);
+
+                return validatedDeals.stream()
+                        .map(this::enrichDealDTO)
+                        .toList();
+            }
+        }
+
+        // Gérer le cas où l'utilisateur n'est pas trouvé dans la base de données
+        return Collections.emptyList();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
