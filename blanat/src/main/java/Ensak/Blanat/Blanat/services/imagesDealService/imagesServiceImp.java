@@ -1,8 +1,11 @@
 
 package Ensak.Blanat.Blanat.services.imagesDealService;
 
+import Ensak.Blanat.Blanat.config.appconfig.AppConfiguration;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
+import Ensak.Blanat.Blanat.exeptions.FileReadException;
+import Ensak.Blanat.Blanat.exeptions.FileStorageException;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.repositories.ImagesDealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +22,24 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class imagesServiceImp implements imagesServiceInterface {
 
     private final ImagesDealRepository imagesDealRepository;
     private final DealRepository dealRepository;
-    private final imageURLbuilder imageUrlBuilder;
+    private final Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder imageUrlBuilder;
+    private final AppConfiguration appConfiguration;
 
 
     @Autowired
-    public imagesServiceImp(ImagesDealRepository imagesDealRepository, imageURLbuilder imageUrlBuilder,DealRepository dealRepository) {
+    public imagesServiceImp(ImagesDealRepository imagesDealRepository, Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder imageUrlBuilder, DealRepository dealRepository, AppConfiguration appConfiguration) {
         this.imagesDealRepository = imagesDealRepository;
         this.imageUrlBuilder = imageUrlBuilder;
         this.dealRepository = dealRepository;
+        this.appConfiguration = appConfiguration;
     }
 
     @Override
@@ -65,12 +72,20 @@ public class imagesServiceImp implements imagesServiceInterface {
         return imagesDealRepository.findAll();
     }
 
-    private String saveImageToFileSystem(MultipartFile file) {
-
+    public String saveImageToFileSystem(MultipartFile file) {
         try {
-            Path folderPath = Path.of("D:\\ImagesTest");
+            if (file == null) {
+                throw new FileStorageException("File cannot be null");
+            }
+
+            String imageStoragePath = appConfiguration.getDealImagePath();
+            Path folderPath = Path.of(imageStoragePath);
 
             String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null) {
+                throw new FileStorageException("Original filename cannot be null");
+            }
+
             String extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
             String uniqueFileName = System.currentTimeMillis() + "_" + java.util.UUID.randomUUID() + extension;
             Path filePath = folderPath.resolve(uniqueFileName);
@@ -79,9 +94,10 @@ public class imagesServiceImp implements imagesServiceInterface {
 
             return filePath.toString();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save file", e);
+            throw new FileStorageException("Failed to save file", e);
         }
     }
+
 
 
     @Override
@@ -99,6 +115,7 @@ public class imagesServiceImp implements imagesServiceInterface {
 
 
 
+    @Override
     public List<String> getImagesUrlsForDeal(long dealId) {
         // Retrieve the Deal entity by dealId
         Deal deal = dealRepository.findById(dealId).orElse(null);
@@ -108,8 +125,8 @@ public class imagesServiceImp implements imagesServiceInterface {
             List<ImagesDeal> imagesList = imagesDealRepository.findByDeal(deal);
 
             if (imagesList != null) {
-                // Construct URLs for the images
-                return imageUrlBuilder.buildImageUrls(imagesList);
+                // Construct URLs for the images using the class name
+                return Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder.buildImageUrls(imagesList);
             } else {
                 // Handle the case when there are no images associated with the deal
                 return new ArrayList<>();
@@ -125,29 +142,26 @@ public class imagesServiceImp implements imagesServiceInterface {
     //==================================================================================
     //==================================================================================
 
-    private final String BASE_DEAL_IMAGE_PATH = "D:\\ImagesTest";
-    private final String BASE_PROFILE_IMAGE_PATH = "D:\\ImageprofileUser";
+    private static final Logger logger = LoggerFactory.getLogger(imagesServiceImp.class);
 
-
-    @Override
     public Resource loadImageAsResource(String fileName, String imageType) {
         try {
-            String basePath = imageType.equals("DealReq") ? BASE_DEAL_IMAGE_PATH : BASE_PROFILE_IMAGE_PATH;
+            String basePath = imageType.equals("DealReq") ? appConfiguration.getDealImagePath() : appConfiguration.getProfileImagePath();
 
             // Use the correct basePath variable here
             Path filePath = Paths.get(basePath).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {
-                System.out.println("Successfully loaded image: " + fileName);
+                logger.info("Successfully loaded image: {}", fileName);
                 return resource;
             } else {
-                System.err.println("Could not read the image: " + fileName);
-                throw new RuntimeException("Could not read the image: " + fileName);
+                logger.error("Could not read the image: {}", fileName);
+                throw new FileReadException("Could not read the image: " + fileName);
             }
         } catch (MalformedURLException e) {
-            System.err.println("Malformed URL for image: " + fileName);
-            throw new RuntimeException("Malformed URL for image: " + fileName, e);
+            logger.error("Malformed URL for image: {}", fileName, e);
+            throw new FileReadException("Malformed URL for image: " + fileName, e);
         }
     }
 }

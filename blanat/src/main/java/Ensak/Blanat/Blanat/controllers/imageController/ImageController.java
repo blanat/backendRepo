@@ -1,6 +1,5 @@
 package Ensak.Blanat.Blanat.controllers.imageController;
 
-import Ensak.Blanat.Blanat.entities.ImagesDeal;
 import Ensak.Blanat.Blanat.services.imagesDealService.imagesServiceInterface;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

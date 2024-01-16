@@ -1,18 +1,23 @@
 package Ensak.Blanat.Blanat.services.imagesDealService;
 
 import Ensak.Blanat.Blanat.entities.ImagesDeal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-public class imageURLbuilder {
+public class imageUrlBuilder {
 
+    private static String BASE_URL;
+
+    @Value("${baseImageUrl}")
+    public void setBaseUrl(String baseUrl) {
+        BASE_URL = baseUrl;
+    }
 
     // Load the base URL from properties file or configuration
-    private static final String BASE_URL = "http://192.168.1.104:8085/api/images/";
+    //private static final String BASE_URL = "http://192.168.1.103:8085/api/images/";
 
 
     public static String buildImageUrl(ImagesDeal image) {

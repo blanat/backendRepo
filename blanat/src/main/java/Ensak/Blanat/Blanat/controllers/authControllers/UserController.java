@@ -5,14 +5,11 @@ import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,23 +32,20 @@ public class UserController {
 
 
 
-    @DeleteMapping("/{email}")
-    public void deleteUser(@PathVariable String email) {
-        userService.deleteUser(email);
+    @DeleteMapping ("/{email}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
+        String mail = requestBody.get("email");
+        userService.deleteUser(email, mail);
+        return ResponseEntity.ok().build();
     }
 
 
-//    @PutMapping("/{email}")
-//    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody Map<String, String> requestBody) {
-//        String newPassword = requestBody.get("password");
-//        userService.updatePassword(email, newPassword);
-//        return ResponseEntity.ok().build();
-//    }
-
     @PutMapping("/{email}")
-    public ResponseEntity<Void> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
-        userService.updatePassword(email, newPassword);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> updatePassword(@PathVariable String email, @RequestBody String newPassword) {
+        newPassword = newPassword.replaceAll("\"", "");
+        UserApp userApp = userService.updatePassword(email, newPassword);
+        String successMessage = "Password updated successfully for user: " + userApp.getUsername();
+        return ResponseEntity.ok(successMessage);
     }
 
     @PutMapping("username/{email}")
@@ -99,6 +93,19 @@ public class UserController {
     @GetMapping("/userFromToken2")
     public ProfileDTO fromToke2(@RequestHeader("Authorization") String authorizationHeader ){
         return userService.getUserFromToken2(authorizationHeader);
+    }
+
+    @PostMapping("/{email}/changeProfilePicture")
+    public ResponseEntity<Void> changeProfilePicture(@PathVariable String email, @RequestPart("images") MultipartFile images) {
+        try {
+            userService.changeProfilePicture(email, images);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // Handle IO exception
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }

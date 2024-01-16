@@ -4,7 +4,6 @@ package Ensak.Blanat.Blanat.controllers.commentController;
 import Ensak.Blanat.Blanat.DTOs.commentDTO.CommentDTO;
 import Ensak.Blanat.Blanat.DTOs.commentDTO.CommentRequest;
 import Ensak.Blanat.Blanat.entities.Comment;
-import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.commentServices.commentServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

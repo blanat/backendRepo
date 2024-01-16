@@ -5,6 +5,12 @@ import java.time.LocalDateTime;
 
 public class General {
 
+    private General() {
+        // Private constructor to hide the implicit public one
+        // This prevents the class from being instantiated
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String calculateTimePassed(LocalDateTime creationTime) {
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(creationTime, now);

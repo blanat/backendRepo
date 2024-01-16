@@ -5,7 +5,6 @@ import Ensak.Blanat.Blanat.entities.Comment;
 import Ensak.Blanat.Blanat.entities.Deal;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.mappers.CommentMapper;
-import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.CommentRepository;
 import Ensak.Blanat.Blanat.repositories.DealRepository;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
@@ -13,8 +12,8 @@ import Ensak.Blanat.Blanat.services.dealService.DealServiceImp;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class commentServiceImpl implements commentServiceInterface {
@@ -44,36 +43,41 @@ public class commentServiceImpl implements commentServiceInterface {
             // Retrieve comments for the deal ordered by date
             List<Comment> comments = commentRepository.findByDealOrderByDateAsc(deal);
 
-            // Map and return the DTOs
-            return comments.stream().map(commentMapper::commentToCommentDTO).collect(Collectors.toList());
+            // Map and return the DTOs using Stream.toList()
+            return comments.stream().map(commentMapper::commentToCommentDTO).toList();
         }
 
-        return null; // Handle the case where the deal is not found
+        return Collections.emptyList(); // Handle the case where the deal is not found
     }
+
 
 
     @Override
     public Comment createComment(String token, long dealId, String content) {
-
         UserApp user = userService.getUserFromToken(token);
 
         if (user != null) {
-            Comment comment = new Comment();
-            comment.setContent(content);
-            comment.setDate(LocalDateTime.now());
-            comment.setUser(user);
-            // Implement logic to set the deal for the comment (dealRepository.findById(dealId).orElse(null))
             Deal deal = dealRepository.findById(dealId).orElse(null);
-            comment.setDeal(deal);
 
-            //update the number of comment of the deal
-            dealService.updateCommentCount(comment.getDeal().getDealID());
-            System.out.println("=========== - Deal ID: " + deal.getDealID() + ", Comment Count: " + deal.getNumberOfComments());
+            if (deal != null) {
+                Comment comment = new Comment();
+                comment.setContent(content);
+                comment.setDate(LocalDateTime.now());
+                comment.setUser(user);
+                comment.setDeal(deal);
 
-            return commentRepository.save(comment);
+                // Update the number of comments for the deal
+                dealService.updateCommentCount(deal.getDealID());
+
+                // Log the comment count if deal is not null
+                System.out.println("=========== - Deal ID: " + deal.getDealID() + ", Comment Count: " + deal.getNumberOfComments());
+
+                return commentRepository.save(comment);
+            }
         }
 
-        // If user is null, it means the token is invalid
+        // If user is null or deal is null, return null
         return null;
     }
+
 }

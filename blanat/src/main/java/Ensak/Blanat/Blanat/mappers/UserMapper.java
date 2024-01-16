@@ -3,7 +3,7 @@ package Ensak.Blanat.Blanat.mappers;
 import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
 import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class UserMapper {
 
     public UserDTO userToUserDTO(UserApp user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        userDTO.setProfileImageUrl(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+        userDTO.setProfileImageUrl(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
         return userDTO;
     }
 

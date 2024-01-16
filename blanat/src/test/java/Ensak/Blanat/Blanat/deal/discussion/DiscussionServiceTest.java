@@ -2,22 +2,18 @@ package Ensak.Blanat.Blanat.deal.discussion;
 import Ensak.Blanat.Blanat.DTOs.discDTO.DiscussionDTO;
 import Ensak.Blanat.Blanat.DTOs.discDTO.MessageDTO;
 import Ensak.Blanat.Blanat.entities.Discussion;
-import Ensak.Blanat.Blanat.entities.DiscussionView;
-import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.repositories.DiscussionRepository;
 import Ensak.Blanat.Blanat.repositories.DiscussionViewRepository;
 import Ensak.Blanat.Blanat.repositories.UserRepository;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
 import Ensak.Blanat.Blanat.services.discuService.DiscussionServiceImpl;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -29,7 +25,6 @@ import org.springframework.security.core.Authentication;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,7 +45,7 @@ public class DiscussionServiceTest {
     private DiscussionViewRepository discussionViewRepository;
 
     @Mock
-    private imageURLbuilder imageBuilder;
+    private imageUrlBuilder imageBuilder;
     @Mock
     private Authentication authentication;
     //Case : la discussion n'existe pas :
