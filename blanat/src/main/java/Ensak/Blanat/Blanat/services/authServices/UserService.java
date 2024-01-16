@@ -107,33 +107,12 @@ public class UserService {
 
 
 
-    @Transactional
-    public void deleteUser(String email) {
+
+    public UserApp deleteUser(String email, String password) {
         UserApp user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        // Remove associations
-        for (Discussion discussion : user.getDiscussions()) {
-            discussion.getViewers().remove(user);
-            discussion.getDiscMessage().clear();
-        }
-
-        // Remove user from views of other discussions
-        List<Discussion> otherDiscussions = discussionRepository.findAllByViewersContaining(user);
-        for (Discussion discussion : otherDiscussions) {
-            discussion.getViewers().remove(user);
-        }
-
-        // Clear associations from comments and deals
-        for (Comment comment : user.getComments()) {
-            comment.getDeal().getComments().remove(comment);
-        }
-        for (Deal deal : user.getDeals()) {
-            deal.getComments().clear();
-            deal.getDealCreator().getDeals().remove(deal);
-        }
-
-        userRepository.delete(user);
+        user.setEmail(password);
+        return userRepository.save(user);
     }
 
 
