@@ -44,6 +44,7 @@ public class UserApp implements UserDetails {
   String profileFilePath;
 //=========================
 
+  @Column(name = "firebase_token")  // Add this annotation to map to the correct column
   private String firebaseToken;
 
 public String getFirebaseToken() {

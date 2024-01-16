@@ -24,7 +24,7 @@ public class UserMapper {
 
     public ProfileDTO profileToProfileDTO(UserApp user){
         ProfileDTO profileDTO = modelMapper.map(user, ProfileDTO.class);
-        profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+        profileDTO.setProfileFilePath(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
         return profileDTO;
     }
 }

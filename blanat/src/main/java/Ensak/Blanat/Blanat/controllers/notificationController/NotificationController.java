@@ -4,7 +4,6 @@ import Ensak.Blanat.Blanat.DTOs.discDTO.MessageDTO;
 import Ensak.Blanat.Blanat.entities.Discussion;
 import Ensak.Blanat.Blanat.services.discuService.IDiscussionService;
 import Ensak.Blanat.Blanat.services.notificationService.FirebaseMessagingService;
-import Ensak.Blanat.Blanat.services.notificationService.MessagingFirebaseService;
 import Ensak.Blanat.Blanat.services.notificationService.NotificationMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class NotificationController {
         String creatorToken = discussion.getCreateur().getFirebaseToken();
 
         // Send notification to the discussion creator
-        MessagingFirebaseService.sendCommentNotification(creatorToken, discussion.getTitre(), discMessage.getContent());
+        //MessagingFirebaseService.sendCommentNotification(creatorToken, discussion.getTitre(), discMessage.getContent());
 
         return "Comment added successfully.";
     }
