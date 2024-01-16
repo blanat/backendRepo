@@ -5,15 +5,11 @@ import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.UserApp;
 import Ensak.Blanat.Blanat.services.authServices.JwtService;
 import Ensak.Blanat.Blanat.services.authServices.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

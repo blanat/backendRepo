@@ -1,5 +1,21 @@
 package Ensak.Blanat.Blanat.services.authServices;
 
+import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
+import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
+import Ensak.Blanat.Blanat.entities.*;
+import Ensak.Blanat.Blanat.mappers.UserMapper;
+import Ensak.Blanat.Blanat.repositories.*;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,29 +23,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import Ensak.Blanat.Blanat.DTOs.ethDoa.ProfileDTO;
-import Ensak.Blanat.Blanat.DTOs.userDTO.UserDTO;
-import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
-import Ensak.Blanat.Blanat.entities.*;
-import Ensak.Blanat.Blanat.mappers.UserMapper;
-import Ensak.Blanat.Blanat.repositories.*;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
