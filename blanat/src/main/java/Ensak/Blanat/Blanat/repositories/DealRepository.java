@@ -19,4 +19,5 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     @Query("SELECT COUNT(c.commentId) FROM Comment c WHERE c.deal.id = :dealId")
     int countCommentsByDealId(@Param("dealId") long dealId);
 
+    //Long countBydealCreator(UserApp currentUser);
 }
