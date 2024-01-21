@@ -14,7 +14,7 @@ import Ensak.Blanat.Blanat.DTOs.userDTO.UserProfileStatisticsDTO;
 import Ensak.Blanat.Blanat.entities.*;
 import Ensak.Blanat.Blanat.mappers.UserMapper;
 import Ensak.Blanat.Blanat.repositories.*;
-import Ensak.Blanat.Blanat.services.imagesDealService.imageURLbuilder;
+import Ensak.Blanat.Blanat.services.imagesDealService.imageUrlBuilder;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,19 +65,26 @@ public class UserService {
 
 
     public UserDetailsService userDetailsService() {
-      return new UserDetailsService() {
-          @Override
-          public UserDetails loadUserByUsername(String username) {
-              return userRepository.findByEmail(username)
-                      .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-          }
-      };
-  }
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                try {
+                    return userRepository.findByEmail(username)
+                            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                } catch (UsernameNotFoundException e) {
+                    // Log the error
+                    log.error("Error loading user by username: {}", username, e);
+                    throw e; // Re-throw the exception if needed
+                }
+            }
+        };
+    }
+
     public UserApp save(UserApp newUser) {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
         }
-        Path filePath = Path.of("C:\\ImageprofileUser\\nassima.jpg");
+        Path filePath = Path.of("E:\\ImageprofileUser\\imagesDefault.jpg");
         newUser.setProfileFilePath(filePath.toString());
 
         newUser.setUpdatedAt(LocalDateTime.now());
@@ -138,7 +145,7 @@ public ProfileDTO getUserFromToken2(String token) {
 
     // Use the mapper to convert UserApp to ProfileDTO
     ProfileDTO profileDTO = userMapper.profileToProfileDTO(user);
-    profileDTO.setProfileFilePath(imageURLbuilder.buildProfileImageUrl(user.getProfileFilePath()));
+    profileDTO.setProfileFilePath(imageUrlBuilder.buildProfileImageUrl(user.getProfileFilePath()));
 
     return profileDTO;
 }
