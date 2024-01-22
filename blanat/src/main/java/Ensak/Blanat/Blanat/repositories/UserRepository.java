@@ -9,11 +9,14 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserApp, Long> {
     Optional<UserApp> findByEmail(String email);
-    Optional<UserApp> findByUserName(String username);
+
+
+    UserApp findByUserName(String username);
 
     @Query("SELECT id FROM UserApp WHERE email = :email")
     Optional<Long> findUserIdByEmail(@Param("email") String email);
 
+    UserApp findByEmailIgnoreCase(String currentUsername);
 
 
 }

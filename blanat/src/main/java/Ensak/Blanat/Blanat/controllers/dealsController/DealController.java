@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -222,5 +224,23 @@ public ResponseEntity<String> modifyDeal(
         List<ListDealDTO> listDealDTOs = dealService.getValidatedDeals();
         return new ResponseEntity<>(listDealDTOs, HttpStatus.OK);
     }
+
+
+    @GetMapping("/validatedByCurrentUser")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<ListDealDTO>> getValidatedDealsByCurrentUser() {
+        List<ListDealDTO> deals = dealService.getValidatedDealsByCurrentUser();
+        System.out.println("Number of deals found: " + deals.size()); // Ajouter un log
+        return new ResponseEntity<>(deals, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/validate/{dealId}")
+    public ResponseEntity<String> validateDeal(@PathVariable long dealId) {
+        dealService.validateDeal(dealId);
+        return ResponseEntity.ok("Deal validated successfully.");
+    }
+
+
 
 }

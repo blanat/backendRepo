@@ -120,5 +120,11 @@ public class DiscussionController {
     }
 
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countDiscussionsCreatedByCurrentUser() {
+        Long count = discussionService.countDiscussionsCreatedByCurrentUser();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
 
 }

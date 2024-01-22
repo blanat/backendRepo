@@ -17,7 +17,7 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long voteId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", nullable = false)
     private UserApp user;
 

@@ -23,4 +23,5 @@ public interface DiscussionRepository extends JpaRepository<Discussion,Long> {
     List<Discussion>findByViewersAndSave(UserApp user, int save);
 
     Long countByCreateur(UserApp currentUser);
+
 }

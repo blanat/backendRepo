@@ -19,20 +19,14 @@ public class NotificationController {
     @PostMapping
     public String sendNotificationByToken(@RequestBody NotificationMessage notificationMessage){
         return firebaseMessagingService.sendNotificationByToken(notificationMessage);
-    }
-
-
-    @PostMapping("/{discussionId}/comment")
-    public String addComment(@PathVariable Long discussionId, @RequestBody MessageDTO discMessage) {
-        // Add the comment to the discussion
-        Discussion discussion = discussionService.addMessage(discussionId, discMessage);
-
+    /*
         // Get the creator of the discussion
         String creatorToken = discussion.getCreateur().getFirebaseToken();
 
         // Send notification to the discussion creator
         //MessagingFirebaseService.sendCommentNotification(creatorToken, discussion.getTitre(), discMessage.getContent());
 
-        return "Comment added successfully.";
+        return "Comment added successfully.";*/
     }
+
 }

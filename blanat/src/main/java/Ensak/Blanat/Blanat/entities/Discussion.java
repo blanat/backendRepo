@@ -50,7 +50,7 @@ public class Discussion {
     @JsonBackReference
     private UserApp createur;
 
-    @OneToMany(mappedBy = "discussion", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<DiscMessage> discMessage;
 

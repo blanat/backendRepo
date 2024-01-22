@@ -81,4 +81,8 @@ public class Deal {
     private Collection<ImagesDeal> imagesDeals;
 
 
+
+    public void setValidated() {
+        this.isValidated = true;
+    }
 }

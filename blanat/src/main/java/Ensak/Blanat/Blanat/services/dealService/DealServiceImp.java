@@ -1,4 +1,3 @@
-
 package Ensak.Blanat.Blanat.services.dealService;
 
 
@@ -183,16 +182,16 @@ public class DealServiceImp implements DealServiceInterface {
 
         if (deal != null && checkAndCreateVote(deal, user)) {
 
-                log.info("Incrementing degree for dealId: {} by userId: {}", dealId, user.getId());
+            log.info("Incrementing degree for dealId: {} by userId: {}", dealId, user.getId());
 
-                // Update the degree in the deal
-                deal.setDeg(deal.getDeg() + 1);
-                dealRepository.save(deal);
+            // Update the degree in the deal
+            deal.setDeg(deal.getDeg() + 1);
+            dealRepository.save(deal);
 
-                // Log success message
-                log.info("Degree incremented successfully for dealId: {} by userId: {}", dealId, user.getId());
+            // Log success message
+            log.info("Degree incremented successfully for dealId: {} by userId: {}", dealId, user.getId());
 
-                // Separate method for checking and creating Vote
+            // Separate method for checking and creating Vote
 
         } else {
             log.error("Failed to increment degree. Deal not found for dealId: {}", dealId);
@@ -262,7 +261,7 @@ public class DealServiceImp implements DealServiceInterface {
 
         }
         catch (Exception e){
-        throw new RuntimeException("Deal not found");
+            throw new RuntimeException("Deal not found");
         }
 
 
@@ -288,5 +287,7 @@ public class DealServiceImp implements DealServiceInterface {
             throw new RuntimeException("Deal not found");
         }
     }
+
+   
 
 }

@@ -13,7 +13,7 @@ public class DiscussionView {
     @JoinColumn(name = "discussion_id")
     private Discussion discussion;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserApp user;
 
