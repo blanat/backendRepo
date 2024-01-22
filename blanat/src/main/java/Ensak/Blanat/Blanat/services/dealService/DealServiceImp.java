@@ -288,6 +288,10 @@ public class DealServiceImp implements DealServiceInterface {
         }
     }
 
-   
+    @Override
+    public List<ListDealDTO> getValidatedDealsByCurrentUser() {
+        return null;
+    }
+
 
 }
